@@ -27,12 +27,47 @@ const ApartmentPage = () => {
                 <h2 className="text-2xl font-serif font-bold text-forest-700 mb-4">
                   Ihr Zuhause in Einruhr
                 </h2>
+                
+                <div className="flex flex-wrap -mx-2 mb-8">
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220729_164415339-1.jpg?w=1024&h=768" 
+                      alt="Ferienwohnung Außenansicht" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163708033.jpg" 
+                      alt="Wohnbereich" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+                
                 <p>
                   Unsere liebevoll eingerichtete Ferienwohnung befindet sich in dem schönen Dorf Einruhr, direkt am Obersee und am Rande des Nationalparks Eifel.
                 </p>
                 <p>
                   Die Wohnung ist bequem für bis zu 4 Personen ausgelegt, wobei der Wohnraum als Schlafzimmer und Wohnküche dient. Die Einrichtung ist komplett neu, liebevoll ausgesucht und bietet Ihnen allen Komfort für einen erholsamen Aufenthalt.
                 </p>
+                
+                <div className="flex flex-wrap -mx-2 my-8">
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163743381.jpg" 
+                      alt="Küchenbereich" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163923358.jpg" 
+                      alt="Badezimmer" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
                 
                 <div className="my-8">
                   <h3 className="text-xl font-serif font-bold text-forest-700 mb-4">
@@ -90,6 +125,23 @@ const ApartmentPage = () => {
                   </ul>
                 </div>
                 
+                <div className="flex flex-wrap -mx-2 my-8">
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163615663.jpg" 
+                      alt="Schlafbereich" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163639764.jpg" 
+                      alt="Wohnraum mit Kamin" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+                
                 <h3 className="text-xl font-serif font-bold text-forest-700 mb-4">
                   Schlafmöglichkeiten
                 </h3>
@@ -115,7 +167,7 @@ const ApartmentPage = () => {
                   Heizung & Kamin
                 </h3>
                 <p>
-                  Die Wohnung verfügt über keine klassische Heizung, dafür aber über einen wunderschönen, gemütlichen Kamin, der an kühlen Tagen für eine angenehme Wärme und eine besondere Atmosphäre sorgt.
+                  Die Wohnung verfügt über keine klassische Heizung, dafür aber über einen wunderschönen, gemütlichen Kamin, der an kühlen Tagen für eine angenehme Wärme und eine besondere Atmosphäre sorgt. Holz ist genügend kostenlos vorhanden. Über eine kleine Spende würden wir uns aber freuen.
                 </p>
                 
                 <div className="mt-8">
@@ -170,7 +222,7 @@ const ApartmentPage = () => {
                   </h3>
                   <div>
                     <h4 className="font-medium">Frühstück</h4>
-                    <p className="text-gray-700">Nach Rücksprache servieren wir Ihnen ein einfaches Frühstück (7,50 € pro Person/Tag).</p>
+                    <p className="text-gray-700">Nach Rücksprache servieren wir Ihnen ein einfaches Frühstück (9 € pro Person/Tag).</p>
                   </div>
                   <div>
                     <h4 className="font-medium">Wäschepaket</h4>

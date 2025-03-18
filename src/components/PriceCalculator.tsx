@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,7 +23,9 @@ const PriceCalculator = () => {
   const [withBreakfast, setWithBreakfast] = useState<string>("no");
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [priceDetails, setPriceDetails] = useState<{
-    basePrice: number;
+    firstNightPrice: number;
+    additionalNightsPrice: number;
+    additionalNightsCount: number;
     breakfastPrice: number;
     laundryPrice: number;
     cleaningPrice: number;
@@ -35,7 +36,7 @@ const PriceCalculator = () => {
   // Price constants
   const FIRST_NIGHT_PRICE = 59;          // €59 für die erste Nacht
   const ADDITIONAL_NIGHT_PRICE = 50;     // €50 für jede weitere Nacht
-  const BREAKFAST_PRICE_PER_PERSON = 7.50;   // €7.50 pro Person pro Tag mit Frühstück
+  const BREAKFAST_PRICE_PER_PERSON = 9;   // €9 pro Person pro Tag mit Frühstück
   const LAUNDRY_PACKAGE_PRICE = 5;       // €5 pro Wäschepaket pro Person
   const CLEANING_FEE = 25;               // €25 für die Endreinigung
 
@@ -99,9 +100,9 @@ const PriceCalculator = () => {
     const numNights = Math.max(1, differenceInCalendarDays(endDate, startDate));
     
     // Berechnung des Grundpreises: 59€ für erste Nacht, 50€ für jede weitere
-    const basePrice = numNights === 1 
-      ? FIRST_NIGHT_PRICE 
-      : FIRST_NIGHT_PRICE + ((numNights - 1) * ADDITIONAL_NIGHT_PRICE);
+    const firstNightPrice = FIRST_NIGHT_PRICE;
+    const additionalNightsCount = numNights - 1;
+    const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * ADDITIONAL_NIGHT_PRICE : 0;
     
     // Frühstückspreis (falls ausgewählt)
     const breakfastPrice = withBreakfast === "yes" ? guests * BREAKFAST_PRICE_PER_PERSON * numNights : 0;
@@ -113,11 +114,13 @@ const PriceCalculator = () => {
     const cleaningPrice = CLEANING_FEE;
     
     // Gesamtpreis
-    const total = basePrice + breakfastPrice + laundryPrice + cleaningPrice;
+    const total = firstNightPrice + additionalNightsPrice + breakfastPrice + laundryPrice + cleaningPrice;
     
     setTotalPrice(total);
     setPriceDetails({
-      basePrice,
+      firstNightPrice,
+      additionalNightsPrice,
+      additionalNightsCount,
       breakfastPrice,
       laundryPrice,
       cleaningPrice
@@ -254,7 +257,7 @@ const PriceCalculator = () => {
 
         {/* Breakfast */}
         <div className="space-y-2">
-          <Label>Frühstück (€7,50 pro Person/Tag)</Label>
+          <Label>Frühstück (€9 pro Person/Tag)</Label>
           <div className="flex items-center">
             <Coffee className="mr-2 h-4 w-4 text-muted-foreground" />
             <RadioGroup
@@ -289,9 +292,15 @@ const PriceCalculator = () => {
             <h3 className="font-medium text-lg mb-2 font-serif">Preisdetails:</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span>Grundpreis für Übernachtung:</span>
-                <span>€{priceDetails.basePrice.toFixed(2)}</span>
+                <span>Erste Nacht:</span>
+                <span>€{priceDetails.firstNightPrice.toFixed(2)}</span>
               </div>
+              {priceDetails.additionalNightsCount > 0 && (
+                <div className="flex justify-between">
+                  <span>Weitere Nächte ({priceDetails.additionalNightsCount}x):</span>
+                  <span>€{priceDetails.additionalNightsPrice.toFixed(2)}</span>
+                </div>
+              )}
               {priceDetails.breakfastPrice > 0 && (
                 <div className="flex justify-between">
                   <span>Frühstück:</span>

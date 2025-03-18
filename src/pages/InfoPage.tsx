@@ -39,6 +39,19 @@ const InfoPage = () => {
                   Preise
                 </h2>
                 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <img 
+                    src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163615663.jpg" 
+                    alt="Gemütliches Schlafzimmer" 
+                    className="rounded-lg w-full h-auto object-cover"
+                  />
+                  <img 
+                    src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163639764.jpg" 
+                    alt="Wohnraum mit Kamin" 
+                    className="rounded-lg w-full h-auto object-cover"
+                  />
+                </div>
+                
                 <div className="space-y-6">
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="text-xl font-serif font-medium mb-4">Grundpreis</h3>
@@ -67,7 +80,7 @@ const InfoPage = () => {
                         <Coffee className="h-5 w-5 text-forest-600 mr-3 flex-shrink-0 mt-1" />
                         <div>
                           <h4 className="font-medium">Frühstück</h4>
-                          <p className="text-forest-700 text-lg font-medium">7,50 € pro Person/Tag</p>
+                          <p className="text-forest-700 text-lg font-medium">9 € pro Person/Tag</p>
                           <p className="text-sm text-gray-600">Einfaches Frühstück nach Rücksprache</p>
                         </div>
                       </div>
