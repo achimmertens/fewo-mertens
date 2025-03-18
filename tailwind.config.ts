@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -52,16 +53,32 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
+				forest: {
+					50: '#f2f7f4',
+					100: '#e0eae4',
+					200: '#c3d5ce',
+					300: '#9ab8ae',
+					400: '#6c9589',
+					500: '#4d796e',
+					600: '#3e625a',
+					700: '#345049',
+					800: '#2c403c',
+					900: '#263532',
+					950: '#131c1a',
+				},
+				lake: {
+					50: '#eef8ff',
+					100: '#daeeff',
+					200: '#bae2ff',
+					300: '#8aceff',
+					400: '#52b1ff',
+					500: '#2490ff',
+					600: '#1273ff',
+					700: '#0a5deb',
+					800: '#104abe',
+					900: '#124195',
+					950: '#0e2a5c',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -89,7 +106,11 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+			},
+			fontFamily: {
+				sans: ['Roboto', 'sans-serif'],
+				serif: ['Playfair Display', 'serif'],
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
