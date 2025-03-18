@@ -123,8 +123,19 @@ const LocationPage = () => {
                   <p className="mb-4">
                     Mit dem Auto erreichen Sie uns über die A44 und A4, die beide gut an das deutsche Autobahnnetz angebunden sind. Von dort aus führen gut ausgebaute Landstraßen nach Einruhr.
                   </p>
-                  <p>
+                  <p className="mb-4">
                     Mit öffentlichen Verkehrsmitteln reisen Sie zunächst mit dem Zug nach Aachen oder Düren und nehmen von dort aus den Bus nach Einruhr.
+                  </p>
+                  <p className="mb-4">
+                    <a 
+                      href="https://maps.app.goo.gl/qkxbJidBxtzRt5Vv9" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-forest-600 hover:underline inline-flex items-center"
+                    >
+                      Route in Google Maps anzeigen
+                      <MapPin className="h-4 w-4 ml-1" />
+                    </a>
                   </p>
                 </div>
               </div>

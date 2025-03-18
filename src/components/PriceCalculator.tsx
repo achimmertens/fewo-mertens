@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,11 +8,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Users, ShoppingCart, Coffee } from "lucide-react";
-import { format, differenceInCalendarDays, addDays } from "date-fns";
+import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle } from "lucide-react";
+import { format, differenceInCalendarDays, addDays, isSameDay } from "date-fns";
 import { de } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const PriceCalculator = () => {
   const { toast } = useToast();
@@ -26,19 +27,70 @@ const PriceCalculator = () => {
     basePrice: number;
     breakfastPrice: number;
     laundryPrice: number;
+    cleaningPrice: number;
   } | null>(null);
+  const [isDateBooked, setIsDateBooked] = useState<boolean>(false);
+  const [bookedDates, setBookedDates] = useState<Date[]>([]);
 
   // Price constants
   const FIRST_NIGHT_PRICE = 59;          // €59 für die erste Nacht
   const ADDITIONAL_NIGHT_PRICE = 50;     // €50 für jede weitere Nacht
   const BREAKFAST_PRICE_PER_PERSON = 7.50;   // €7.50 pro Person pro Tag mit Frühstück
   const LAUNDRY_PACKAGE_PRICE = 5;       // €5 pro Wäschepaket pro Person
+  const CLEANING_FEE = 25;               // €25 für die Endreinigung
+
+  useEffect(() => {
+    // Check if the selected dates are booked
+    if (startDate && endDate && bookedDates.length > 0) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      
+      // Check each day between start and end date
+      let current = start;
+      let isBooked = false;
+      
+      while (current <= end) {
+        if (bookedDates.some(date => isSameDay(date, current))) {
+          isBooked = true;
+          break;
+        }
+        current = addDays(current, 1);
+      }
+      
+      setIsDateBooked(isBooked);
+    } else {
+      setIsDateBooked(false);
+    }
+  }, [startDate, endDate, bookedDates]);
+
+  useEffect(() => {
+    // This would normally fetch data from the Google Calendar API
+    // For now, let's just set some example booked dates
+    const today = new Date();
+    const nextYear = new Date(today);
+    nextYear.setFullYear(today.getFullYear() + 1);
+    
+    // Example: March 21-22, 2025 is booked
+    setBookedDates([
+      new Date(2025, 2, 21), // March 21, 2025
+      new Date(2025, 2, 22), // March 22, 2025
+    ]);
+  }, []);
 
   const calculatePrice = () => {
     if (!startDate || !endDate) {
       toast({
         title: "Fehler",
         description: "Bitte wählen Sie Start- und Enddatum aus.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (isDateBooked) {
+      toast({
+        title: "Achtung",
+        description: "Der gewählte Zeitraum ist bereits belegt.",
         variant: "destructive",
       });
       return;
@@ -55,16 +107,20 @@ const PriceCalculator = () => {
     const breakfastPrice = withBreakfast === "yes" ? guests * BREAKFAST_PRICE_PER_PERSON * numNights : 0;
     
     // Wäschepaketpreis (pro Person)
-    const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE * guests;
+    const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE;
+    
+    // Endreinigung
+    const cleaningPrice = CLEANING_FEE;
     
     // Gesamtpreis
-    const total = basePrice + breakfastPrice + laundryPrice;
+    const total = basePrice + breakfastPrice + laundryPrice + cleaningPrice;
     
     setTotalPrice(total);
     setPriceDetails({
       basePrice,
       breakfastPrice,
       laundryPrice,
+      cleaningPrice
     });
 
     toast({
@@ -153,6 +209,15 @@ const PriceCalculator = () => {
           </div>
         </div>
 
+        {isDateBooked && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              Der gewählte Zeitraum ist bereits belegt. Bitte wählen Sie ein anderes Datum.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Guests */}
         <div className="space-y-2">
           <Label htmlFor="guests">Anzahl der Personen</Label>
@@ -184,7 +249,7 @@ const PriceCalculator = () => {
               className="w-full"
             />
           </div>
-          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €5 pro Person und enthält Handtücher und Bettwäsche.</p>
+          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €5 und enthält Handtücher und Bettwäsche.</p>
         </div>
 
         {/* Breakfast */}
@@ -207,7 +272,7 @@ const PriceCalculator = () => {
               </div>
             </RadioGroup>
           </div>
-          <p className="text-sm text-muted-foreground">Wir bieten ein einfaches Frühstück an.</p>
+          <p className="text-sm text-muted-foreground">Wir bieten ein einfaches Frühstück nach Rücksprache an.</p>
         </div>
       </CardContent>
 
@@ -239,6 +304,10 @@ const PriceCalculator = () => {
                   <span>€{priceDetails.laundryPrice.toFixed(2)}</span>
                 </div>
               )}
+              <div className="flex justify-between">
+                <span>Endreinigung:</span>
+                <span>€{priceDetails.cleaningPrice.toFixed(2)}</span>
+              </div>
               <Separator className="my-2" />
               <div className="flex justify-between font-medium">
                 <span>Gesamtpreis:</span>

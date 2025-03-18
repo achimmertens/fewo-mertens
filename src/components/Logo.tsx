@@ -8,7 +8,7 @@ const Logo = () => {
       <img 
         src="/lovable-uploads/fc234910-95e4-4855-b7ec-9d5340eafa6e.png" 
         alt="Waldoase Mertens Logo" 
-        className="waldoase-logo"
+        className="w-full h-auto"
       />
     </Link>
   );

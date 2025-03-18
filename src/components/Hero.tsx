@@ -5,12 +5,12 @@ import Logo from "./Logo";
 
 const Hero = () => {
   return (
-    <div className="hero-image w-full min-h-[70vh] flex items-center justify-center text-white">
-      <div className="container mx-auto px-4 text-center">
-        <div className="flex justify-center mb-6">
+    <div className="hero-image w-full min-h-[70vh] flex items-center justify-center text-white bg-cover bg-center" style={{ backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220729_164415339-1.jpg?w=1024&h=768')" }}>
+      <div className="container mx-auto px-4 text-center relative">
+        <div className="absolute top-4 left-4 md:top-8 md:left-8 w-32">
           <Logo />
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 drop-shadow-lg">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 drop-shadow-lg mt-16">
           Ferienwohnung Einruhr Waldoase Mertens
         </h1>
         <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-8 drop-shadow-md">

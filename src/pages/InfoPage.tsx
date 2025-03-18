@@ -11,7 +11,8 @@ import {
   Clock, 
   ShoppingCart,
   Coffee,
-  HelpCircle
+  HelpCircle,
+  MapPin
 } from "lucide-react";
 import GoogleCalendar from "@/components/GoogleCalendar";
 
@@ -67,8 +68,19 @@ const InfoPage = () => {
                         <div>
                           <h4 className="font-medium">Frühstück</h4>
                           <p className="text-forest-700 text-lg font-medium">7,50 € pro Person/Tag</p>
-                          <p className="text-sm text-gray-600">Einfaches Frühstück</p>
+                          <p className="text-sm text-gray-600">Einfaches Frühstück nach Rücksprache</p>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 className="text-xl font-serif font-medium mb-4">Sonstige Kosten</h3>
+                    <div className="grid grid-cols-1 gap-4">
+                      <div>
+                        <h4 className="font-medium">Endreinigung</h4>
+                        <p className="text-forest-700 text-lg font-medium">25 €</p>
+                        <p className="text-sm text-gray-600">Wird immer berechnet</p>
                       </div>
                     </div>
                   </div>
@@ -91,7 +103,7 @@ const InfoPage = () => {
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="text-xl font-serif font-medium mb-4">Aufenthaltsdauer</h3>
                     <p>
-                      Die Mindestaufenthaltsdauer beträgt in der Regel 2 Nächte. An Feiertagen und in der Hauptsaison kann die Mindestaufenthaltsdauer variieren. Bei längeren Aufenthalten bieten wir Ihnen gerne einen Rabatt an - sprechen Sie uns einfach an!
+                      Die Mindestaufenthaltsdauer beträgt 1 Nacht. An Feiertagen und in der Hauptsaison kann die Mindestaufenthaltsdauer variieren.
                     </p>
                   </div>
                   
@@ -110,7 +122,7 @@ const InfoPage = () => {
                         <Clock className="h-5 w-5 text-forest-600 mr-3 flex-shrink-0 mt-1" />
                         <div>
                           <h4 className="font-medium">Check-out</h4>
-                          <p>Bis 11:00 Uhr</p>
+                          <p>Bis 12:00 Uhr</p>
                           <p className="text-sm text-gray-600">Späterer Check-out nach Absprache möglich</p>
                         </div>
                       </div>
@@ -143,7 +155,7 @@ const InfoPage = () => {
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="font-medium mb-2">Ist WLAN verfügbar?</h3>
                     <p>
-                      Nein, wir bieten kein WLAN an. Genießen Sie die Zeit in der Natur ohne digitale Ablenkung.
+                      Nein, wir bieten kein WLAN an. Der Funkempfang ist aber sehr gut.
                     </p>
                   </div>
                   
@@ -177,6 +189,29 @@ const InfoPage = () => {
                   <div className="flex items-center">
                     <Users className="h-5 w-5 text-forest-600 mr-3" />
                     <span>Für bis zu 4 Personen geeignet</span>
+                  </div>
+                </div>
+                
+                <Separator className="my-6" />
+                
+                <div className="space-y-4">
+                  <h3 className="text-xl font-serif font-bold text-forest-700 mb-4">
+                    Anfahrt
+                  </h3>
+                  <div className="flex items-start">
+                    <MapPin className="h-5 w-5 text-forest-600 mr-3 mt-1" />
+                    <div>
+                      <p className="mb-2">Heilsteinstr. 39, 52152 Simmerath-Einruhr</p>
+                      <a 
+                        href="https://maps.app.goo.gl/qkxbJidBxtzRt5Vv9" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-forest-600 hover:underline inline-flex items-center"
+                      >
+                        Route in Google Maps anzeigen
+                        <MapPin className="h-4 w-4 ml-1" />
+                      </a>
+                    </div>
                   </div>
                 </div>
                 

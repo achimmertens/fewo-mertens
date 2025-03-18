@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, AlertTriangle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const ContactPage = () => {
   const { toast } = useToast();
@@ -28,12 +29,15 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
+    // Note: In a real application, we would send the form data to a backend
+    // Since this is a frontend-only app, we'll just show a toast and simulate submission
+    toast({
+      title: "Hinweis",
+      description: "Diese Demo-Website kann keine echten E-Mails versenden. Bitte kontaktieren Sie uns telefonisch oder per E-Mail direkt.",
+      variant: "default",
+    });
+    
     setTimeout(() => {
-      toast({
-        title: "Nachricht gesendet",
-        description: "Wir werden uns so schnell wie möglich bei Ihnen melden.",
-      });
       setFormData({
         name: "",
         email: "",
@@ -66,6 +70,14 @@ const ContactPage = () => {
               <p className="mb-8 text-gray-700">
                 Füllen Sie das Formular aus und wir werden uns so schnell wie möglich bei Ihnen melden. Gerne können Sie uns auch direkt telefonisch kontaktieren.
               </p>
+              
+              <Alert className="mb-6">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Hinweis</AlertTitle>
+                <AlertDescription>
+                  Das Kontaktformular ist eine Demo. Bitte kontaktieren Sie uns direkt per E-Mail oder Telefon.
+                </AlertDescription>
+              </Alert>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -177,6 +189,15 @@ const ContactPage = () => {
                           52152 Simmerath-Einruhr<br />
                           Deutschland
                         </p>
+                        <a 
+                          href="https://maps.app.goo.gl/qkxbJidBxtzRt5Vv9" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-forest-600 hover:underline inline-flex items-center mt-2"
+                        >
+                          Route in Google Maps anzeigen
+                          <MapPin className="h-4 w-4 ml-1" />
+                        </a>
                       </div>
                     </div>
                   </CardContent>

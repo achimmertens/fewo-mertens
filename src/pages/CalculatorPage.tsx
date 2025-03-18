@@ -13,7 +13,7 @@ const CalculatorPage = () => {
           <div className="container mx-auto px-4">
             <h1 className="text-4xl font-serif font-bold mb-4">Preisrechner</h1>
             <p className="text-xl max-w-3xl">
-              Berechnen Sie ganz einfach den Preis für Ihren Aufenthalt in unserem Ferienhaus.
+              Berechnen Sie ganz einfach den Preis für Ihren Aufenthalt in unserer Ferienwohnung.
             </p>
           </div>
         </div>
@@ -26,7 +26,7 @@ const CalculatorPage = () => {
                   Preis berechnen
                 </h2>
                 <p className="mb-8 text-gray-700">
-                  Mit unserem Preisrechner können Sie ganz einfach den Gesamtpreis für Ihren Aufenthalt in unserem Ferienhaus berechnen. Geben Sie einfach Ihre Daten ein und sehen Sie sofort den Gesamtpreis.
+                  Mit unserem Preisrechner können Sie ganz einfach den Gesamtpreis für Ihren Aufenthalt in unserer Ferienwohnung berechnen. Geben Sie einfach Ihre Daten ein und sehen Sie sofort den Gesamtpreis.
                 </p>
                 
                 <PriceCalculator />
@@ -38,7 +38,7 @@ const CalculatorPage = () => {
                 Verfügbarkeit prüfen
               </h2>
               <p className="mb-8 text-gray-700">
-                Hier können Sie prüfen, ob unser Ferienhaus für Ihren Wunschtermin verfügbar ist. Die belegten Tage sind im Kalender markiert.
+                Hier können Sie prüfen, ob unsere Ferienwohnung für Ihren Wunschtermin verfügbar ist. Die belegten Tage sind im Kalender markiert.
               </p>
               
               <GoogleCalendar />

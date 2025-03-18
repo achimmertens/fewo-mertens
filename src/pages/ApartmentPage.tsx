@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Bed, Users, Bath, CheckSquare } from "lucide-react";
+import { Bed, Users, Bath, CheckSquare, Flame, Phone } from "lucide-react";
 
 const ApartmentPage = () => {
   return (
@@ -61,7 +61,7 @@ const ApartmentPage = () => {
                     </li>
                     <li className="flex items-center">
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
-                      Modernes Badezimmer mit Dusche
+                      Badezimmer mit Dusche
                     </li>
                     <li className="flex items-center">
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
@@ -79,6 +79,14 @@ const ApartmentPage = () => {
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
                       Wäschepaket (gegen Aufpreis)
                     </li>
+                    <li className="flex items-center">
+                      <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
+                      Gemütlicher Kamin
+                    </li>
+                    <li className="flex items-center">
+                      <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
+                      Guter Mobilfunkempfang
+                    </li>
                   </ul>
                 </div>
                 
@@ -93,7 +101,7 @@ const ApartmentPage = () => {
                   Badezimmer
                 </h3>
                 <p>
-                  Das moderne Badezimmer ist mit einer geräumigen Dusche ausgestattet. Handtücher können auf Wunsch als Wäschepaket dazugebucht werden.
+                  Das Badezimmer ist mit einer Dusche ausgestattet. Handtücher können auf Wunsch als Wäschepaket dazugebucht werden.
                 </p>
                 
                 <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
@@ -101,6 +109,13 @@ const ApartmentPage = () => {
                 </h3>
                 <p>
                   Die offene Küchenzeile ist vollständig ausgestattet, sodass Sie sich während Ihres Aufenthalts selbst versorgen können. Sie finden hier alles, was Sie zum Kochen benötigen: Herd, Kühlschrank mit Gefrierfach, French Press für Kaffee, Wasserkocher, Toaster sowie Geschirr und Kochutensilien. Zudem haben wir immer einige Essensvorräte im Schrank für Sie.
+                </p>
+                
+                <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
+                  Heizung & Kamin
+                </h3>
+                <p>
+                  Die Wohnung verfügt über keine klassische Heizung, dafür aber über einen wunderschönen, gemütlichen Kamin, der an kühlen Tagen für eine angenehme Wärme und eine besondere Atmosphäre sorgt.
                 </p>
                 
                 <div className="mt-8">
@@ -134,6 +149,14 @@ const ApartmentPage = () => {
                     <span>1 Badezimmer mit Dusche</span>
                   </li>
                   <li className="flex items-center">
+                    <Flame className="h-5 w-5 text-forest-600 mr-3" />
+                    <span>Gemütlicher Kamin</span>
+                  </li>
+                  <li className="flex items-center">
+                    <Phone className="h-5 w-5 text-forest-600 mr-3" />
+                    <span>Guter Mobilfunkempfang</span>
+                  </li>
+                  <li className="flex items-center">
                     <CheckSquare className="h-5 w-5 text-forest-600 mr-3" />
                     <span>Haustiere erlaubt</span>
                   </li>
@@ -147,7 +170,7 @@ const ApartmentPage = () => {
                   </h3>
                   <div>
                     <h4 className="font-medium">Frühstück</h4>
-                    <p className="text-gray-700">Auf Wunsch servieren wir Ihnen ein einfaches Frühstück (7,50 € pro Person/Tag).</p>
+                    <p className="text-gray-700">Nach Rücksprache servieren wir Ihnen ein einfaches Frühstück (7,50 € pro Person/Tag).</p>
                   </div>
                   <div>
                     <h4 className="font-medium">Wäschepaket</h4>
