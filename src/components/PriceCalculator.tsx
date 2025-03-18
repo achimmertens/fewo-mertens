@@ -24,23 +24,15 @@ const PriceCalculator = () => {
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [priceDetails, setPriceDetails] = useState<{
     basePrice: number;
-    additionalGuestPrice: number;
     breakfastPrice: number;
     laundryPrice: number;
   } | null>(null);
 
   // Price constants
-  const BASE_PRICE_PER_NIGHT = 80;          // €80 for 2 persons
-  const HIGH_SEASON_PRICE_PER_NIGHT = 89;   // €89 for 2 persons in high season
-  const ADDITIONAL_GUEST_PRICE = 10;         // €10 per additional guest per night
-  const BREAKFAST_PRICE_PER_PERSON = 7.50;   // €7.50 per person per day with breakfast
-  const LAUNDRY_PACKAGE_PRICE = 10;          // €10 per laundry package
-
-  // High season months (June, July, August)
-  const isHighSeason = (date: Date): boolean => {
-    const month = date.getMonth();
-    return month >= 5 && month <= 7; // months are 0-indexed (5 = June, 7 = August)
-  };
+  const FIRST_NIGHT_PRICE = 59;          // €59 für die erste Nacht
+  const ADDITIONAL_NIGHT_PRICE = 50;     // €50 für jede weitere Nacht
+  const BREAKFAST_PRICE_PER_PERSON = 7.50;   // €7.50 pro Person pro Tag mit Frühstück
+  const LAUNDRY_PACKAGE_PRICE = 5;       // €5 pro Wäschepaket pro Person
 
   const calculatePrice = () => {
     if (!startDate || !endDate) {
@@ -54,30 +46,23 @@ const PriceCalculator = () => {
 
     const numNights = Math.max(1, differenceInCalendarDays(endDate, startDate));
     
-    // Determine if the stay is during high season
-    const isHighSeasonStay = isHighSeason(startDate);
-    const baseNightPrice = isHighSeasonStay ? HIGH_SEASON_PRICE_PER_NIGHT : BASE_PRICE_PER_NIGHT;
+    // Berechnung des Grundpreises: 59€ für erste Nacht, 50€ für jede weitere
+    const basePrice = numNights === 1 
+      ? FIRST_NIGHT_PRICE 
+      : FIRST_NIGHT_PRICE + ((numNights - 1) * ADDITIONAL_NIGHT_PRICE);
     
-    // Calculate base price for 2 persons
-    const basePrice = baseNightPrice * numNights;
-    
-    // Additional guests (beyond 2)
-    const additionalGuests = Math.max(0, guests - 2);
-    const additionalGuestPrice = additionalGuests * ADDITIONAL_GUEST_PRICE * numNights;
-    
-    // Breakfast price (if selected)
+    // Frühstückspreis (falls ausgewählt)
     const breakfastPrice = withBreakfast === "yes" ? guests * BREAKFAST_PRICE_PER_PERSON * numNights : 0;
     
-    // Laundry package price
-    const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE;
+    // Wäschepaketpreis (pro Person)
+    const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE * guests;
     
-    // Total price
-    const total = basePrice + additionalGuestPrice + breakfastPrice + laundryPrice;
+    // Gesamtpreis
+    const total = basePrice + breakfastPrice + laundryPrice;
     
     setTotalPrice(total);
     setPriceDetails({
       basePrice,
-      additionalGuestPrice,
       breakfastPrice,
       laundryPrice,
     });
@@ -93,7 +78,7 @@ const PriceCalculator = () => {
       <CardHeader>
         <CardTitle className="text-2xl font-serif">Preisrechner</CardTitle>
         <CardDescription>
-          Berechnen Sie den Preis für Ihren Aufenthalt in unserem Ferienhaus.
+          Berechnen Sie den Preis für Ihren Aufenthalt in unserer Ferienwohnung.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -199,7 +184,7 @@ const PriceCalculator = () => {
               className="w-full"
             />
           </div>
-          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €10 und enthält Handtücher und Bettwäsche.</p>
+          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €5 pro Person und enthält Handtücher und Bettwäsche.</p>
         </div>
 
         {/* Breakfast */}
@@ -222,6 +207,7 @@ const PriceCalculator = () => {
               </div>
             </RadioGroup>
           </div>
+          <p className="text-sm text-muted-foreground">Wir bieten ein einfaches Frühstück an.</p>
         </div>
       </CardContent>
 
@@ -238,15 +224,9 @@ const PriceCalculator = () => {
             <h3 className="font-medium text-lg mb-2 font-serif">Preisdetails:</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span>Grundpreis:</span>
+                <span>Grundpreis für Übernachtung:</span>
                 <span>€{priceDetails.basePrice.toFixed(2)}</span>
               </div>
-              {priceDetails.additionalGuestPrice > 0 && (
-                <div className="flex justify-between">
-                  <span>Zusätzliche Gäste:</span>
-                  <span>€{priceDetails.additionalGuestPrice.toFixed(2)}</span>
-                </div>
-              )}
               {priceDetails.breakfastPrice > 0 && (
                 <div className="flex justify-between">
                   <span>Frühstück:</span>

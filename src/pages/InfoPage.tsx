@@ -41,21 +41,12 @@ const InfoPage = () => {
                 <div className="space-y-6">
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="text-xl font-serif font-medium mb-4">Grundpreis</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4">
                       <div>
-                        <h4 className="font-medium">Hauptsaison (Juni - August)</h4>
-                        <p className="text-forest-700 text-lg font-medium">89 € pro Nacht</p>
-                        <p className="text-sm text-gray-600">Für 2 Personen</p>
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Nebensaison</h4>
-                        <p className="text-forest-700 text-lg font-medium">80 € pro Nacht</p>
-                        <p className="text-sm text-gray-600">Für 2 Personen</p>
-                      </div>
-                      <div className="md:col-span-2">
-                        <h4 className="font-medium">Zusätzliche Personen</h4>
-                        <p className="text-forest-700 text-lg font-medium">+10 € pro Person/Nacht</p>
-                        <p className="text-sm text-gray-600">Maximal 4 Personen möglich</p>
+                        <h4 className="font-medium">Übernachtung</h4>
+                        <p className="text-forest-700 text-lg font-medium">59 € für die erste Nacht</p>
+                        <p className="text-forest-700 text-lg font-medium">50 € für jede weitere Nacht</p>
+                        <p className="text-sm text-gray-600">Unabhängig von der Personenanzahl</p>
                       </div>
                     </div>
                   </div>
@@ -67,7 +58,7 @@ const InfoPage = () => {
                         <ShoppingCart className="h-5 w-5 text-forest-600 mr-3 flex-shrink-0 mt-1" />
                         <div>
                           <h4 className="font-medium">Wäschepaket</h4>
-                          <p className="text-forest-700 text-lg font-medium">10 € pro Paket</p>
+                          <p className="text-forest-700 text-lg font-medium">5 € pro Person</p>
                           <p className="text-sm text-gray-600">Handtücher & Bettwäsche</p>
                         </div>
                       </div>
@@ -76,7 +67,7 @@ const InfoPage = () => {
                         <div>
                           <h4 className="font-medium">Frühstück</h4>
                           <p className="text-forest-700 text-lg font-medium">7,50 € pro Person/Tag</p>
-                          <p className="text-sm text-gray-600">Reichhaltiges Frühstück</p>
+                          <p className="text-sm text-gray-600">Einfaches Frühstück</p>
                         </div>
                       </div>
                     </div>
@@ -125,16 +116,6 @@ const InfoPage = () => {
                       </div>
                     </div>
                   </div>
-                  
-                  <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                    <h3 className="text-xl font-serif font-medium mb-4">Stornierungsbedingungen</h3>
-                    <ul className="space-y-2">
-                      <li>Bis 30 Tage vor Anreise: kostenfreie Stornierung</li>
-                      <li>29-14 Tage vor Anreise: 50% des Gesamtpreises</li>
-                      <li>13-7 Tage vor Anreise: 75% des Gesamtpreises</li>
-                      <li>Ab 6 Tage vor Anreise: 100% des Gesamtpreises</li>
-                    </ul>
-                  </div>
                 </div>
               </section>
               
@@ -148,7 +129,7 @@ const InfoPage = () => {
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="font-medium mb-2">Sind Haustiere erlaubt?</h3>
                     <p>
-                      Leider sind Haustiere in unserer Ferienwohnung nicht gestattet.
+                      Ja, Haustiere sind in unserer Ferienwohnung erlaubt. Wir bitten Sie jedoch, alle Tierspuren (Haare, Dreck) vor der Abreise zu entfernen.
                     </p>
                   </div>
                   
@@ -162,14 +143,14 @@ const InfoPage = () => {
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="font-medium mb-2">Ist WLAN verfügbar?</h3>
                     <p>
-                      Ja, wir bieten kostenloses WLAN für unsere Gäste an.
+                      Nein, wir bieten kein WLAN an. Genießen Sie die Zeit in der Natur ohne digitale Ablenkung.
                     </p>
                   </div>
                   
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="font-medium mb-2">Wie kann ich buchen?</h3>
                     <p>
-                      Sie können direkt über unsere <Link to="/contact" className="text-forest-600 hover:underline">Kontaktseite</Link> anfragen oder uns telefonisch unter +49 1734142620 erreichen.
+                      Sie können direkt über unsere <Link to="/contact" className="text-forest-600 hover:underline">Kontaktseite</Link> anfragen oder uns telefonisch unter +49 1517 4412216 oder 02403 837412 erreichen.
                     </p>
                   </div>
                 </div>
@@ -182,7 +163,7 @@ const InfoPage = () => {
                   Verfügbarkeit
                 </h3>
                 <p className="mb-4">
-                  Hier können Sie sehen, wann unser Ferienhaus verfügbar ist. Die belegten Tage sind im Kalender markiert.
+                  Hier können Sie sehen, wann unsere Ferienwohnung verfügbar ist. Die belegten Tage sind im Kalender markiert.
                 </p>
                 
                 <GoogleCalendar />

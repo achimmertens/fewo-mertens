@@ -147,7 +147,8 @@ const ContactPage = () => {
                       <Phone className="h-5 w-5 text-forest-600 mr-4 mt-1" />
                       <div>
                         <h3 className="font-medium mb-1">Telefon</h3>
-                        <p className="text-forest-700 text-lg">+49 1734142620</p>
+                        <p className="text-forest-700">+49 1517 4412216</p>
+                        <p className="text-forest-700">02403 837412</p>
                       </div>
                     </div>
                   </CardContent>
@@ -159,7 +160,7 @@ const ContactPage = () => {
                       <Mail className="h-5 w-5 text-forest-600 mr-4 mt-1" />
                       <div>
                         <h3 className="font-medium mb-1">E-Mail</h3>
-                        <p className="text-forest-700 text-lg">einruhr@mailbox.org</p>
+                        <p className="text-forest-700 text-lg">einruhr.mertens@web.de</p>
                       </div>
                     </div>
                   </CardContent>
@@ -172,7 +173,7 @@ const ContactPage = () => {
                       <div>
                         <h3 className="font-medium mb-1">Adresse</h3>
                         <p className="text-forest-700">
-                          Zum Haag 15<br />
+                          Heilsteinstr. 39<br />
                           52152 Simmerath-Einruhr<br />
                           Deutschland
                         </p>
@@ -187,7 +188,7 @@ const ContactPage = () => {
                   Anfahrt
                 </h3>
                 <p className="mb-4">
-                  Unser Ferienhaus ist gut mit dem Auto erreichbar. Parkplätze stehen direkt am Haus zur Verfügung.
+                  Unsere Ferienwohnung ist gut mit dem Auto erreichbar. Parkplätze stehen direkt am Haus zur Verfügung.
                 </p>
                 <p>
                   Die nächsten größeren Bahnhöfe befinden sich in Aachen und Düren. Von dort aus fahren regelmäßig Busse nach Einruhr.

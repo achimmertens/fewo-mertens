@@ -77,7 +77,7 @@ const LocationPage = () => {
                     <h3 className="text-xl font-serif font-medium">Wassersport</h3>
                   </div>
                   <p>
-                    Die Rursee-Kette mit dem Obersee, dem Urftsee und dem Rursee bietet ideale Bedingungen für verschiedene Wassersportarten. Sie können hier segeln, paddeln, Stand-up-Paddling ausprobieren oder einfach eine erfrischende Schwimmrunde drehen.
+                    Im nahegelegenen Untersee können Sie verschiedene Wassersportarten ausüben. Der See ist natürlich geblieben und bietet ideale Bedingungen zum Paddeln, Stand-up-Paddling oder Schwimmen in naturbelassener Umgebung.
                   </p>
                 </div>
                 
@@ -118,7 +118,7 @@ const LocationPage = () => {
                 <MapPin className="h-6 w-6 text-forest-600 mr-3 mt-1" />
                 <div>
                   <p className="mb-4">
-                    Unser Ferienhaus befindet sich in der Straße "Zum Haag 15" in 52152 Simmerath-Einruhr. Die Anreise ist sowohl mit dem Auto als auch mit öffentlichen Verkehrsmitteln möglich.
+                    Unsere Ferienwohnung befindet sich in der Heilsteinstr. 39 in 52152 Simmerath-Einruhr. Die Anreise ist sowohl mit dem Auto als auch mit öffentlichen Verkehrsmitteln möglich.
                   </p>
                   <p className="mb-4">
                     Mit dem Auto erreichen Sie uns über die A44 und A4, die beide gut an das deutsche Autobahnnetz angebunden sind. Von dort aus führen gut ausgebaute Landstraßen nach Einruhr.

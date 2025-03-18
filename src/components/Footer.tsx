@@ -10,11 +10,11 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-serif font-bold mb-4">Ferienhaus Einruhr</h3>
+            <h3 className="text-xl font-serif font-bold mb-4">Ferienwohnung Einruhr Waldoase Mertens</h3>
             <p className="mb-2">Ihr gemütliches Zuhause im Nationalpark Eifel</p>
             <div className="flex items-center mt-4">
               <MapPin className="h-5 w-5 mr-2" />
-              <span>Zum Haag 15, 52152 Simmerath-Einruhr</span>
+              <span>Heilsteinstr. 39, 52152 Simmerath-Einruhr</span>
             </div>
           </div>
           
@@ -22,12 +22,12 @@ const Footer = () => {
             <h3 className="text-xl font-serif font-bold mb-4">Kontakt</h3>
             <div className="flex items-center mb-3">
               <Phone className="h-5 w-5 mr-2" />
-              <span>+49 1734142620</span>
+              <span>+49 1517 4412216 oder 02403 837412</span>
             </div>
             <div className="flex items-center">
               <Mail className="h-5 w-5 mr-2" />
-              <a href="mailto:einruhr@mailbox.org" className="hover:text-lake-300 transition-colors">
-                einruhr@mailbox.org
+              <a href="mailto:einruhr.mertens@web.de" className="hover:text-lake-300 transition-colors">
+                einruhr.mertens@web.de
               </a>
             </div>
           </div>
@@ -65,7 +65,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-forest-700 mt-8 pt-6 text-center text-sm">
-          <p>&copy; {currentYear} Ferienhaus Einruhr. Alle Rechte vorbehalten.</p>
+          <p>&copy; {currentYear} Ferienwohnung Einruhr Waldoase Mertens. Alle Rechte vorbehalten.</p>
         </div>
       </div>
     </footer>

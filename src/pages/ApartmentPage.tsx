@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Bed, Users, Bath, Tv, Wifi, CheckSquare } from "lucide-react";
+import { Bed, Users, Bath, CheckSquare } from "lucide-react";
 
 const ApartmentPage = () => {
   return (
@@ -49,7 +49,7 @@ const ApartmentPage = () => {
                     </li>
                     <li className="flex items-center">
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
-                      Kaffeepadmaschine (Senseo)
+                      French Press für Kaffee
                     </li>
                     <li className="flex items-center">
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
@@ -65,11 +65,7 @@ const ApartmentPage = () => {
                     </li>
                     <li className="flex items-center">
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
-                      Smart-TV mit Streaming-Möglichkeit
-                    </li>
-                    <li className="flex items-center">
-                      <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
-                      Kostenfreies WLAN
+                      Grundlegende Essensvorräte
                     </li>
                     <li className="flex items-center">
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
@@ -81,11 +77,7 @@ const ApartmentPage = () => {
                     </li>
                     <li className="flex items-center">
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
-                      Handtücher (gegen Aufpreis)
-                    </li>
-                    <li className="flex items-center">
-                      <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
-                      Bettwäsche (gegen Aufpreis)
+                      Wäschepaket (gegen Aufpreis)
                     </li>
                   </ul>
                 </div>
@@ -108,7 +100,7 @@ const ApartmentPage = () => {
                   Küche
                 </h3>
                 <p>
-                  Die offene Küchenzeile ist vollständig ausgestattet, sodass Sie sich während Ihres Aufenthalts selbst versorgen können. Sie finden hier alles, was Sie zum Kochen benötigen: Herd, Kühlschrank mit Gefrierfach, Kaffeemaschine, Wasserkocher, Toaster sowie Geschirr und Kochutensilien.
+                  Die offene Küchenzeile ist vollständig ausgestattet, sodass Sie sich während Ihres Aufenthalts selbst versorgen können. Sie finden hier alles, was Sie zum Kochen benötigen: Herd, Kühlschrank mit Gefrierfach, French Press für Kaffee, Wasserkocher, Toaster sowie Geschirr und Kochutensilien. Zudem haben wir immer einige Essensvorräte im Schrank für Sie.
                 </p>
                 
                 <div className="mt-8">
@@ -142,12 +134,8 @@ const ApartmentPage = () => {
                     <span>1 Badezimmer mit Dusche</span>
                   </li>
                   <li className="flex items-center">
-                    <Tv className="h-5 w-5 text-forest-600 mr-3" />
-                    <span>Smart-TV mit Streaming</span>
-                  </li>
-                  <li className="flex items-center">
-                    <Wifi className="h-5 w-5 text-forest-600 mr-3" />
-                    <span>Kostenfreies WLAN</span>
+                    <CheckSquare className="h-5 w-5 text-forest-600 mr-3" />
+                    <span>Haustiere erlaubt</span>
                   </li>
                 </ul>
                 
@@ -159,11 +147,11 @@ const ApartmentPage = () => {
                   </h3>
                   <div>
                     <h4 className="font-medium">Frühstück</h4>
-                    <p className="text-gray-700">Auf Wunsch servieren wir Ihnen ein leckeres Frühstück (7,50 € pro Person/Tag).</p>
+                    <p className="text-gray-700">Auf Wunsch servieren wir Ihnen ein einfaches Frühstück (7,50 € pro Person/Tag).</p>
                   </div>
                   <div>
                     <h4 className="font-medium">Wäschepaket</h4>
-                    <p className="text-gray-700">Handtücher und Bettwäsche können für 10 € pro Paket dazugebucht werden.</p>
+                    <p className="text-gray-700">Handtücher und Bettwäsche können für 5 € pro Person dazugebucht werden.</p>
                   </div>
                 </div>
                 

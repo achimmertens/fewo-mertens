@@ -1,13 +1,17 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import Logo from "./Logo";
 
 const Hero = () => {
   return (
     <div className="hero-image w-full min-h-[70vh] flex items-center justify-center text-white">
       <div className="container mx-auto px-4 text-center">
+        <div className="flex justify-center mb-6">
+          <Logo />
+        </div>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 drop-shadow-lg">
-          Willkommen in Einruhr
+          Ferienwohnung Einruhr Waldoase Mertens
         </h1>
         <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-8 drop-shadow-md">
           Entdecken Sie Ihren perfekten Rückzugsort im Herzen des Nationalparks Eifel
