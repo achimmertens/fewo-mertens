@@ -38,8 +38,8 @@ const ApartmentPage = () => {
                   </div>
                   <div className="w-full md:w-1/2 p-2">
                     <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163708033.jpg" 
-                      alt="Wohnbereich" 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens02.jpg?w=2046" 
+                      alt="Außenansicht der Ferienwohnung" 
                       className="rounded-lg w-full h-auto object-cover"
                     />
                   </div>
@@ -52,6 +52,41 @@ const ApartmentPage = () => {
                   Die Wohnung ist bequem für bis zu 4 Personen ausgelegt, wobei der Wohnraum als Schlafzimmer und Wohnküche dient. Die Einrichtung ist komplett neu, liebevoll ausgesucht und bietet Ihnen allen Komfort für einen erholsamen Aufenthalt.
                 </p>
                 
+                <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
+                  Das Wohnzimmer
+                </h3>
+                
+                <div className="flex flex-wrap -mx-2 my-4">
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2023/03/20230325_131529.jpg?w=2046" 
+                      alt="Wohnzimmer mit gemütlicher Einrichtung" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/comica1741615898162.png" 
+                      alt="Wohnraum mit Sitzecke" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex flex-wrap -mx-2 my-4">
+                  <div className="w-full p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/20240807_185001.jpg?w=2048" 
+                      alt="Wohnzimmer mit Ausblick" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+                
+                <p>
+                  Das großzügige Wohnzimmer ist mit einer gemütlichen Sitzecke und einem Kamin ausgestattet. Hier können Sie abends entspannen, ein Buch lesen oder die schöne Aussicht genießen.
+                </p>
+                
                 <div className="flex flex-wrap -mx-2 my-8">
                   <div className="w-full md:w-1/2 p-2">
                     <img 
@@ -62,8 +97,8 @@ const ApartmentPage = () => {
                   </div>
                   <div className="w-full md:w-1/2 p-2">
                     <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163923358.jpg" 
-                      alt="Badezimmer" 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/kuche-1.jpg" 
+                      alt="Kochnische" 
                       className="rounded-lg w-full h-auto object-cover"
                     />
                   </div>
@@ -125,7 +160,11 @@ const ApartmentPage = () => {
                   </ul>
                 </div>
                 
-                <div className="flex flex-wrap -mx-2 my-8">
+                <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
+                  Schlafbereich
+                </h3>
+                
+                <div className="flex flex-wrap -mx-2 my-4">
                   <div className="w-full md:w-1/2 p-2">
                     <img 
                       src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163615663.jpg" 
@@ -135,8 +174,25 @@ const ApartmentPage = () => {
                   </div>
                   <div className="w-full md:w-1/2 p-2">
                     <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens03.jpg?w=2046" 
+                      alt="Schlafzimmer mit Boxspringbett" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex flex-wrap -mx-2 my-4">
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
                       src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163639764.jpg" 
                       alt="Wohnraum mit Kamin" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163923358.jpg" 
+                      alt="Badezimmer" 
                       className="rounded-lg w-full h-auto object-cover"
                     />
                   </div>
@@ -168,6 +224,54 @@ const ApartmentPage = () => {
                 </h3>
                 <p>
                   Die Wohnung verfügt über keine klassische Heizung, dafür aber über einen wunderschönen, gemütlichen Kamin, der an kühlen Tagen für eine angenehme Wärme und eine besondere Atmosphäre sorgt. Holz ist genügend kostenlos vorhanden. Über eine kleine Spende würden wir uns aber freuen.
+                </p>
+                
+                <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
+                  Terrasse
+                </h3>
+                
+                <div className="flex flex-wrap -mx-2 my-4">
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/20240807_185130.jpg?w=2048" 
+                      alt="Terrasse mit Sitzgelegenheit" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                  <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/20240807_185227.jpg?w=2048" 
+                      alt="Terrasse mit Blick ins Grüne" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex flex-wrap -mx-2 my-4">
+                  <div className="w-full md:w-1/2 p-2">
+                    <figure>
+                      <img 
+                        src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/terasse_02-1.jpg" 
+                        alt="Terrasse vor dem Umbau" 
+                        className="rounded-lg w-full h-auto object-cover"
+                      />
+                      <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Archivbild</figcaption>
+                    </figure>
+                  </div>
+                  <div className="w-full md:w-1/2 p-2">
+                    <figure>
+                      <img 
+                        src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/terasse03-1.jpg" 
+                        alt="Alte Ansicht der Terrasse" 
+                        className="rounded-lg w-full h-auto object-cover"
+                      />
+                      <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Archivbild</figcaption>
+                    </figure>
+                  </div>
+                </div>
+                
+                <p>
+                  Die Ferienwohnung verfügt über eine schöne Terrasse, auf der Sie bei gutem Wetter entspannen und die Natur genießen können.
                 </p>
                 
                 <div className="mt-8">
@@ -226,7 +330,7 @@ const ApartmentPage = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">Wäschepaket</h4>
-                    <p className="text-gray-700">Handtücher und Bettwäsche können für 5 € pro Person dazugebucht werden.</p>
+                    <p className="text-gray-700">Handtücher und Bettwäsche können für 7 € pro Person dazugebucht werden.</p>
                   </div>
                 </div>
                 

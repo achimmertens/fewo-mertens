@@ -16,9 +16,17 @@ const Hero = () => {
           <Button
             asChild
             size="lg"
-            className="bg-forest-600 hover:bg-forest-700 text-white font-medium px-8"
+            className="bg-forest-600 hover:bg-forest-700 text-white font-medium px-10 py-7 text-lg relative overflow-hidden group"
+            style={{
+              backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens02.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center"
+            }}
           >
-            <Link to="/apartment">Die Wohnung entdecken</Link>
+            <Link to="/apartment">
+              <span className="relative z-10 drop-shadow-md">Die Wohnung entdecken</span>
+              <div className="absolute inset-0 bg-forest-600/60 group-hover:bg-forest-700/70 transition-colors"></div>
+            </Link>
           </Button>
           <Button
             asChild

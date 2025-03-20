@@ -8,7 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle, Mail, Phone, User } from "lucide-react";
+import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle, Mail, Phone, User, Copy } from "lucide-react";
 import { format, differenceInCalendarDays, addDays, isSameDay, startOfDay } from "date-fns";
 import { de } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -34,6 +34,7 @@ const PriceCalculator = () => {
   } | null>(null);
   const [isDateBooked, setIsDateBooked] = useState<boolean>(false);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
+  const [emailTemplate, setEmailTemplate] = useState<string>("");
   
   // Contact form fields
   const [contactName, setContactName] = useState("");
@@ -87,6 +88,46 @@ const PriceCalculator = () => {
       new Date(2025, 2, 22), // March 22, 2025
     ]);
   }, []);
+
+  // Generate email template whenever relevant data changes
+  useEffect(() => {
+    if (startDate && endDate) {
+      const arrivalDateStr = format(startDate, "dd.MM.yyyy", { locale: de });
+      const departureDateStr = format(endDate, "dd.MM.yyyy", { locale: de });
+      
+      let template = 
+`Betreff: Einruhr - Reservierungsanfrage
+
+Hallo Herr Mertens,
+
+bitte bestätigen Sie, dass die Wohnung in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.
+Wir würden sie gerne für diesen Zeitraum reservieren.`;
+      
+      if (laundryPackages > 0) {
+        template += `\nWir buchen das Wäschepaket für ${laundryPackages} Personen.`;
+      }
+      
+      if (withBreakfast === "yes") {
+        template += `\nWir möchten gerne Frühstück für ${guests} Personen dazu buchen.`;
+      }
+      
+      if (contactMessage) {
+        template += `\n\nWeitere Informationen:\n${contactMessage}`;
+      }
+      
+      template += `\n\nMit freundlichen Grüßen,\n${contactName || "[Ihr Name]"}`;
+      
+      if (contactPhone) {
+        template += `\nTel: ${contactPhone}`;
+      }
+      
+      if (contactEmail) {
+        template += `\nEmail: ${contactEmail || "[Ihre Email]"}`;
+      }
+      
+      setEmailTemplate(template);
+    }
+  }, [startDate, endDate, guests, laundryPackages, withBreakfast, contactName, contactEmail, contactPhone, contactMessage]);
 
   const calculatePrice = () => {
     if (!startDate || !endDate) {
@@ -210,6 +251,14 @@ const PriceCalculator = () => {
     }, 1500);
   };
 
+  const copyEmailTemplate = () => {
+    navigator.clipboard.writeText(emailTemplate);
+    toast({
+      title: "Kopiert!",
+      description: "Die E-Mail-Vorlage wurde in die Zwischenablage kopiert.",
+    });
+  };
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -280,7 +329,7 @@ const PriceCalculator = () => {
                   selected={endDate}
                   onSelect={setEndDate}
                   disabled={(date) => 
-                    date < (startDate ? addDays(startDate, 1) : new Date())
+                    date < (startDate ? startDate : new Date())
                   }
                   initialFocus
                   className={cn("p-3 pointer-events-auto")}
@@ -445,8 +494,28 @@ const PriceCalculator = () => {
           </Button>
         </div>
 
+        {startDate && endDate && (
+          <div className="mt-4 p-4 bg-gray-50 rounded-md w-full">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-medium text-lg font-serif">E-Mail-Vorlage:</h3>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex items-center gap-1"
+                onClick={copyEmailTemplate}
+              >
+                <Copy className="h-4 w-4" />
+                Kopieren
+              </Button>
+            </div>
+            <div className="whitespace-pre-wrap bg-white p-3 border rounded-md text-sm font-mono">
+              {emailTemplate}
+            </div>
+          </div>
+        )}
+
         {totalPrice !== null && priceDetails && (
-          <div className="mt-2 p-4 bg-forest-50 rounded-md w-full">
+          <div className="mt-4 p-4 bg-forest-50 rounded-md w-full">
             <h3 className="font-medium text-lg mb-2 font-serif">Preisdetails:</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
