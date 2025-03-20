@@ -20,7 +20,9 @@ const Hero = () => {
             style={{
               backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens02.jpg')",
               backgroundSize: "cover",
-              backgroundPosition: "center"
+              backgroundPosition: "center",
+              height: "200px",
+              width: "400px"
             }}
           >
             <Link to="/apartment">
@@ -31,10 +33,15 @@ const Hero = () => {
           <Button
             asChild
             size="lg"
-            variant="outline"
-            className="bg-white/80 border-forest-600 text-forest-700 hover:bg-white/90 font-medium px-8"
+            className="bg-forest-600 hover:bg-forest-700 text-white font-medium px-20 py-28 text-lg relative overflow-hidden group w-full sm:w-auto"
+            style={{
+              height: "200px",
+              width: "400px"
+            }}
           >
-            <Link to="/calculator">Preis berechnen</Link>
+            <Link to="/calculator">
+              <span className="relative z-10 text-center">Ab 84 €/Nacht für 4 Personen inkl. Reinigung. Jetzt Preis berechnen.</span>
+            </Link>
           </Button>
         </div>
       </div>
