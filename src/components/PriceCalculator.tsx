@@ -8,12 +8,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle } from "lucide-react";
+import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle, Mail, Phone, User } from "lucide-react";
 import { format, differenceInCalendarDays, addDays, isSameDay, startOfDay } from "date-fns";
 import { de } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Textarea } from "@/components/ui/textarea";
 
 const PriceCalculator = () => {
   const { toast } = useToast();
@@ -33,6 +34,13 @@ const PriceCalculator = () => {
   } | null>(null);
   const [isDateBooked, setIsDateBooked] = useState<boolean>(false);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
+  
+  // Contact form fields
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Price constants
   const FIRST_NIGHT_PRICE = 59;              // €59 für die erste Nacht
@@ -42,7 +50,7 @@ const PriceCalculator = () => {
   const CLEANING_FEE = 25;                   // €25 für die Endreinigung
 
   useEffect(() => {
-    // Check if the selected dates are booked
+    // Check if the selected dates are booked, but allow overlap on first and last day
     if (startDate && endDate && bookedDates.length > 0) {
       const start = startOfDay(new Date(startDate));
       const end = startOfDay(new Date(endDate));
@@ -93,7 +101,7 @@ const PriceCalculator = () => {
     if (isDateBooked) {
       toast({
         title: "Achtung",
-        description: "Der gewählte Zeitraum ist bereits belegt.",
+        description: "Der gewählte Zeitraum ist teilweise belegt. Bitte wählen Sie ein anderes Datum.",
         variant: "destructive",
       });
       return;
@@ -134,12 +142,80 @@ const PriceCalculator = () => {
     });
   };
 
+  const sendReservationRequest = () => {
+    if (!startDate || !endDate) {
+      toast({
+        title: "Fehler",
+        description: "Bitte wählen Sie Start- und Enddatum aus.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!contactName || !contactEmail) {
+      toast({
+        title: "Fehler",
+        description: "Bitte geben Sie Ihren Namen und Ihre E-Mail-Adresse ein.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    // Format dates for the email body
+    const arrivalDateStr = startDate ? format(startDate, "dd.MM.yyyy", { locale: de }) : "";
+    const departureDateStr = endDate ? format(endDate, "dd.MM.yyyy", { locale: de }) : "";
+    
+    // Build the mailto link with the form data
+    const subject = encodeURIComponent("Einruhr - Reservierungsanfrage");
+    
+    // Build the body of the email
+    let body = encodeURIComponent(
+      `Hallo Herr Mertens,\n\nbitte bestätigen Sie, dass die Wohnung in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.\nWir würden sie gerne für diesen Zeitraum reservieren.`
+    );
+    
+    // Add information about the laundry package if selected
+    if (laundryPackages > 0) {
+      body += encodeURIComponent(`\nWir buchen das Wäschepaket für ${laundryPackages} Personen.`);
+    }
+    
+    // Add breakfast information if selected
+    if (withBreakfast === "yes") {
+      body += encodeURIComponent(`\nWir möchten gerne Frühstück für ${guests} Personen dazu buchen.`);
+    }
+    
+    // Add the message if provided
+    if (contactMessage) {
+      body += encodeURIComponent(`\n\nWeitere Informationen:\n${contactMessage}`);
+    }
+    
+    // Add sender's contact information
+    body += encodeURIComponent(`\n\nMit freundlichen Grüßen,\n${contactName}\nTel: ${contactPhone}\nEmail: ${contactEmail}`);
+    
+    // Create and open the mailto link
+    const mailtoLink = `mailto:einruhr.mertens@web.de?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
+    
+    // Show a confirmation toast
+    toast({
+      title: "E-Mail wird geöffnet",
+      description: "Ihr E-Mail-Programm sollte sich jetzt öffnen. Bitte senden Sie die vorbereitete Nachricht ab.",
+      variant: "default",
+    });
+    
+    // Reset the form submission state after a delay
+    setTimeout(() => {
+      setIsSubmitting(false);
+    }, 1500);
+  };
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-serif">Preisrechner</CardTitle>
+        <CardTitle className="text-2xl font-serif">Preisrechner & Anfrage</CardTitle>
         <CardDescription>
-          Berechnen Sie den Preis für Ihren Aufenthalt in unserer Ferienwohnung.
+          Berechnen Sie den Preis für Ihren Aufenthalt und senden Sie eine Reservierungsanfrage.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -218,7 +294,7 @@ const PriceCalculator = () => {
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
-              Der gewählte Zeitraum ist bereits belegt. Bitte wählen Sie ein anderes Datum.
+              Der gewählte Zeitraum ist teilweise belegt. Bitte wählen Sie ein anderes Datum.
             </AlertDescription>
           </Alert>
         )}
@@ -279,18 +355,98 @@ const PriceCalculator = () => {
           </div>
           <p className="text-sm text-muted-foreground">Wir bieten ein einfaches Frühstück nach Rücksprache an.</p>
         </div>
+
+        <Separator className="my-4" />
+
+        {/* Contact Information */}
+        <div className="space-y-2">
+          <h3 className="text-lg font-medium">Ihre Kontaktdaten</h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            Für Ihre Reservierungsanfrage benötigen wir folgende Informationen:
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Name *</Label>
+              <div className="flex items-center">
+                <User className="mr-2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="name"
+                  value={contactName}
+                  onChange={(e) => setContactName(e.target.value)}
+                  required
+                  className="w-full"
+                  placeholder="Ihr Name"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">E-Mail *</Label>
+              <div className="flex items-center">
+                <Mail className="mr-2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="email"
+                  type="email"
+                  value={contactEmail}
+                  onChange={(e) => setContactEmail(e.target.value)}
+                  required
+                  className="w-full"
+                  placeholder="Ihre E-Mail"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="phone">Telefon</Label>
+            <div className="flex items-center">
+              <Phone className="mr-2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="phone"
+                type="tel"
+                value={contactPhone}
+                onChange={(e) => setContactPhone(e.target.value)}
+                className="w-full"
+                placeholder="Ihre Telefonnummer"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="message">Nachricht</Label>
+            <Textarea
+              id="message"
+              value={contactMessage}
+              onChange={(e) => setContactMessage(e.target.value)}
+              placeholder="Weitere Wünsche oder Fragen..."
+              className="min-h-[100px]"
+            />
+          </div>
+        </div>
       </CardContent>
 
       <CardFooter className="flex flex-col">
-        <Button 
-          onClick={calculatePrice}
-          className="w-full bg-forest-600 hover:bg-forest-700"
-        >
-          Preis berechnen
-        </Button>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-4">
+          <Button 
+            onClick={calculatePrice}
+            className="w-full bg-forest-600 hover:bg-forest-700"
+          >
+            Preis berechnen
+          </Button>
+
+          <Button 
+            onClick={sendReservationRequest}
+            disabled={isSubmitting || !startDate || !endDate || !contactName || !contactEmail}
+            className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
+          >
+            <Mail className="h-4 w-4" />
+            {isSubmitting ? "Wird gesendet..." : "Reservierungsanfrage senden"}
+          </Button>
+        </div>
 
         {totalPrice !== null && priceDetails && (
-          <div className="mt-6 p-4 bg-forest-50 rounded-md w-full">
+          <div className="mt-2 p-4 bg-forest-50 rounded-md w-full">
             <h3 className="font-medium text-lg mb-2 font-serif">Preisdetails:</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">

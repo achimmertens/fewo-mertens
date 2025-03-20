@@ -9,7 +9,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { Phone, Mail, MapPin, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { format } from "date-fns";
 
 const ContactPage = () => {
   const { toast } = useToast();
@@ -34,26 +33,16 @@ const ContactPage = () => {
     setIsSubmitting(true);
     
     // Construct the mailto link with the form data
-    const subject = encodeURIComponent("Einruhr - Reservierungsanfrage");
+    const subject = encodeURIComponent("Einruhr - Kontaktanfrage");
     
     // Format dates for the email body if they exist
-    const arrivalDateStr = formData.arrivalDate ? formData.arrivalDate : "dd/mm/yyyy";
-    const departureDateStr = formData.departureDate ? formData.departureDate : "dd/mm/yyyy";
+    const arrivalDateStr = formData.arrivalDate ? formData.arrivalDate : "";
+    const departureDateStr = formData.departureDate ? formData.departureDate : "";
     
     // Build the body of the email
     let body = encodeURIComponent(
-      `Hallo Herr Mertens,\n\nbitte bestätigen Sie, dass die Wohnung in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.\nWir würden sie gerne für diesen Zeitraum reservieren.`
+      `Hallo Herr Mertens,\n\n${formData.message}`
     );
-    
-    // Add information about the laundry package if it's in the message
-    if (formData.guests) {
-      body += encodeURIComponent(`\nWir buchen das Wäschepaket für ${formData.guests} Personen.`);
-    }
-    
-    // Add the rest of the message if provided
-    if (formData.message) {
-      body += encodeURIComponent(`\n\nWeitere Informationen:\n${formData.message}`);
-    }
     
     // Add sender's contact information
     body += encodeURIComponent(`\n\nMit freundlichen Grüßen,\n${formData.name}\nTel: ${formData.phone}\nEmail: ${formData.email}`);
@@ -85,7 +74,7 @@ const ContactPage = () => {
           <div className="container mx-auto px-4">
             <h1 className="text-4xl font-serif font-bold mb-4">Kontakt</h1>
             <p className="text-xl max-w-3xl">
-              Haben Sie Fragen oder möchten Sie buchen? Kontaktieren Sie uns gerne!
+              Haben Sie allgemeine Fragen? Kontaktieren Sie uns gerne!
             </p>
           </div>
         </div>
@@ -104,7 +93,7 @@ const ContactPage = () => {
                 <AlertTriangle className="h-4 w-4" />
                 <AlertTitle>Hinweis</AlertTitle>
                 <AlertDescription>
-                  Das Formular öffnet Ihr E-Mail-Programm mit einer vorbereiteten Nachricht.
+                  Für Reservierungsanfragen nutzen Sie bitte unseren <a href="/calculator" className="text-forest-600 hover:underline">Preisrechner</a> mit integriertem Anfrageformular.
                 </AlertDescription>
               </Alert>
               
@@ -152,63 +141,18 @@ const ContactPage = () => {
                   />
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="arrivalDate" className="block text-sm font-medium mb-1">
-                      Anreisedatum
-                    </label>
-                    <Input
-                      id="arrivalDate"
-                      name="arrivalDate"
-                      type="date"
-                      value={formData.arrivalDate}
-                      onChange={handleChange}
-                      className="w-full"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="departureDate" className="block text-sm font-medium mb-1">
-                      Abreisedatum
-                    </label>
-                    <Input
-                      id="departureDate"
-                      name="departureDate"
-                      type="date"
-                      value={formData.departureDate}
-                      onChange={handleChange}
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="guests" className="block text-sm font-medium mb-1">
-                    Anzahl der Personen
-                  </label>
-                  <Input
-                    id="guests"
-                    name="guests"
-                    type="number"
-                    min="1"
-                    max="4"
-                    value={formData.guests}
-                    onChange={handleChange}
-                    className="w-full"
-                  />
-                </div>
-                
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-1">
-                    Nachricht
+                    Nachricht *
                   </label>
                   <Textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    required
                     className="w-full min-h-[150px]"
-                    placeholder="Weitere Wünsche oder Fragen..."
+                    placeholder="Ihre Nachricht an uns..."
                   />
                 </div>
                 
@@ -277,6 +221,14 @@ const ContactPage = () => {
                     </div>
                   </CardContent>
                 </Card>
+              </div>
+              
+              <div className="mt-8">
+                <img 
+                  src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/gerumpel.jpg?w=2046" 
+                  alt="Außenansicht Eingang" 
+                  className="w-full h-auto rounded-lg shadow-md"
+                />
               </div>
               
               <div className="mt-8">
