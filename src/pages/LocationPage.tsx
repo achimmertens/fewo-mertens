@@ -31,6 +31,23 @@ const LocationPage = () => {
               <p>
                 Mit seiner Lage am Wasser und am Rande des Nationalparks ist Einruhr der ideale Ausgangspunkt für Wanderungen, Radtouren und Wassersport. Zudem finden Sie hier gemütliche Restaurants und Cafés, in denen Sie lokale Spezialitäten genießen können.
               </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div>
+                  <img 
+                    src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/einruhrvonoben.jpg?w=1024" 
+                    alt="Einruhr von oben" 
+                    className="w-full h-auto rounded-lg shadow-md mb-2"
+                  />
+                </div>
+                <div>
+                  <img 
+                    src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/gansestimmung.jpg?w=1024" 
+                    alt="Gänsestimmung" 
+                    className="w-full h-auto rounded-lg shadow-md mb-2"
+                  />
+                </div>
+              </div>
             </section>
             
             <section className="mb-12">
@@ -40,9 +57,31 @@ const LocationPage = () => {
               <p className="mb-4">
                 Der Nationalpark Eifel, gegründet im Jahr 2004, erstreckt sich über eine Fläche von rund 110 Quadratkilometern und beherbergt eine einzigartige Tier- und Pflanzenwelt. Hier können Sie die unberührte Natur auf zahlreichen Wanderwegen erkunden.
               </p>
-              <p>
+              <p className="mb-6">
                 Besonders beeindruckend sind die ausgedehnten Buchenwälder, die klaren Bäche und die vielfältige Tierwelt des Parks. Mit etwas Glück können Sie hier Wildkatzen, Schwarzspechte oder sogar den seltenen Schwarzstorch beobachten.
               </p>
+              
+              <div className="mb-8">
+                <img 
+                  src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/grafik-8.png?w=2046" 
+                  alt="Schafswiese oberhalb von Einruhr" 
+                  className="w-full h-auto rounded-lg shadow-md mb-2"
+                />
+                <p className="text-sm text-gray-600 italic text-center">
+                  Schafswiese oberhalb von Einruhr auf der Ginsterhöhe
+                </p>
+              </div>
+              
+              <div className="mb-6">
+                <img 
+                  src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/einruhr-knotenpunkt.jpg?w=2046" 
+                  alt="Wanderrouten um Einruhr" 
+                  className="w-full h-auto rounded-lg shadow-md mb-2"
+                />
+                <p className="text-sm text-gray-600 italic text-center">
+                  Wanderrouten
+                </p>
+              </div>
             </section>
             
             <section className="mb-12">
@@ -90,6 +129,17 @@ const LocationPage = () => {
                     Entdecken Sie die charmanten Städte und Dörfer der Region wie Monschau mit seinen historischen Fachwerkhäusern, das mittelalterliche Heimbach oder die ehemalige Ordensburg Vogelsang. Auch die Städte Aachen und Köln sind für Tagesausflüge erreichbar.
                   </p>
                 </div>
+              </div>
+              
+              <div className="mt-8">
+                <img 
+                  src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/herbertseck.jpg?w=1024" 
+                  alt="Herberts Eck" 
+                  className="w-full h-auto rounded-lg shadow-md mb-2"
+                />
+                <p className="text-sm text-gray-600 italic text-center">
+                  Herberts Eck
+                </p>
               </div>
             </section>
             

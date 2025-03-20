@@ -16,7 +16,7 @@ const Hero = () => {
           <Button
             asChild
             size="lg"
-            className="bg-forest-600 hover:bg-forest-700 text-white font-medium px-10 py-7 text-lg relative overflow-hidden group"
+            className="bg-forest-600 hover:bg-forest-700 text-white font-medium px-20 py-28 text-lg relative overflow-hidden group w-full sm:w-auto"
             style={{
               backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens02.jpg')",
               backgroundSize: "cover",

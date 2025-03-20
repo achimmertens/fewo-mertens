@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -94,6 +93,7 @@ const PriceCalculator = () => {
     if (startDate && endDate) {
       const arrivalDateStr = format(startDate, "dd.MM.yyyy", { locale: de });
       const departureDateStr = format(endDate, "dd.MM.yyyy", { locale: de });
+      const numNights = Math.max(1, differenceInCalendarDays(endDate, startDate));
       
       let template = 
 `Betreff: Einruhr - Reservierungsanfrage
@@ -109,6 +109,30 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       
       if (withBreakfast === "yes") {
         template += `\nWir möchten gerne Frühstück für ${guests} Personen dazu buchen.`;
+      }
+      
+      if (priceDetails) {
+        template += `\n\nPreisdetails:
+- Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}`;
+        
+        if (priceDetails.additionalNightsCount > 0) {
+          template += `
+- Weitere Nächte (${priceDetails.additionalNightsCount}x): €${priceDetails.additionalNightsPrice.toFixed(2)}`;
+        }
+        
+        if (priceDetails.breakfastPrice > 0) {
+          template += `
+- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`;
+        }
+        
+        if (priceDetails.laundryPrice > 0) {
+          template += `
+- Wäschepakete: €${priceDetails.laundryPrice.toFixed(2)}`;
+        }
+        
+        template += `
+- Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}
+- Gesamtpreis: €${totalPrice?.toFixed(2)}`;
       }
       
       if (contactMessage) {
@@ -127,7 +151,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       
       setEmailTemplate(template);
     }
-  }, [startDate, endDate, guests, laundryPackages, withBreakfast, contactName, contactEmail, contactPhone, contactMessage]);
+  }, [startDate, endDate, guests, laundryPackages, withBreakfast, contactName, contactEmail, contactPhone, contactMessage, totalPrice, priceDetails]);
 
   const calculatePrice = () => {
     if (!startDate || !endDate) {
@@ -224,6 +248,25 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     // Add breakfast information if selected
     if (withBreakfast === "yes") {
       body += encodeURIComponent(`\nWir möchten gerne Frühstück für ${guests} Personen dazu buchen.`);
+    }
+    
+    // Add price details if available
+    if (priceDetails && totalPrice) {
+      body += encodeURIComponent(`\n\nPreisdetails:\n- Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}`);
+      
+      if (priceDetails.additionalNightsCount > 0) {
+        body += encodeURIComponent(`\n- Weitere Nächte (${priceDetails.additionalNightsCount}x): €${priceDetails.additionalNightsPrice.toFixed(2)}`);
+      }
+      
+      if (priceDetails.breakfastPrice > 0) {
+        body += encodeURIComponent(`\n- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`);
+      }
+      
+      if (priceDetails.laundryPrice > 0) {
+        body += encodeURIComponent(`\n- Wäschepakete: €${priceDetails.laundryPrice.toFixed(2)}`);
+      }
+      
+      body += encodeURIComponent(`\n- Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}\n- Gesamtpreis: €${totalPrice.toFixed(2)}`);
     }
     
     // Add the message if provided
