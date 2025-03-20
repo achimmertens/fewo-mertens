@@ -1,4 +1,3 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
@@ -72,7 +71,7 @@ const InfoPage = () => {
                         <ShoppingCart className="h-5 w-5 text-forest-600 mr-3 flex-shrink-0 mt-1" />
                         <div>
                           <h4 className="font-medium">Wäschepaket</h4>
-                          <p className="text-forest-700 text-lg font-medium">5 € pro Person</p>
+                          <p className="text-forest-700 text-lg font-medium">7 € pro Person</p>
                           <p className="text-sm text-gray-600">Handtücher & Bettwäsche</p>
                         </div>
                       </div>

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle } from "lucide-react";
-import { format, differenceInCalendarDays, addDays, isSameDay } from "date-fns";
+import { format, differenceInCalendarDays, addDays, isSameDay, startOfDay } from "date-fns";
 import { de } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
@@ -34,23 +35,24 @@ const PriceCalculator = () => {
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
 
   // Price constants
-  const FIRST_NIGHT_PRICE = 59;          // €59 für die erste Nacht
-  const ADDITIONAL_NIGHT_PRICE = 50;     // €50 für jede weitere Nacht
-  const BREAKFAST_PRICE_PER_PERSON = 9;   // €9 pro Person pro Tag mit Frühstück
-  const LAUNDRY_PACKAGE_PRICE = 5;       // €5 pro Wäschepaket pro Person
-  const CLEANING_FEE = 25;               // €25 für die Endreinigung
+  const FIRST_NIGHT_PRICE = 59;              // €59 für die erste Nacht
+  const ADDITIONAL_NIGHT_PRICE = 50;         // €50 für jede weitere Nacht
+  const BREAKFAST_PRICE_PER_PERSON = 9;      // €9 pro Person pro Tag mit Frühstück
+  const LAUNDRY_PACKAGE_PRICE = 7;           // €7 pro Wäschepaket pro Person
+  const CLEANING_FEE = 25;                   // €25 für die Endreinigung
 
   useEffect(() => {
     // Check if the selected dates are booked
     if (startDate && endDate && bookedDates.length > 0) {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      const start = startOfDay(new Date(startDate));
+      const end = startOfDay(new Date(endDate));
       
-      // Check each day between start and end date
-      let current = start;
+      // Check only the days between start+1 and end-1
+      // This allows bookings to overlap on arrival and departure days
+      let current = addDays(start, 1);
       let isBooked = false;
       
-      while (current <= end) {
+      while (current < end) {
         if (bookedDates.some(date => isSameDay(date, current))) {
           isBooked = true;
           break;
@@ -252,7 +254,7 @@ const PriceCalculator = () => {
               className="w-full"
             />
           </div>
-          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €5 und enthält Handtücher und Bettwäsche.</p>
+          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €7 pro Person und enthält Handtücher und Bettwäsche.</p>
         </div>
 
         {/* Breakfast */}

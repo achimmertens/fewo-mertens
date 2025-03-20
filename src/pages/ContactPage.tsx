@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { Phone, Mail, MapPin, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { format } from "date-fns";
 
 const ContactPage = () => {
   const { toast } = useToast();
@@ -16,7 +17,10 @@ const ContactPage = () => {
     name: "",
     email: "",
     phone: "",
-    message: ""
+    message: "",
+    arrivalDate: "",
+    departureDate: "",
+    guests: "2"
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -29,21 +33,46 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Note: In a real application, we would send the form data to a backend
-    // Since this is a frontend-only app, we'll just show a toast and simulate submission
+    // Construct the mailto link with the form data
+    const subject = encodeURIComponent("Einruhr - Reservierungsanfrage");
+    
+    // Format dates for the email body if they exist
+    const arrivalDateStr = formData.arrivalDate ? formData.arrivalDate : "dd/mm/yyyy";
+    const departureDateStr = formData.departureDate ? formData.departureDate : "dd/mm/yyyy";
+    
+    // Build the body of the email
+    let body = encodeURIComponent(
+      `Hallo Herr Mertens,\n\nbitte bestätigen Sie, dass die Wohnung in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.\nWir würden sie gerne für diesen Zeitraum reservieren.`
+    );
+    
+    // Add information about the laundry package if it's in the message
+    if (formData.guests) {
+      body += encodeURIComponent(`\nWir buchen das Wäschepaket für ${formData.guests} Personen.`);
+    }
+    
+    // Add the rest of the message if provided
+    if (formData.message) {
+      body += encodeURIComponent(`\n\nWeitere Informationen:\n${formData.message}`);
+    }
+    
+    // Add sender's contact information
+    body += encodeURIComponent(`\n\nMit freundlichen Grüßen,\n${formData.name}\nTel: ${formData.phone}\nEmail: ${formData.email}`);
+    
+    // Create the mailto link
+    const mailtoLink = `mailto:einruhr.mertens@web.de?subject=${subject}&body=${body}`;
+    
+    // Open the mail client
+    window.location.href = mailtoLink;
+    
+    // Show a confirmation toast
     toast({
-      title: "Hinweis",
-      description: "Diese Demo-Website kann keine echten E-Mails versenden. Bitte kontaktieren Sie uns telefonisch oder per E-Mail direkt.",
+      title: "E-Mail wird geöffnet",
+      description: "Ihr E-Mail-Programm sollte sich jetzt öffnen. Bitte senden Sie die vorbereitete Nachricht ab.",
       variant: "default",
     });
     
+    // Reset the form submission state after a delay
     setTimeout(() => {
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: ""
-      });
       setIsSubmitting(false);
     }, 1500);
   };
@@ -75,7 +104,7 @@ const ContactPage = () => {
                 <AlertTriangle className="h-4 w-4" />
                 <AlertTitle>Hinweis</AlertTitle>
                 <AlertDescription>
-                  Das Kontaktformular ist eine Demo. Bitte kontaktieren Sie uns direkt per E-Mail oder Telefon.
+                  Das Formular öffnet Ihr E-Mail-Programm mit einer vorbereiteten Nachricht.
                 </AlertDescription>
               </Alert>
               
@@ -123,17 +152,63 @@ const ContactPage = () => {
                   />
                 </div>
                 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="arrivalDate" className="block text-sm font-medium mb-1">
+                      Anreisedatum
+                    </label>
+                    <Input
+                      id="arrivalDate"
+                      name="arrivalDate"
+                      type="date"
+                      value={formData.arrivalDate}
+                      onChange={handleChange}
+                      className="w-full"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="departureDate" className="block text-sm font-medium mb-1">
+                      Abreisedatum
+                    </label>
+                    <Input
+                      id="departureDate"
+                      name="departureDate"
+                      type="date"
+                      value={formData.departureDate}
+                      onChange={handleChange}
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label htmlFor="guests" className="block text-sm font-medium mb-1">
+                    Anzahl der Personen
+                  </label>
+                  <Input
+                    id="guests"
+                    name="guests"
+                    type="number"
+                    min="1"
+                    max="4"
+                    value={formData.guests}
+                    onChange={handleChange}
+                    className="w-full"
+                  />
+                </div>
+                
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-1">
-                    Nachricht *
+                    Nachricht
                   </label>
                   <Textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    required
                     className="w-full min-h-[150px]"
+                    placeholder="Weitere Wünsche oder Fragen..."
                   />
                 </div>
                 

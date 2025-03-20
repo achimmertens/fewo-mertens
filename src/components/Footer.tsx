@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import Logo from './Logo';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -15,6 +16,9 @@ const Footer = () => {
             <div className="flex items-center mt-4">
               <MapPin className="h-5 w-5 mr-2" />
               <span>Heilsteinstr. 39, 52152 Simmerath-Einruhr</span>
+            </div>
+            <div className="mt-4 w-28">
+              <Logo />
             </div>
           </div>
           

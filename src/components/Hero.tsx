@@ -1,17 +1,11 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import Logo from "./Logo";
 
 const Hero = () => {
   return (
     <div className="hero-image w-full min-h-[70vh] flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220729_164415339-1.jpg?w=1024&h=768')" }}>
       <div className="container mx-auto px-4 text-center relative">
-        <div className="absolute top-4 left-0 right-0 mx-auto w-full flex justify-center">
-          <div className="w-40">
-            <Logo />
-          </div>
-        </div>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 drop-shadow-lg mt-16 text-black bg-white/70 py-2 rounded-lg">
           Ferienwohnung Einruhr Waldoase Mertens
         </h1>
