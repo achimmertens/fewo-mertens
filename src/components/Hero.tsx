@@ -39,9 +39,14 @@ const Hero = () => {
               width: "400px"
             }}
           >
-            <Link to="/calculator">
-              <span className="relative z-10 text-center">Ab 84 €/Nacht für 4 Personen inkl. Reinigung. Jetzt Preis berechnen.</span>
-            </Link>
+<Link to="/calculator">
+  <span className="relative z-10 text-center">
+    Ab 84 €/Nacht<br />
+    für 4 Personen<br />
+    inkl. Reinigung.<br />
+    Jetzt Preis berechnen.
+  </span>
+</Link>
           </Button>
         </div>
       </div>

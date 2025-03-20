@@ -17,9 +17,24 @@ const ArrivalPage = () => {
             </p>
           </div>
         </div>
-        
+
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
+            <Card className="mb-8">
+              <CardContent className="p-6">
+                <div className="mt-8">
+                  <h3 className="text-xl font-serif font-medium text-forest-700 mb-4">
+                    Anfahrt
+                  </h3>
+                  <p className="mb-4">
+                    Unsere Ferienwohnung ist gut mit dem Auto erreichbar. Parkplätze stehen direkt am Haus zur Verfügung.
+                  </p>
+                  <p>
+                    Die nächsten größeren Bahnhöfe befinden sich in Aachen und Düren. Von dort aus fahren regelmäßig Busse nach Einruhr.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
             <Card className="mb-8">
               <CardContent className="p-6">
                 <div className="flex items-start">
@@ -31,10 +46,10 @@ const ArrivalPage = () => {
                       52152 Simmerath-Einruhr<br />
                       Deutschland
                     </p>
-                    <a 
-                      href="https://maps.app.goo.gl/qkxbJidBxtzRt5Vv9" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <a
+                      href="https://maps.app.goo.gl/qkxbJidBxtzRt5Vv9"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-forest-600 hover:underline inline-flex items-center mt-2 text-lg"
                     >
                       Route in Google Maps anzeigen
@@ -44,23 +59,23 @@ const ArrivalPage = () => {
                 </div>
               </CardContent>
             </Card>
-            
+
             <div className="space-y-16">
               <div>
-                <img 
-                  src="https://greensniper.files.wordpress.com/2022/07/grafik-4.png" 
-                  alt="Anfahrt zur Ferienwohnung" 
+                <img
+                  src="https://greensniper.files.wordpress.com/2022/07/grafik-4.png"
+                  alt="Anfahrt zur Ferienwohnung"
                   className="w-full h-auto rounded-lg shadow-md mb-4"
                 />
                 <p className="text-lg italic">
                   Einfach die obere Heilsteinstraße bis ans Ende fahren. Das Haus, dessen obere Hälfte ein Fachwerkhaus ist, hat ein rotes Dach und steht links, halb im Wald.
                 </p>
               </div>
-              
+
               <div>
-                <img 
-                  src="https://greensniper.files.wordpress.com/2022/07/grafik.png" 
-                  alt="Übersicht Haus" 
+                <img
+                  src="https://greensniper.files.wordpress.com/2022/07/grafik.png"
+                  alt="Übersicht Haus"
                   className="w-full h-auto rounded-lg shadow-md mb-4"
                 />
                 <div className="text-lg">
@@ -70,22 +85,22 @@ const ArrivalPage = () => {
                   <p>Vor dem Haus geht links eine Treppe hoch. Diese bis ganz nach oben gehen.</p>
                 </div>
               </div>
-              
+
               <div>
-                <img 
-                  src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/grafik-6.png?w=1017" 
-                  alt="Treppe zur Wohnung" 
+                <img
+                  src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/grafik-6.png?w=1017"
+                  alt="Treppe zur Wohnung"
                   className="w-full h-auto rounded-lg shadow-md mb-4"
                 />
                 <p className="text-lg italic">
                   Zur Wohnung
                 </p>
               </div>
-              
+
               <div>
-                <img 
-                  src="https://greensniper.files.wordpress.com/2022/08/grafik-5.png" 
-                  alt="Eingang zur Wohnung" 
+                <img
+                  src="https://greensniper.files.wordpress.com/2022/08/grafik-5.png"
+                  alt="Eingang zur Wohnung"
                   className="w-full h-auto rounded-lg shadow-md mb-4"
                 />
                 <p className="text-lg italic">

@@ -84,17 +84,7 @@ const ContactPage = () => {
               />
             </div>
             
-            <div className="mt-8">
-              <h3 className="text-xl font-serif font-medium text-forest-700 mb-4">
-                Anfahrt
-              </h3>
-              <p className="mb-4">
-                Unsere Ferienwohnung ist gut mit dem Auto erreichbar. Parkplätze stehen direkt am Haus zur Verfügung.
-              </p>
-              <p>
-                Die nächsten größeren Bahnhöfe befinden sich in Aachen und Düren. Von dort aus fahren regelmäßig Busse nach Einruhr.
-              </p>
-            </div>
+            
           </div>
         </div>
       </main>
