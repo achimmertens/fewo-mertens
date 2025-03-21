@@ -25,6 +25,13 @@ const LocationPage = () => {
               <h2 className="text-2xl font-serif font-bold text-forest-700 mb-4">
                 Über Einruhr
               </h2>
+              <div className="w-full p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220729_164415339-1.jpg?w=1024&h=768" 
+                      alt="Ferienwohnung Außenansicht" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
               <p className="mb-4">
                 Einruhr ist ein idyllisches Dorf im Nationalpark Eifel, direkt am Ufer des Obersees gelegen. Der Ort bietet die perfekte Mischung aus Natur, Ruhe und Erholung, gepaart mit zahlreichen Möglichkeiten für Aktivitäten in der Umgebung.
               </p>

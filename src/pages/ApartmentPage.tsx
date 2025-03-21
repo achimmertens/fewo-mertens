@@ -19,7 +19,8 @@ const ApartmentPage = () => {
             </p>
           </div>
         </div>
-        
+
+              
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
@@ -29,51 +30,8 @@ const ApartmentPage = () => {
                 </h2>
                 
                 <div className="flex flex-wrap -mx-2 mb-8">
-                  <div className="w-full md:w-1/2 p-2">
-                    <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220729_164415339-1.jpg?w=1024&h=768" 
-                      alt="Ferienwohnung Außenansicht" 
-                      className="rounded-lg w-full h-auto object-cover"
-                    />
-                  </div>
-                  <div className="w-full md:w-1/2 p-2">
-                    <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens02.jpg?w=2046" 
-                      alt="Außenansicht der Ferienwohnung" 
-                      className="rounded-lg w-full h-auto object-cover"
-                    />
-                  </div>
-                </div>
-                
-                <p>
-                  Unsere liebevoll eingerichtete Ferienwohnung befindet sich in dem schönen Dorf Einruhr, direkt am Obersee und am Rande des Nationalparks Eifel.
-                </p>
-                <p>
-                  Die Wohnung ist bequem für bis zu 4 Personen ausgelegt, wobei der Wohnraum als Schlafzimmer und Wohnküche dient. Die Einrichtung ist komplett neu, liebevoll ausgesucht und bietet Ihnen allen Komfort für einen erholsamen Aufenthalt.
-                </p>
-                
-                <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
-                  Das Wohnzimmer
-                </h3>
-                
-                <div className="flex flex-wrap -mx-2 my-4">
-                  <div className="w-full md:w-1/2 p-2">
-                    <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2023/03/20230325_131529.jpg?w=2046" 
-                      alt="Wohnzimmer mit gemütlicher Einrichtung" 
-                      className="rounded-lg w-full h-auto object-cover"
-                    />
-                  </div>
-                  <div className="w-full md:w-1/2 p-2">
-                    <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/comica1741615898162.png" 
-                      alt="Wohnraum mit Sitzecke" 
-                      className="rounded-lg w-full h-auto object-cover"
-                    />
-                  </div>
-                </div>
-                
-                <div className="flex flex-wrap -mx-2 my-4">
+
+                  <div className="flex flex-wrap -mx-2 my-4">
                   <div className="w-full p-2">
                     <img 
                       src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/20240807_185001.jpg?w=2048" 
@@ -82,28 +40,7 @@ const ApartmentPage = () => {
                     />
                   </div>
                 </div>
-                
-                <p>
-                  Das großzügige Wohnzimmer ist mit einer gemütlichen Sitzecke und einem Kamin ausgestattet. Hier können Sie abends entspannen, ein Buch lesen oder die schöne Aussicht genießen.
-                </p>
-                
-                <div className="flex flex-wrap -mx-2 my-8">
-                  <div className="w-full md:w-1/2 p-2">
-                    <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163743381.jpg" 
-                      alt="Küchenbereich" 
-                      className="rounded-lg w-full h-auto object-cover"
-                    />
-                  </div>
-                  <div className="w-full md:w-1/2 p-2">
-                    <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/kuche-1.jpg" 
-                      alt="Kochnische" 
-                      className="rounded-lg w-full h-auto object-cover"
-                    />
-                  </div>
                 </div>
-                
                 <div className="my-8">
                   <h3 className="text-xl font-serif font-bold text-forest-700 mb-4">
                     Ausstattung im Überblick:
@@ -159,20 +96,67 @@ const ApartmentPage = () => {
                     </li>
                   </ul>
                 </div>
+
+                <p>
+                  Unsere liebevoll eingerichtete Ferienwohnung befindet sich in dem schönen Dorf Einruhr, direkt am Obersee und am Rande des Nationalparks Eifel.
+                </p>
+                <p>
+                  Die Wohnung ist bequem für bis zu 4 Personen ausgelegt, wobei der Wohnraum als Schlafzimmer und Wohnküche dient. Die Einrichtung ist komplett neu (2023), liebevoll ausgesucht und bietet Ihnen allen Komfort für einen erholsamen Aufenthalt.
+                </p>
                 
                 <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
-                  Schlafbereich
+                  Das Wohnzimmer
                 </h3>
                 
                 <div className="flex flex-wrap -mx-2 my-4">
                   <div className="w-full md:w-1/2 p-2">
                     <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163615663.jpg" 
-                      alt="Schlafbereich" 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2023/03/20230325_131529.jpg?w=2046" 
+                      alt="Wohnzimmer mit gemütlicher Einrichtung" 
                       className="rounded-lg w-full h-auto object-cover"
                     />
                   </div>
+                  <div className="flex flex-wrap -mx-2 my-4">
+
+                </div>
                   <div className="w-full md:w-1/2 p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/comica1741615898162.png" 
+                      alt="Wohnraum mit Sitzecke" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+                <p>
+                Im Wohnzimmer befindet sich eine ausziehbare Schlafcouch, auf der bequem zwei weitere Personen schlafen können.
+                </p>
+
+                
+                <p>
+                  Die weiche Sitzecke ist auf den Kamin ausgerichtet, der sowohl wohlige Wärme, als auch Ruhe und Gemütlichkeit ausstrahlt. Hier können Sie die schöne Aussicht in den Wald genießen, abends entspannen oder ein Buch lesen.
+                </p>
+                <div className="w-full p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens02.jpg?w=2046" 
+                      alt="Außenansicht der Ferienwohnung" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                
+                
+                
+                
+                
+                
+                <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
+                  Das Schlafzimmer
+                </h3>
+                
+
+
+                <div className="flex flex-wrap -mx-2 my-4">
+
+                  <div className="w-full p-2">
                     <img 
                       src="https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens03.jpg?w=2046" 
                       alt="Schlafzimmer mit Boxspringbett" 
@@ -180,6 +164,13 @@ const ApartmentPage = () => {
                     />
                   </div>
                 </div>
+                <p>
+                  Die Wohnung verfügt über ein hochwertiges Boxspringbett (180x200 cm) 
+                </p>
+                
+                <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
+                  Badezimmer
+                </h3>
                 
                 <div className="flex flex-wrap -mx-2 my-4">
                   <div className="w-full md:w-1/2 p-2">
@@ -189,32 +180,25 @@ const ApartmentPage = () => {
                       className="rounded-lg w-full h-auto object-cover"
                     />
                   </div>
-                  <div className="w-full md:w-1/2 p-2">
-                    <img 
-                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220731_163923358.jpg" 
-                      alt="Badezimmer" 
-                      className="rounded-lg w-full h-auto object-cover"
-                    />
-                  </div>
+
                 </div>
-                
-                <h3 className="text-xl font-serif font-bold text-forest-700 mb-4">
-                  Schlafmöglichkeiten
-                </h3>
-                <p>
-                  Die Wohnung verfügt über ein hochwertiges Boxspringbett (180x200 cm) sowie eine ausziehbare Schlafcouch im Wohnbereich, auf der bequem zwei weitere Personen schlafen können.
-                </p>
-                
-                <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
-                  Badezimmer
-                </h3>
                 <p>
                   Das Badezimmer ist mit einer Dusche ausgestattet. Handtücher können auf Wunsch als Wäschepaket dazugebucht werden.
                 </p>
                 
                 <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
-                  Küche
+                  Die Küche
                 </h3>
+                <div className="flex flex-wrap -mx-2 my-8">
+
+                  <div className="w-full p-2">
+                    <img 
+                      src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/kuche-1.jpg" 
+                      alt="Kochnische" 
+                      className="rounded-lg w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
                 <p>
                   Die offene Küchenzeile ist vollständig ausgestattet, sodass Sie sich während Ihres Aufenthalts selbst versorgen können. Sie finden hier alles, was Sie zum Kochen benötigen: Herd, Kühlschrank mit Gefrierfach, French Press für Kaffee, Wasserkocher, Toaster sowie Geschirr und Kochutensilien. Zudem haben wir immer einige Essensvorräte im Schrank für Sie.
                 </p>
@@ -224,8 +208,9 @@ const ApartmentPage = () => {
                 </h3>
                 <p>
                   Die Wohnung verfügt über keine klassische Heizung, dafür aber über einen wunderschönen, gemütlichen Kamin, der an kühlen Tagen für eine angenehme Wärme und eine besondere Atmosphäre sorgt. Holz ist genügend kostenlos vorhanden. Über eine kleine Spende würden wir uns aber freuen.
+                  Der Kamin ist eigentlich einfach zu bedienen. Sollten Sie aber eine Anleitung wünschen, finden Sie diese in meinem Erklärvideo.
                 </p>
-                
+                https://youtu.be/STdEPUSYcSU
                 <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
                   Terrasse
                 </h3>
