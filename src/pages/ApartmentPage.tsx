@@ -208,9 +208,19 @@ const ApartmentPage = () => {
                 </h3>
                 <p>
                   Die Wohnung verfügt über keine klassische Heizung, dafür aber über einen wunderschönen, gemütlichen Kamin, der an kühlen Tagen für eine angenehme Wärme und eine besondere Atmosphäre sorgt. Holz ist genügend kostenlos vorhanden. Über eine kleine Spende würden wir uns aber freuen.
-                  Der Kamin ist eigentlich einfach zu bedienen. Sollten Sie aber eine Anleitung wünschen, finden Sie diese in meinem Erklärvideo.
+                  Der Kamin ist eigentlich einfach zu bedienen. Sollten Sie aber eine Anleitung wünschen, finden Sie diese in unserem Erklärvideo.
                 </p>
-                https://youtu.be/STdEPUSYcSU
+
+                <div className="aspect-w-16 aspect-h-9 my-8 rounded-lg overflow-hidden">
+                  <iframe 
+                    className="w-full h-96 rounded-lg"
+                    src="https://www.youtube.com/embed/STdEPUSYcSU" 
+                    title="Anleitung zur Bedienung des Kamins"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen>
+                  </iframe>
+                </div>
+                
                 <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
                   Terrasse
                 </h3>
