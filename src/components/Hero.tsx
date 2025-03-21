@@ -1,28 +1,31 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="hero-image w-full min-h-[70vh] flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220729_164415339-1.jpg?w=1024&h=768')" }}>
-      <div className="container mx-auto px-4 text-center relative">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 drop-shadow-lg mt-16 text-black bg-white/70 py-2 rounded-lg">
+      <div className="container mx-auto px-4 text-center relative py-8">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 sm:mb-6 drop-shadow-lg mt-8 sm:mt-16 text-black bg-white/70 py-2 rounded-lg">
           Ferienwohnung Einruhr Waldoase Mertens
         </h1>
-        <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-8 drop-shadow-md text-black bg-white/70 py-2 rounded-lg">
+        <p className="text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto mb-6 sm:mb-8 drop-shadow-md text-black bg-white/70 py-2 rounded-lg">
           Entdecken Sie Ihren perfekten Rückzugsort im Herzen des Nationalparks Eifel
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
             asChild
             size="lg"
-            className="bg-forest-600 hover:bg-forest-700 text-white font-medium px-20 py-28 text-lg relative overflow-hidden group w-full sm:w-auto"
+            className="bg-forest-600 hover:bg-forest-700 text-white font-medium relative overflow-hidden group w-full sm:w-auto"
             style={{
               backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens02.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "center",
-              height: "200px",
-              width: "400px"
+              height: isMobile ? "150px" : "200px",
+              width: isMobile ? "100%" : "400px"
             }}
           >
             <Link to="/apartment">
@@ -33,21 +36,21 @@ const Hero = () => {
           <Button
             asChild
             size="lg"
-            className="bg-forest-600 hover:bg-forest-700 text-white font-medium px-20 py-28 text-lg relative overflow-hidden group w-full sm:w-auto"
+            className="bg-forest-600 hover:bg-forest-700 text-white font-medium relative overflow-hidden group w-full sm:w-auto"
             style={{
-              height: "200px",
-              width: "400px"
+              height: isMobile ? "150px" : "200px",
+              width: isMobile ? "100%" : "400px"
             }}
           >
-<Link to="/calculator">
-  <span className="relative z-10 text-center flex flex-col">
-    <span className="text-sm">Ab 84 €/Nacht</span>
-    <span className="text-sm">für 1-4 Personen</span>
-    <span className="text-sm">inkl. Reinigung.</span>
-    <span className="text-sm">Jede weiter Nacht nur 50 €.</span>
-    <span>Jetzt Preis berechnen.</span>
-  </span>
-</Link>
+            <Link to="/calculator">
+              <span className="relative z-10 text-center flex flex-col">
+                <span className="text-sm">Ab 84 €/Nacht</span>
+                <span className="text-sm">für 1-4 Personen</span>
+                <span className="text-sm">inkl. Reinigung.</span>
+                <span className="text-sm">Jede weiter Nacht nur 50 €.</span>
+                <span>Jetzt Preis berechnen.</span>
+              </span>
+            </Link>
           </Button>
         </div>
       </div>

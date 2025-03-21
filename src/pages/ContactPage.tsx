@@ -9,26 +9,26 @@ const ContactPage = () => {
     <>
       <Header />
       <main className="pb-16">
-        <div className="bg-forest-700 py-16 text-white">
+        <div className="bg-forest-700 py-12 sm:py-16 text-white">
           <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-serif font-bold mb-4">Kontakt</h1>
-            <p className="text-xl max-w-3xl">
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold mb-4">Kontakt</h1>
+            <p className="text-lg sm:text-xl max-w-3xl">
               Haben Sie allgemeine Fragen? Kontaktieren Sie uns gerne!
             </p>
           </div>
         </div>
         
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-8 sm:py-12">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-serif font-bold text-forest-700 mb-6">
+            <h2 className="text-xl sm:text-2xl font-serif font-bold text-forest-700 mb-6">
               Kontaktdaten
             </h2>
             
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               <Card>
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start">
-                    <Phone className="h-5 w-5 text-forest-600 mr-4 mt-1" />
+                    <Phone className="h-5 w-5 text-forest-600 mr-3 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-medium mb-1">Telefon</h3>
                       <p className="text-forest-700">+49 1517 4412216</p>
@@ -39,21 +39,21 @@ const ContactPage = () => {
               </Card>
               
               <Card>
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start">
-                    <Mail className="h-5 w-5 text-forest-600 mr-4 mt-1" />
+                    <Mail className="h-5 w-5 text-forest-600 mr-3 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-medium mb-1">E-Mail</h3>
-                      <p className="text-forest-700 text-lg">einruhr.mertens@web.de</p>
+                      <p className="text-forest-700 text-base sm:text-lg break-words">einruhr.mertens@web.de</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
               <Card>
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-forest-600 mr-4 mt-1" />
+                    <MapPin className="h-5 w-5 text-forest-600 mr-3 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-medium mb-1">Adresse</h3>
                       <p className="text-forest-700">
@@ -83,8 +83,6 @@ const ContactPage = () => {
                 className="w-full h-auto rounded-lg shadow-md"
               />
             </div>
-            
-            
           </div>
         </div>
       </main>
