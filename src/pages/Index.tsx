@@ -57,7 +57,7 @@ const Index = () => {
                   className="bg-forest-600 hover:bg-forest-700 text-white px-8 py-6"
                 >
                   <Link to="/calculator">
-                    Jetzt Preis berechnen
+                    Ab 84 €/Nacht für 4 Personen inkl. Reinigung. Jetzt Preis berechnen.
                   </Link>
                 </Button>
               </div>
@@ -92,8 +92,8 @@ const Index = () => {
                   asChild
                   className="bg-forest-600 hover:bg-forest-700 text-white px-8 py-6 w-full md:w-auto"
                 >
-                  <Link to="/contact">
-                    Kontakt aufnehmen
+                  <Link to="/calculator">
+                    Preis berechnen
                   </Link>
                 </Button>
                 <Separator className="hidden md:block h-12 w-px bg-gray-300" orientation="vertical" />

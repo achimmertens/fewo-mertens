@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,9 +7,10 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle, Mail, Phone, User, Copy } from "lucide-react";
-import { format, differenceInCalendarDays, addDays, isSameDay, startOfDay } from "date-fns";
+import { format, differenceInCalendarDays, addDays, isSameDay, startOfDay, isBefore, isAfter } from "date-fns";
 import { de } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
@@ -17,8 +19,10 @@ import { Textarea } from "@/components/ui/textarea";
 
 const PriceCalculator = () => {
   const { toast } = useToast();
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: undefined,
+    to: undefined,
+  });
   const [guests, setGuests] = useState<number>(2);
   const [laundryPackages, setLaundryPackages] = useState<number>(0);
   const [withBreakfast, setWithBreakfast] = useState<string>("no");
@@ -45,34 +49,10 @@ const PriceCalculator = () => {
   // Price constants
   const FIRST_NIGHT_PRICE = 59;              // €59 für die erste Nacht
   const ADDITIONAL_NIGHT_PRICE = 50;         // €50 für jede weitere Nacht
-  const BREAKFAST_PRICE_PER_PERSON = 9;      // €9 pro Person pro Tag mit Frühstück
+  const BREAKFAST_FIRST_PERSON_PRICE = 14;   // €14 für die erste Person mit Frühstück
+  const BREAKFAST_ADDITIONAL_PRICE = 6;      // €6 für jede weitere Person mit Frühstück
   const LAUNDRY_PACKAGE_PRICE = 7;           // €7 pro Wäschepaket pro Person
   const CLEANING_FEE = 25;                   // €25 für die Endreinigung
-
-  useEffect(() => {
-    // Check if the selected dates are booked, but allow overlap on first and last day
-    if (startDate && endDate && bookedDates.length > 0) {
-      const start = startOfDay(new Date(startDate));
-      const end = startOfDay(new Date(endDate));
-      
-      // Check only the days between start+1 and end-1
-      // This allows bookings to overlap on arrival and departure days
-      let current = addDays(start, 1);
-      let isBooked = false;
-      
-      while (current < end) {
-        if (bookedDates.some(date => isSameDay(date, current))) {
-          isBooked = true;
-          break;
-        }
-        current = addDays(current, 1);
-      }
-      
-      setIsDateBooked(isBooked);
-    } else {
-      setIsDateBooked(false);
-    }
-  }, [startDate, endDate, bookedDates]);
 
   useEffect(() => {
     // This would normally fetch data from the Google Calendar API
@@ -81,19 +61,67 @@ const PriceCalculator = () => {
     const nextYear = new Date(today);
     nextYear.setFullYear(today.getFullYear() + 1);
     
-    // Example: March 21-22, 2025 is booked
+    // Example: March 21-25, 2025 is booked
     setBookedDates([
       new Date(2025, 2, 21), // March 21, 2025
       new Date(2025, 2, 22), // March 22, 2025
+      new Date(2025, 2, 23), // March 23, 2025
+      new Date(2025, 2, 24), // March 24, 2025
     ]);
   }, []);
 
+  // Check if a date is in the booking range but not on the exact start/end dates
+  const isDayBooked = (day: Date) => {
+    const dayStart = startOfDay(new Date(day));
+    
+    // Check if this exact day is in the booked dates array
+    return bookedDates.some(bookedDate => 
+      isSameDay(dayStart, bookedDate)
+    );
+  };
+
+  // Check if the selected date range overlaps with booked dates
+  const isRangeOverlappingBookings = (from: Date, to: Date) => {
+    if (!from || !to) return false;
+    
+    // We need to check all days between from+1 and to-1
+    // This allows bookings to end on the day another booking starts
+    const checkStart = addDays(startOfDay(from), 1);
+    const checkEnd = startOfDay(to);
+    
+    // If range is just one day, it's valid (departure = arrival)
+    if (isSameDay(checkStart, checkEnd) || isBefore(checkEnd, checkStart)) {
+      return false;
+    }
+    
+    // Check each day in the range
+    let current = new Date(checkStart);
+    while (isBefore(current, checkEnd)) {
+      if (isDayBooked(current)) {
+        return true;
+      }
+      current = addDays(current, 1);
+    }
+    
+    return false;
+  };
+
+  useEffect(() => {
+    // Check if the selected date range overlaps with booked dates
+    if (date?.from && date?.to) {
+      const isOverlapping = isRangeOverlappingBookings(date.from, date.to);
+      setIsDateBooked(isOverlapping);
+    } else {
+      setIsDateBooked(false);
+    }
+  }, [date, bookedDates]);
+
   // Generate email template whenever relevant data changes
   useEffect(() => {
-    if (startDate && endDate) {
-      const arrivalDateStr = format(startDate, "dd.MM.yyyy", { locale: de });
-      const departureDateStr = format(endDate, "dd.MM.yyyy", { locale: de });
-      const numNights = Math.max(1, differenceInCalendarDays(endDate, startDate));
+    if (date?.from && date?.to) {
+      const arrivalDateStr = format(date.from, "dd.MM.yyyy", { locale: de });
+      const departureDateStr = format(date.to, "dd.MM.yyyy", { locale: de });
+      const numNights = Math.max(1, differenceInCalendarDays(date.to, date.from));
       
       let template = 
 `Betreff: Einruhr - Reservierungsanfrage
@@ -151,10 +179,10 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       
       setEmailTemplate(template);
     }
-  }, [startDate, endDate, guests, laundryPackages, withBreakfast, contactName, contactEmail, contactPhone, contactMessage, totalPrice, priceDetails]);
+  }, [date, guests, laundryPackages, withBreakfast, contactName, contactEmail, contactPhone, contactMessage, totalPrice, priceDetails]);
 
   const calculatePrice = () => {
-    if (!startDate || !endDate) {
+    if (!date?.from || !date?.to) {
       toast({
         title: "Fehler",
         description: "Bitte wählen Sie Start- und Enddatum aus.",
@@ -172,7 +200,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       return;
     }
 
-    const numNights = Math.max(1, differenceInCalendarDays(endDate, startDate));
+    const numNights = Math.max(1, differenceInCalendarDays(date.to, date.from));
     
     // Berechnung des Grundpreises: 59€ für erste Nacht, 50€ für jede weitere
     const firstNightPrice = FIRST_NIGHT_PRICE;
@@ -180,7 +208,15 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * ADDITIONAL_NIGHT_PRICE : 0;
     
     // Frühstückspreis (falls ausgewählt)
-    const breakfastPrice = withBreakfast === "yes" ? guests * BREAKFAST_PRICE_PER_PERSON * numNights : 0;
+    let breakfastPrice = 0;
+    if (withBreakfast === "yes" && guests > 0) {
+      // Erste Person zahlt 14€, jede weitere 6€ pro Tag mit Frühstück
+      breakfastPrice = BREAKFAST_FIRST_PERSON_PRICE;
+      if (guests > 1) {
+        breakfastPrice += (guests - 1) * BREAKFAST_ADDITIONAL_PRICE;
+      }
+      breakfastPrice *= numNights; // Frühstück für jeden Tag
+    }
     
     // Wäschepaketpreis (pro Person)
     const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE;
@@ -208,7 +244,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
   };
 
   const sendReservationRequest = () => {
-    if (!startDate || !endDate) {
+    if (!date?.from || !date?.to) {
       toast({
         title: "Fehler",
         description: "Bitte wählen Sie Start- und Enddatum aus.",
@@ -229,8 +265,8 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     setIsSubmitting(true);
     
     // Format dates for the email body
-    const arrivalDateStr = startDate ? format(startDate, "dd.MM.yyyy", { locale: de }) : "";
-    const departureDateStr = endDate ? format(endDate, "dd.MM.yyyy", { locale: de }) : "";
+    const arrivalDateStr = date.from ? format(date.from, "dd.MM.yyyy", { locale: de }) : "";
+    const departureDateStr = date.to ? format(date.to, "dd.MM.yyyy", { locale: de }) : "";
     
     // Build the mailto link with the form data
     const subject = encodeURIComponent("Einruhr - Reservierungsanfrage");
@@ -311,75 +347,54 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Date Selection */}
-          <div className="space-y-2">
-            <Label htmlFor="startDate">Anreisedatum</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  id="startDate"
-                  variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !startDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {startDate ? (
-                    format(startDate, "PPP", { locale: de })
+        {/* Date Range Picker */}
+        <div className="space-y-2">
+          <Label>Anreise- und Abreisedatum</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal",
+                  !date && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date?.from ? (
+                  date.to ? (
+                    <>
+                      {format(date.from, "PPP", { locale: de })}
+                      {" - "}
+                      {format(date.to, "PPP", { locale: de })}
+                    </>
                   ) : (
-                    <span>Datum auswählen</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={startDate}
-                  onSelect={setStartDate}
-                  disabled={(date) => date < new Date()}
-                  initialFocus
-                  className={cn("p-3 pointer-events-auto")}
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="endDate">Abreisedatum</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  id="endDate"
-                  variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !endDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {endDate ? (
-                    format(endDate, "PPP", { locale: de })
-                  ) : (
-                    <span>Datum auswählen</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={endDate}
-                  onSelect={setEndDate}
-                  disabled={(date) => 
-                    date < (startDate ? startDate : new Date())
-                  }
-                  initialFocus
-                  className={cn("p-3 pointer-events-auto")}
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
+                    format(date.from, "PPP", { locale: de })
+                  )
+                ) : (
+                  <span>Wählen Sie Ihren Zeitraum</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                initialFocus
+                mode="range"
+                defaultMonth={date?.from}
+                selected={date}
+                onSelect={setDate}
+                numberOfMonths={2}
+                disabled={(day) => {
+                  // Prevent selecting dates in the past
+                  if (isBefore(day, startOfDay(new Date()))) return true;
+                  
+                  // Allow selecting start/end of a booking
+                  // but disable days that are in the middle of booked periods
+                  return isDayBooked(day);
+                }}
+                className={cn("p-3 pointer-events-auto")}
+              />
+            </PopoverContent>
+          </Popover>
         </div>
 
         {isDateBooked && (
@@ -427,7 +442,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
 
         {/* Breakfast */}
         <div className="space-y-2">
-          <Label>Frühstück (€9 pro Person/Tag)</Label>
+          <Label>Frühstück</Label>
           <div className="flex items-center">
             <Coffee className="mr-2 h-4 w-4 text-muted-foreground" />
             <RadioGroup
@@ -445,7 +460,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
               </div>
             </RadioGroup>
           </div>
-          <p className="text-sm text-muted-foreground">Wir bieten ein einfaches Frühstück nach Rücksprache an.</p>
+          <p className="text-sm text-muted-foreground">Erste Person: €14 pro Tag, jede weitere Person: €6 pro Tag. Wir bieten ein einfaches Frühstück nach Rücksprache an.</p>
         </div>
 
         <Separator className="my-4" />
@@ -529,7 +544,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
 
           <Button 
             onClick={sendReservationRequest}
-            disabled={isSubmitting || !startDate || !endDate || !contactName || !contactEmail}
+            disabled={isSubmitting || !date?.from || !date?.to || !contactName || !contactEmail}
             className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
           >
             <Mail className="h-4 w-4" />
@@ -537,7 +552,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
           </Button>
         </div>
 
-        {startDate && endDate && (
+        {date?.from && date?.to && (
           <div className="mt-4 p-4 bg-gray-50 rounded-md w-full">
             <div className="flex justify-between items-center mb-3">
               <h3 className="font-medium text-lg font-serif">E-Mail-Vorlage:</h3>
