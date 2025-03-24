@@ -31,9 +31,10 @@ const LocationPage = () => {
                       alt="Ferienwohnung Außenansicht" 
                       className="rounded-lg w-full h-auto object-cover"
                     />
+                    <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Einruhr</figcaption>
                   </div>
               <p className="mb-4">
-                Einruhr ist ein idyllisches Dorf im Nationalpark Eifel, direkt am Ufer des Obersees gelegen. Der Ort bietet die perfekte Mischung aus Natur, Ruhe und Erholung, gepaart mit zahlreichen Möglichkeiten für Aktivitäten in der Umgebung.
+                Einruhr ist ein idyllisches Dorf im Nationalpark Eifel, direkt am Ufer des Obersees (Teil des Rursees) gelegen. Der Ort bietet die perfekte Mischung aus Natur, Ruhe und Erholung, gepaart mit zahlreichen Möglichkeiten für Aktivitäten in der Umgebung.
               </p>
               <p>
                 Mit seiner Lage am Wasser und am Rande des Nationalparks ist Einruhr der ideale Ausgangspunkt für Wanderungen, Radtouren und Wassersport. Zudem finden Sie hier gemütliche Restaurants und Cafés, in denen Sie lokale Spezialitäten genießen können.
@@ -46,6 +47,7 @@ const LocationPage = () => {
                     alt="Einruhr von oben" 
                     className="w-full h-auto rounded-lg shadow-md mb-2"
                   />
+                  <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Route 35 oberhalb des Hauses</figcaption>
                 </div>
                 <div>
                   <img 
@@ -53,6 +55,7 @@ const LocationPage = () => {
                     alt="Gänsestimmung" 
                     className="w-full h-auto rounded-lg shadow-md mb-2"
                   />
+                  <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Zulauf zum Obersee, hinter der Hauptstraße/Brücke</figcaption>
                 </div>
               </div>
             </section>
@@ -86,7 +89,7 @@ const LocationPage = () => {
                   className="w-full h-auto rounded-lg shadow-md mb-2"
                 />
                 <p className="text-sm text-gray-600 italic text-center">
-                  Wanderrouten
+                  Zahlreiche Wanderrouten, Startpunkt Einruhr
                 </p>
               </div>
             </section>
@@ -145,7 +148,7 @@ const LocationPage = () => {
                   className="w-full h-auto rounded-lg shadow-md mb-2"
                 />
                 <p className="text-sm text-gray-600 italic text-center">
-                  Herberts Eck
+                  Herberts Eck in Einruhr
                 </p>
               </div>
             </section>
@@ -168,34 +171,7 @@ const LocationPage = () => {
             </section>
             
             <section>
-              <h2 className="text-2xl font-serif font-bold text-forest-700 mb-4">
-                Anfahrt
-              </h2>
-              <div className="flex items-start">
-                <MapPin className="h-6 w-6 text-forest-600 mr-3 mt-1" />
-                <div>
-                  <p className="mb-4">
-                    Unsere Ferienwohnung befindet sich in der Heilsteinstr. 39 in 52152 Simmerath-Einruhr. Die Anreise ist sowohl mit dem Auto als auch mit öffentlichen Verkehrsmitteln möglich.
-                  </p>
-                  <p className="mb-4">
-                    Mit dem Auto erreichen Sie uns über die A44 und A4, die beide gut an das deutsche Autobahnnetz angebunden sind. Von dort aus führen gut ausgebaute Landstraßen nach Einruhr.
-                  </p>
-                  <p className="mb-4">
-                    Mit öffentlichen Verkehrsmitteln reisen Sie zunächst mit dem Zug nach Aachen oder Düren und nehmen von dort aus den Bus nach Einruhr.
-                  </p>
-                  <p className="mb-4">
-                    <a 
-                      href="https://maps.app.goo.gl/qkxbJidBxtzRt5Vv9" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="text-forest-600 hover:underline inline-flex items-center"
-                    >
-                      Route in Google Maps anzeigen
-                      <MapPin className="h-4 w-4 ml-1" />
-                    </a>
-                  </p>
-                </div>
-              </div>
+
               
               <div className="mt-8 flex justify-center">
                 <Button asChild className="bg-forest-600 hover:bg-forest-700">

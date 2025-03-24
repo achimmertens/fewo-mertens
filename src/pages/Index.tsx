@@ -51,20 +51,20 @@ const Index = () => {
                 description="Auch wenn wir kein WLAN anbieten, können Sie sich auf einen guten Mobilfunkempfang in unserer Ferienwohnung verlassen."
                 icon={Phone}
               />
-              <div className="flex items-center justify-center h-full">
-                <Button 
-                  asChild
-                  className="bg-forest-600 hover:bg-forest-700 text-white px-8 py-6"
-                >
-                  <Link to="/calculator">
-                    Ab 84 €/Nacht für 4 Personen inkl. Reinigung. Jetzt Preis berechnen.
-                  </Link>
-                </Button>
-              </div>
+            </div>
+          </div>
+          <div className="flex justify-center my-8">
+            <div className="aspect-w-16 aspect-h-9 max-w-lg w-full rounded-lg overflow-hidden">
+              <iframe
+                className="w-full h-96 rounded-lg"
+                src="https://www.youtube.com/embed/STdEPUSYcSU"
+                title="Ein Video zur Beschreibung der Wohnung"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen>
+              </iframe>
             </div>
           </div>
         </section>
-        
         <section className="py-16 bg-forest-50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-12">
