@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { DateRange } from "react-day-picker";
@@ -25,7 +24,7 @@ const PriceCalculator = () => {
   });
   const [guests, setGuests] = useState<number>(2);
   const [laundryPackages, setLaundryPackages] = useState<number>(0);
-  const [withBreakfast, setWithBreakfast] = useState<string>("no");
+  const [breakfastCount, setBreakfastCount] = useState<number>(0);
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
   const [priceDetails, setPriceDetails] = useState<{
     firstNightPrice: number;
@@ -38,6 +37,7 @@ const PriceCalculator = () => {
   const [isDateBooked, setIsDateBooked] = useState<boolean>(false);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [emailTemplate, setEmailTemplate] = useState<string>("");
+  const [showEmailTemplate, setShowEmailTemplate] = useState<boolean>(false);
   
   // Contact form fields
   const [contactName, setContactName] = useState("");
@@ -57,18 +57,52 @@ const PriceCalculator = () => {
   useEffect(() => {
     // This would normally fetch data from the Google Calendar API
     // For now, let's just set some example booked dates
-    const today = new Date();
-    const nextYear = new Date(today);
-    nextYear.setFullYear(today.getFullYear() + 1);
-    
-    // Example: March 21-25, 2025 is booked
-    setBookedDates([
-      new Date(2025, 2, 21), // March 21, 2025
-      new Date(2025, 2, 22), // March 22, 2025
-      new Date(2025, 2, 23), // March 23, 2025
-      new Date(2025, 2, 24), // March 24, 2025
-    ]);
+    fetchBookedDates();
   }, []);
+
+  // Fetch booked dates from Google Calendar API
+  const fetchBookedDates = async () => {
+    try {
+      // In a real implementation, this would be an API call to get booked dates
+      // For now, we'll simulate it with example data
+      const today = new Date();
+      
+      // Example: Current month ranges
+      const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 10);
+      const currentMonthEnd = new Date(today.getFullYear(), today.getMonth(), 15);
+      
+      // Example: Next month ranges
+      const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 5);
+      const nextMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 10);
+      
+      // Generate all dates in the booked ranges
+      const bookedDatesArray: Date[] = [];
+      
+      // Add current month booking
+      let currentDate = new Date(currentMonthStart);
+      while (currentDate <= currentMonthEnd) {
+        bookedDatesArray.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      
+      // Add next month booking
+      currentDate = new Date(nextMonthStart);
+      while (currentDate <= nextMonthEnd) {
+        bookedDatesArray.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      
+      setBookedDates(bookedDatesArray);
+      
+    } catch (error) {
+      console.error("Error fetching booked dates:", error);
+      toast({
+        title: "Fehler",
+        description: "Die Belegungsdaten konnten nicht geladen werden.",
+        variant: "destructive",
+      });
+    }
+  };
 
   // Check if a date is in the booking range but not on the exact start/end dates
   const isDayBooked = (day: Date) => {
@@ -111,6 +145,15 @@ const PriceCalculator = () => {
     if (date?.from && date?.to) {
       const isOverlapping = isRangeOverlappingBookings(date.from, date.to);
       setIsDateBooked(isOverlapping);
+      
+      // Show warning toast if overlapping
+      if (isOverlapping) {
+        toast({
+          title: "Belegung",
+          description: "Leider ist zu diesem Zeitraum die Wohnung schon reserviert.",
+          variant: "destructive",
+        });
+      }
     } else {
       setIsDateBooked(false);
     }
@@ -135,8 +178,8 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
         template += `\nWir buchen das Wäschepaket für ${laundryPackages} Personen.`;
       }
       
-      if (withBreakfast === "yes") {
-        template += `\nWir möchten gerne Frühstück für ${guests} Personen dazu buchen.`;
+      if (breakfastCount > 0) {
+        template += `\nWir möchten gerne Frühstück für ${breakfastCount} Personen dazu buchen.`;
       }
       
       if (priceDetails) {
@@ -179,7 +222,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       
       setEmailTemplate(template);
     }
-  }, [date, guests, laundryPackages, withBreakfast, contactName, contactEmail, contactPhone, contactMessage, totalPrice, priceDetails]);
+  }, [date, guests, laundryPackages, breakfastCount, contactName, contactEmail, contactPhone, contactMessage, totalPrice, priceDetails]);
 
   const calculatePrice = () => {
     if (!date?.from || !date?.to) {
@@ -194,7 +237,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     if (isDateBooked) {
       toast({
         title: "Achtung",
-        description: "Der gewählte Zeitraum ist teilweise belegt. Bitte wählen Sie ein anderes Datum.",
+        description: "Leider ist zu diesem Zeitraum die Wohnung schon reserviert.",
         variant: "destructive",
       });
       return;
@@ -209,11 +252,11 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     
     // Frühstückspreis (falls ausgewählt)
     let breakfastPrice = 0;
-    if (withBreakfast === "yes" && guests > 0) {
+    if (breakfastCount > 0) {
       // Erste Person zahlt 14€, jede weitere 6€ pro Tag mit Frühstück
       breakfastPrice = BREAKFAST_FIRST_PERSON_PRICE;
-      if (guests > 1) {
-        breakfastPrice += (guests - 1) * BREAKFAST_ADDITIONAL_PRICE;
+      if (breakfastCount > 1) {
+        breakfastPrice += (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
       }
       breakfastPrice *= numNights; // Frühstück für jeden Tag
     }
@@ -236,6 +279,9 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       laundryPrice,
       cleaningPrice
     });
+    
+    // Show email template after price calculation
+    setShowEmailTemplate(true);
 
     toast({
       title: "Preisberechnung abgeschlossen",
@@ -282,8 +328,8 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     }
     
     // Add breakfast information if selected
-    if (withBreakfast === "yes") {
-      body += encodeURIComponent(`\nWir möchten gerne Frühstück für ${guests} Personen dazu buchen.`);
+    if (breakfastCount > 0) {
+      body += encodeURIComponent(`\nWir möchten gerne Frühstück für ${breakfastCount} Personen dazu buchen.`);
     }
     
     // Add price details if available
@@ -342,9 +388,6 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-serif">Preisrechner & Anfrage</CardTitle>
-        <CardDescription>
-          Berechnen Sie den Preis für Ihren Aufenthalt und senden Sie eine Reservierungsanfrage.
-        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Date Range Picker */}
@@ -401,7 +444,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
-              Der gewählte Zeitraum ist teilweise belegt. Bitte wählen Sie ein anderes Datum.
+              Leider ist zu diesem Zeitraum die Wohnung schon reserviert.
             </AlertDescription>
           </Alert>
         )}
@@ -432,8 +475,9 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
               id="laundry"
               type="number"
               min={0}
+              max={4}
               value={laundryPackages}
-              onChange={(e) => setLaundryPackages(parseInt(e.target.value) || 0)}
+              onChange={(e) => setLaundryPackages(Math.min(4, Math.max(0, parseInt(e.target.value) || 0)))}
               className="w-full"
             />
           </div>
@@ -442,23 +486,18 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
 
         {/* Breakfast */}
         <div className="space-y-2">
-          <Label>Frühstück</Label>
+          <Label htmlFor="breakfast">Anzahl Frühstück</Label>
           <div className="flex items-center">
             <Coffee className="mr-2 h-4 w-4 text-muted-foreground" />
-            <RadioGroup
-              value={withBreakfast}
-              onValueChange={setWithBreakfast}
-              className="flex gap-4"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="yes" id="breakfast-yes" />
-                <Label htmlFor="breakfast-yes" className="cursor-pointer">Ja</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="no" id="breakfast-no" />
-                <Label htmlFor="breakfast-no" className="cursor-pointer">Nein</Label>
-              </div>
-            </RadioGroup>
+            <Input
+              id="breakfast"
+              type="number"
+              min={0}
+              max={8}
+              value={breakfastCount}
+              onChange={(e) => setBreakfastCount(Math.min(8, Math.max(0, parseInt(e.target.value) || 0)))}
+              className="w-full"
+            />
           </div>
           <p className="text-sm text-muted-foreground">Erste Person: €14 pro Tag, jede weitere Person: €6 pro Tag. Wir bieten ein einfaches Frühstück nach Rücksprache an.</p>
         </div>
@@ -552,7 +591,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
           </Button>
         </div>
 
-        {date?.from && date?.to && (
+        {showEmailTemplate && date?.from && date?.to && (
           <div className="mt-4 p-4 bg-gray-50 rounded-md w-full">
             <div className="flex justify-between items-center mb-3">
               <h3 className="font-medium text-lg font-serif">E-Mail-Vorlage:</h3>

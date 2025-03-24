@@ -24,13 +24,6 @@ const CalculatorPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <div className="max-w-xl">
-                <h2 className="text-2xl font-serif font-bold text-forest-700 mb-6">
-                  Preis berechnen & Anfragen
-                </h2>
-                <p className="mb-8 text-gray-700">
-                  Mit unserem Preisrechner können Sie ganz einfach den Gesamtpreis für Ihren Aufenthalt in unserer Ferienwohnung berechnen und gleich eine Reservierungsanfrage senden.
-                </p>
-                
                 <PriceCalculator />
               </div>
             </div>
