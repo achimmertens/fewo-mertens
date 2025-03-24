@@ -1,5 +1,5 @@
 
-import { Bed, Map, Coffee, Mountain, Phone } from "lucide-react";
+import { Bed, Map, Coffee, Mountain, Phone, Flame } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -50,6 +50,11 @@ const Index = () => {
                 title="Guter Mobilfunkempfang"
                 description="Auch wenn wir kein WLAN anbieten, können Sie sich auf einen guten Mobilfunkempfang in unserer Ferienwohnung verlassen."
                 icon={Phone}
+              />
+              <FeatureCard
+                title="Gemütlicher Kamin"
+                description="An kalten Abenden bietet unser Kamin eine wohlige Wärme."
+                icon={Flame}
               />
             </div>
           </div>

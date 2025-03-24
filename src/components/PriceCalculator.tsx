@@ -51,8 +51,8 @@ const PriceCalculator = () => {
   // Price constants
   const FIRST_NIGHT_PRICE = 59;              // €59 für die erste Nacht
   const ADDITIONAL_NIGHT_PRICE = 50;         // €50 für jede weitere Nacht
-  const BREAKFAST_FIRST_PERSON_PRICE = 14;   // €14 für die erste Person mit Frühstück
-  const BREAKFAST_ADDITIONAL_PRICE = 6;      // €6 für jede weitere Person mit Frühstück
+  const BREAKFAST_FIRST_PRICE = 14;          // €14 für das erste Frühstück
+  const BREAKFAST_ADDITIONAL_PRICE = 6;      // €6 für jedes weitere Frühstück
   const LAUNDRY_PACKAGE_PRICE = 7;           // €7 pro Wäschepaket pro Person
   const CLEANING_FEE = 25;                   // €25 für die Endreinigung
 
@@ -66,33 +66,40 @@ const PriceCalculator = () => {
   const fetchBookedDates = async () => {
     try {
       // In a real implementation, this would be an API call to get booked dates
-      // For now, we'll simulate it with example data
+      // For demo purposes only - these dates should match the Google Calendar
       const today = new Date();
       
-      // Example: Current month ranges
-      const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 10);
-      const currentMonthEnd = new Date(today.getFullYear(), today.getMonth(), 15);
+      // Current month bookings - April 2024 examples
+      const firstBlockStart = new Date(2024, 3, 5);  // April 5th
+      const firstBlockEnd = new Date(2024, 3, 10);   // April 10th
       
-      // Example: Next month ranges
-      const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 5);
-      const nextMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 10);
+      const secondBlockStart = new Date(2024, 3, 15); // April 15th
+      const secondBlockEnd = new Date(2024, 3, 22);   // April 22nd
+      
+      const thirdBlockStart = new Date(2024, 3, 25);  // April 25th
+      const thirdBlockEnd = new Date(2024, 3, 28);    // April 28th
+      
+      // Next month bookings - May 2024 examples
+      const mayBlockStart = new Date(2024, 4, 10);    // May 10th
+      const mayBlockEnd = new Date(2024, 4, 15);      // May 15th
       
       // Generate all dates in the booked ranges
       const bookedDatesArray: Date[] = [];
       
-      // Add current month booking
-      let currentDate = new Date(currentMonthStart);
-      while (currentDate <= currentMonthEnd) {
-        bookedDatesArray.push(new Date(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
+      // Function to add all dates in a range to the array
+      const addDateRange = (start: Date, end: Date) => {
+        let currentDate = new Date(start);
+        while (currentDate <= end) {
+          bookedDatesArray.push(new Date(currentDate));
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+      };
       
-      // Add next month booking
-      currentDate = new Date(nextMonthStart);
-      while (currentDate <= nextMonthEnd) {
-        bookedDatesArray.push(new Date(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
+      // Add all booked date ranges
+      addDateRange(firstBlockStart, firstBlockEnd);
+      addDateRange(secondBlockStart, secondBlockEnd);
+      addDateRange(thirdBlockStart, thirdBlockEnd);
+      addDateRange(mayBlockStart, mayBlockEnd);
       
       setBookedDates(bookedDatesArray);
       
@@ -165,7 +172,7 @@ const PriceCalculator = () => {
 
 Hallo Herr Mertens,
 
-bitte bestätigen Sie, dass die Wohnung in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.
+bitte bestätigen Sie, dass die Wohnung Waldoase Mertens in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.
 Wir würden sie gerne für diesen Zeitraum reservieren.`;
       
       if (laundryPackages > 0) {
@@ -173,7 +180,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       }
       
       if (breakfastCount > 0) {
-        template += `\nWir möchten gerne Frühstück für ${breakfastCount} Personen dazu buchen.`;
+        template += `\nWir möchten gerne ${breakfastCount} Frühstück dazu buchen.`;
       }
       
       if (priceDetails) {
@@ -189,7 +196,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
           template += `
 - Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`;
           if (breakfastCount > 1) {
-            template += ` (1 Person: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)})`;
+            template += ` (Erstes Frühstück: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)})`;
           }
         }
         
@@ -253,14 +260,15 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     let breakfastAdditionalPersonsPrice = 0;
     
     if (breakfastCount > 0) {
-      // Erste Person zahlt 14€, jede weitere 6€ pro Tag mit Frühstück
-      breakfastFirstPersonPrice = BREAKFAST_FIRST_PERSON_PRICE * numNights;
+      // Erstes Frühstück kostet 14€, jedes weitere 6€
+      breakfastFirstPersonPrice = BREAKFAST_FIRST_PRICE;
       
       if (breakfastCount > 1) {
-        breakfastAdditionalPersonsPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE * numNights;
+        breakfastAdditionalPersonsPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
       }
       
-      breakfastPrice = breakfastFirstPersonPrice + breakfastAdditionalPersonsPrice;
+      // Multipliziere mit der Anzahl der Tage
+      breakfastPrice = (breakfastFirstPersonPrice + breakfastAdditionalPersonsPrice) * numNights;
     }
     
     // Wäschepaketpreis (pro Person)
@@ -323,7 +331,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     
     // Build the body of the email
     let body = encodeURIComponent(
-      `Hallo Herr Mertens,\n\nbitte bestätigen Sie, dass die Wohnung in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.\nWir würden sie gerne für diesen Zeitraum reservieren.`
+      `Hallo Herr Mertens,\n\nbitte bestätigen Sie, dass die Wohnung Waldoase Mertens in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.\nWir würden sie gerne für diesen Zeitraum reservieren.`
     );
     
     // Add information about the laundry package if selected
@@ -333,7 +341,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     
     // Add breakfast information if selected
     if (breakfastCount > 0) {
-      body += encodeURIComponent(`\nWir möchten gerne Frühstück für ${breakfastCount} Personen dazu buchen.`);
+      body += encodeURIComponent(`\nWir möchten gerne ${breakfastCount} Frühstück dazu buchen.`);
     }
     
     // Add price details if available
@@ -347,7 +355,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       if (priceDetails.breakfastPrice > 0) {
         body += encodeURIComponent(`\n- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`);
         if (breakfastCount > 1) {
-          body += encodeURIComponent(` (1 Person: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)})`);
+          body += encodeURIComponent(` (Erstes Frühstück: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)})`);
         }
       }
       
@@ -437,8 +445,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                   // Prevent selecting dates in the past
                   if (isBefore(day, startOfDay(new Date()))) return true;
                   
-                  // Allow selecting start/end of a booking
-                  // but disable days that are in the middle of booked periods
+                  // Disable days that are booked
                   return isDayBooked(day);
                 }}
                 className={cn("p-3 pointer-events-auto")}
@@ -506,7 +513,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
               className="w-full"
             />
           </div>
-          <p className="text-sm text-muted-foreground">Erste Person: €14 pro Tag, jede weitere Person: €6 pro Tag. Wir bieten ein einfaches Frühstück nach Rücksprache an.</p>
+          <p className="text-sm text-muted-foreground">Das erste Frühstück kostet €14, jedes weitere Frühstück kostet €6. Wir bieten ein einfaches Frühstück nach Rücksprache an.</p>
         </div>
 
         <Separator className="my-4" />
@@ -641,7 +648,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                   {breakfastCount > 1 && (
                     <div className="flex justify-between text-xs text-gray-500 pl-4">
                       <span>
-                        (1 Person: €{priceDetails.breakfastFirstPersonPrice.toFixed(2)}, 
+                        (Erstes Frühstück: €{priceDetails.breakfastFirstPersonPrice.toFixed(2)}, 
                         {breakfastCount > 1 ? ` ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)}` : ""}
                         )
                       </span>

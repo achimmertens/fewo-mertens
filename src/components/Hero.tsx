@@ -10,7 +10,7 @@ const Hero = () => {
     <div className="hero-image w-full min-h-[70vh] flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220729_164415339-1.jpg?w=1024&h=768')" }}>
       <div className="container mx-auto px-4 text-center relative py-8">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 sm:mb-6 drop-shadow-lg mt-8 sm:mt-16 text-black bg-white/70 py-2 rounded-lg">
-          Ferienwohnung "Waldoase Mertens" in Einruhr
+          Ferienwohnung Waldoase Mertens in Einruhr
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto mb-6 sm:mb-8 drop-shadow-md text-black bg-white/70 py-2 rounded-lg">
           Entdecken Sie Ihren perfekten Rückzugsort im Herzen des Nationalparks Eifel
