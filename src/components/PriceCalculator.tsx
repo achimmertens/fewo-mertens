@@ -31,6 +31,8 @@ const PriceCalculator = () => {
     additionalNightsPrice: number;
     additionalNightsCount: number;
     breakfastPrice: number;
+    breakfastFirstPersonPrice: number;
+    breakfastAdditionalPersonsPrice: number;
     laundryPrice: number;
     cleaningPrice: number;
   } | null>(null);
@@ -118,19 +120,11 @@ const PriceCalculator = () => {
   const isRangeOverlappingBookings = (from: Date, to: Date) => {
     if (!from || !to) return false;
     
-    // We need to check all days between from+1 and to-1
-    // This allows bookings to end on the day another booking starts
-    const checkStart = addDays(startOfDay(from), 1);
-    const checkEnd = startOfDay(to);
+    // Check every day in the range except the last day (checkout day)
+    let current = startOfDay(new Date(from));
+    const end = startOfDay(new Date(to));
     
-    // If range is just one day, it's valid (departure = arrival)
-    if (isSameDay(checkStart, checkEnd) || isBefore(checkEnd, checkStart)) {
-      return false;
-    }
-    
-    // Check each day in the range
-    let current = new Date(checkStart);
-    while (isBefore(current, checkEnd)) {
+    while (isBefore(current, end)) {
       if (isDayBooked(current)) {
         return true;
       }
@@ -194,6 +188,9 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
         if (priceDetails.breakfastPrice > 0) {
           template += `
 - Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`;
+          if (breakfastCount > 1) {
+            template += ` (1 Person: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)})`;
+          }
         }
         
         if (priceDetails.laundryPrice > 0) {
@@ -250,15 +247,20 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     const additionalNightsCount = numNights - 1;
     const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * ADDITIONAL_NIGHT_PRICE : 0;
     
-    // Frühstückspreis (falls ausgewählt)
+    // Frühstückspreis (falls ausgewählt) - KORRIGIERTE BERECHNUNG
     let breakfastPrice = 0;
+    let breakfastFirstPersonPrice = 0;
+    let breakfastAdditionalPersonsPrice = 0;
+    
     if (breakfastCount > 0) {
       // Erste Person zahlt 14€, jede weitere 6€ pro Tag mit Frühstück
-      breakfastPrice = BREAKFAST_FIRST_PERSON_PRICE;
+      breakfastFirstPersonPrice = BREAKFAST_FIRST_PERSON_PRICE * numNights;
+      
       if (breakfastCount > 1) {
-        breakfastPrice += (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
+        breakfastAdditionalPersonsPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE * numNights;
       }
-      breakfastPrice *= numNights; // Frühstück für jeden Tag
+      
+      breakfastPrice = breakfastFirstPersonPrice + breakfastAdditionalPersonsPrice;
     }
     
     // Wäschepaketpreis (pro Person)
@@ -276,6 +278,8 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       additionalNightsPrice,
       additionalNightsCount,
       breakfastPrice,
+      breakfastFirstPersonPrice,
+      breakfastAdditionalPersonsPrice,
       laundryPrice,
       cleaningPrice
     });
@@ -342,6 +346,9 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       
       if (priceDetails.breakfastPrice > 0) {
         body += encodeURIComponent(`\n- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`);
+        if (breakfastCount > 1) {
+          body += encodeURIComponent(` (1 Person: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)})`);
+        }
       }
       
       if (priceDetails.laundryPrice > 0) {
@@ -626,10 +633,22 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                 </div>
               )}
               {priceDetails.breakfastPrice > 0 && (
-                <div className="flex justify-between">
-                  <span>Frühstück:</span>
-                  <span>€{priceDetails.breakfastPrice.toFixed(2)}</span>
-                </div>
+                <>
+                  <div className="flex justify-between">
+                    <span>Frühstück:</span>
+                    <span>€{priceDetails.breakfastPrice.toFixed(2)}</span>
+                  </div>
+                  {breakfastCount > 1 && (
+                    <div className="flex justify-between text-xs text-gray-500 pl-4">
+                      <span>
+                        (1 Person: €{priceDetails.breakfastFirstPersonPrice.toFixed(2)}, 
+                        {breakfastCount > 1 ? ` ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)}` : ""}
+                        )
+                      </span>
+                      <span></span>
+                    </div>
+                  )}
+                </>
               )}
               {priceDetails.laundryPrice > 0 && (
                 <div className="flex justify-between">

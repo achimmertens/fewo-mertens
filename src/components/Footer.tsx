@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-serif font-bold mb-4">Ferienwohnung Einruhr Waldoase Mertens</h3>
+            <h3 className="text-xl font-serif font-bold mb-4">Ferienwohnung Waldoase Mertens in Einruhr</h3>
             <p className="mb-2">Ihr gemütliches Zuhause im Nationalpark Eifel</p>
             <div className="flex items-center mt-4">
               <MapPin className="h-5 w-5 mr-2" />
@@ -69,7 +69,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-forest-700 mt-8 pt-6 text-center text-sm">
-          <p>&copy; {currentYear} Ferienwohnung Einruhr Waldoase Mertens. Alle Rechte vorbehalten.</p>
+          <p>&copy; {currentYear} Ferienwohnung Waldoase Mertens in Einruhr. Alle Rechte vorbehalten.</p>
         </div>
       </div>
     </footer>
