@@ -11,14 +11,6 @@ const GoogleCalendar = () => {
         frameBorder="0"
         scrolling="no"
       ></iframe>
-      <div className="mt-4 text-sm text-gray-600">
-        <p>Belegungen im April:</p>
-        <ul className="list-disc pl-5 mt-2">
-          <li>13. April - 14. April: Wannes</li>
-          <li>18. April - 19. April: Magdalena</li>
-          <li>24. April - 26. April: Antje</li>
-        </ul>
-      </div>
     </div>
   );
 };

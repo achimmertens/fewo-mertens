@@ -95,14 +95,19 @@ const PriceCalculator = () => {
 
  // Diese Funktion bestimmt, ob ein bestimmter Tag deaktiviert werden soll
  const isDateDisabled = (day: Date): boolean => {
-  return bookingPeriods.some(period => {
-    const periodStart = startOfDay(period.start);
-    const periodEnd = startOfDay(addDays(period.end,-1)); 
-    const dayStart = startOfDay(day);
+  const today = startOfDay(new Date());
 
-    // Tage innerhalb eines gebuchten Zeitraums deaktivieren, aber An- und Abreisetage erlauben
-    return isAfter(dayStart, periodStart) && isBefore(dayStart, periodEnd);
-  });
+  return (
+    isBefore(day, today) || // Tage in der Vergangenheit deaktivieren
+    bookingPeriods.some(period => {
+      const periodStart = startOfDay(period.start);
+      const periodEnd = startOfDay(addDays(period.end, -1));
+      const dayStart = startOfDay(day);
+
+      // Tage innerhalb eines gebuchten Zeitraums deaktivieren, aber An- und Abreisetage erlauben
+      return isAfter(dayStart, periodStart) && isBefore(dayStart, periodEnd);
+    })
+  );
 };
 
   // Diese Funktion überprüft, ob ein ausgewählter Zeitraum über einen gebuchten Zeitraum hinausgeht
@@ -407,16 +412,19 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                initialFocus
-                mode="range"
-                defaultMonth={date?.from}
-                selected={date}
-                onSelect={handleDateChange}
-                numberOfMonths={2}
-                disabled={isDateDisabled}
-                className={cn("p-3 pointer-events-auto")}
-              />
+            <Calendar
+  initialFocus
+  mode="range"
+  defaultMonth={date?.from}
+  selected={date}
+  onSelect={handleDateChange}
+  numberOfMonths={2}
+  disabled={isDateDisabled}
+  className={cn(
+    "p-3 pointer-events-auto",
+    isDateBooked ? "bg-red-100" : "bg-green-100" // Dynamische Hintergrundfarbe
+  )}
+/>
             </PopoverContent>
           </Popover>
         </div>
