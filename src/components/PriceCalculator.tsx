@@ -1,3 +1,9 @@
+interface BookingPeriod {
+  start: Date;
+  end: Date;
+  name: string; // Name des Events
+}
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,11 +20,6 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Textarea } from "@/components/ui/textarea";
-
-interface BookingPeriod {
-  start: Date;
-  end: Date;
-}
 
 const PriceCalculator = () => {
   const { toast } = useToast();
@@ -68,20 +69,21 @@ const PriceCalculator = () => {
       const calendarId = "6gk8bbmgm01bk625432gb33tk0@group.calendar.google.com"; // Einruhr-Kalender-ID
       const apiKey = "AIzaSyBiD1VUk3DaVOZ2omR9T4xbr9k8vu4gS1c"; // Dein API-Schlüssel
       const timeMin = new Date().toISOString(); // Startzeitpunkt: heute
-      const timeMax = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(); // Endzeitpunkt: 30 Tage in der Zukunft
+      const timeMax = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(); // Endzeitpunkt: 90 Tage in der Zukunft
       const url = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`;
-  
+
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Fehler beim Abrufen der Kalenderdaten");
       }
-  
+
       const data = await response.json();
       const bookings = data.items.map((event: any) => ({
         start: new Date(event.start.date || event.start.dateTime),
         end: new Date(event.end.date || event.end.dateTime),
+        name: event.summary || "Unbekannt", // Extrahiere den Namen aus dem Event
       }));
-  
+
       setBookingPeriods(bookings);
     } catch (error) {
       console.error("Error fetching booked periods:", error);
@@ -460,7 +462,8 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                     {bookingPeriods.map((period, index) => (
                       <li key={index}>
                         {format(period.start, "dd.MM.yyyy", { locale: de })} -{" "}
-                        {format(addDays(period.end, -1), "dd.MM.yyyy", { locale: de })}
+                        {format(addDays(period.end, -1), "dd.MM.yyyy", { locale: de })}{" "}
+                        ({period.name})
                       </li>
                     ))}
                   </ul>
