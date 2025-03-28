@@ -64,13 +64,23 @@ const PriceCalculator = () => {
 
   const fetchBookedPeriods = async () => {
     try {
-      // Real booking data based on Google Calendar information
-      const bookings: BookingPeriod[] = [
-        { start: new Date(2025, 3, 13), end: new Date(2025, 3, 15) }, // Wannes: April 13-14
-        { start: new Date(2025, 3, 18), end: new Date(2025, 3, 20) }, // Magdalena: April 18-19
-        { start: new Date(2025, 3, 24), end: new Date(2025, 3, 27) }  // Antje: April 24-26
-      ];
-      
+      const calendarId = "6gk8bbmgm01bk625432gb33tk0@group.calendar.google.com"; // Einruhr-Kalender-ID
+      const apiKey = "AIzaSyBiD1VUk3DaVOZ2omR9T4xbr9k8vu4gS1c"; // Dein API-Schlüssel
+      const timeMin = new Date().toISOString(); // Startzeitpunkt: heute
+      const timeMax = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(); // Endzeitpunkt: 30 Tage in der Zukunft
+      const url = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`;
+  
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Fehler beim Abrufen der Kalenderdaten");
+      }
+  
+      const data = await response.json();
+      const bookings = data.items.map((event: any) => ({
+        start: new Date(event.start.date || event.start.dateTime),
+        end: new Date(event.end.date || event.end.dateTime),
+      }));
+  
       setBookingPeriods(bookings);
     } catch (error) {
       console.error("Error fetching booked periods:", error);
@@ -100,7 +110,7 @@ const PriceCalculator = () => {
   return (
     isBefore(day, today) || // Tage in der Vergangenheit deaktivieren
     bookingPeriods.some(period => {
-      const periodStart = startOfDay(period.start);
+      const periodStart = startOfDay(addDays(period.start, 0));
       const periodEnd = startOfDay(addDays(period.end, -1));
       const dayStart = startOfDay(day);
 
@@ -123,18 +133,22 @@ const PriceCalculator = () => {
       const periodEnd = startOfDay(period.end);
   
       // Überprüfung: Der Zeitraum darf nicht über den gebuchten Zeitraum hinausgehen oder exakt übereinstimmen
-      const overlapsStart = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodStart);
-      const overlapsEnd = isBefore(rangeEnd, periodEnd) && isAfter(rangeStart, periodEnd);
+      const overlapsStart = isBefore(rangeStart, addDays(periodEnd, -1)) && isAfter(rangeEnd, periodStart);
+      const overlapsEnd = isBefore(rangeEnd, periodEnd) && isAfter(rangeStart, periodStart);
       const fullyContains = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodEnd);
       const exactMatch = isSameDay(rangeStart, periodStart) && isSameDay(rangeEnd, addDays(period.end, -1));
   
-          // Logging der relevanten Variablen
-    console.log("rangeStart:", rangeStart);
-    console.log("periodStart:", periodStart);
-    console.log("rangeEnd:", rangeEnd);
-    console.log("periodEnd:", periodEnd);
-
-      return overlapsStart || overlapsEnd || fullyContains || exactMatch;
+      // Anpassung: Erlaube, dass rangeStart gleich periodEnd ist
+      const startsOnPeriodEnd = isSameDay(rangeStart, periodEnd);
+  
+      // Logging der relevanten Variablen
+      console.log("rangeStart:", rangeStart);
+      console.log("periodStart:", periodStart);
+      console.log("rangeEnd:", rangeEnd);
+      console.log("periodEnd:", periodEnd);
+  
+      // Rückgabebedingung angepasst, um startsOnPeriodEnd zu berücksichtigen
+      return (overlapsStart || overlapsEnd || fullyContains || exactMatch) && !startsOnPeriodEnd;
     });
   };
 
@@ -419,25 +433,40 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-  initialFocus
-  mode="range"
-  defaultMonth={date?.from}
-  selected={date}
-  onSelect={handleDateChange}
-  numberOfMonths={2}
-  disabled={isDateDisabled}
-  modifiersClassNames={{
-    selected: isDateBooked
-      ? "bg-red-200 text-red-800" // Ungültiger Zeitraum: hellrot
-      : "bg-green-200 text-green-800", // Gültiger Zeitraum: hellgrün
-    today: "font-bold underline", // Heute hervorheben
-  }}
-  classNames={{
-    day: "p-2 rounded-full", // Standard-Tage
-  }}
-/>
-            </PopoverContent>
+  <Calendar
+    initialFocus
+    mode="range"
+    defaultMonth={date?.from}
+    selected={date}
+    onSelect={handleDateChange}
+    numberOfMonths={2}
+    disabled={isDateDisabled}
+    modifiersClassNames={{
+      selected: isDateBooked
+        ? "bg-red-200 text-red-800" // Ungültiger Zeitraum: hellrot
+        : "bg-green-200 text-green-800", // Gültiger Zeitraum: hellgrün
+      today: "font-bold underline", // Heute hervorheben
+    }}
+    classNames={{
+      day: "p-2 rounded-full", // Standard-Tage
+    }}
+  />
+  <div className="mt-4 p-4 bg-gray-50 rounded-md">
+    <h3 className="font-medium text-lg mb-2 font-serif">Belegte Zeiträume der nächsten 90 Tage:</h3>
+    {bookingPeriods.length > 0 ? (
+      <ul className="list-disc pl-5 space-y-1 text-sm">
+        {bookingPeriods.map((period, index) => (
+          <li key={index}>
+            {format(period.start, "dd.MM.yyyy", { locale: de })} -{" "}
+            {format((addDays(period.end, -1)), "dd.MM.yyyy", { locale: de })}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-sm text-gray-500">Keine Belegungen gefunden.</p>
+    )}
+  </div>
+</PopoverContent>
           </Popover>
         </div>
 
