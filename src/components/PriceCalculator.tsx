@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,12 +8,17 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle, Mail, Phone, User, Copy } from "lucide-react";
-import { format, differenceInCalendarDays, addDays, isSameDay, startOfDay, isBefore, isAfter } from "date-fns";
+import { format, differenceInCalendarDays, addDays, isSameDay, startOfDay, isBefore, isAfter, parseISO } from "date-fns";
 import { de } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Textarea } from "@/components/ui/textarea";
+
+interface BookingPeriod {
+  start: Date;
+  end: Date;
+}
 
 const PriceCalculator = () => {
   const { toast } = useToast();
@@ -37,74 +41,38 @@ const PriceCalculator = () => {
     cleaningPrice: number;
   } | null>(null);
   const [isDateBooked, setIsDateBooked] = useState<boolean>(false);
-  const [bookedDates, setBookedDates] = useState<Date[]>([]);
+  const [bookingPeriods, setBookingPeriods] = useState<BookingPeriod[]>([]);
   const [emailTemplate, setEmailTemplate] = useState<string>("");
   const [showEmailTemplate, setShowEmailTemplate] = useState<boolean>(false);
   
-  // Contact form fields
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [contactMessage, setContactMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Price constants
-  const FIRST_NIGHT_PRICE = 59;              // €59 für die erste Nacht
-  const ADDITIONAL_NIGHT_PRICE = 50;         // €50 für jede weitere Nacht
-  const BREAKFAST_FIRST_PRICE = 14;          // €14 für das erste Frühstück
-  const BREAKFAST_ADDITIONAL_PRICE = 6;      // €6 für jedes weitere Frühstück
-  const LAUNDRY_PACKAGE_PRICE = 7;           // €7 pro Wäschepaket pro Person
-  const CLEANING_FEE = 25;                   // €25 für die Endreinigung
+  const FIRST_NIGHT_PRICE = 59;
+  const ADDITIONAL_NIGHT_PRICE = 50;
+  const BREAKFAST_FIRST_PRICE = 14;
+  const BREAKFAST_ADDITIONAL_PRICE = 6;
+  const LAUNDRY_PACKAGE_PRICE = 7;
+  const CLEANING_FEE = 25;
 
   useEffect(() => {
-    // This would normally fetch data from the Google Calendar API
-    // For now, let's just set some example booked dates
-    fetchBookedDates();
+    fetchBookedPeriods();
   }, []);
 
-  // Fetch booked dates from Google Calendar API
-  const fetchBookedDates = async () => {
+  const fetchBookedPeriods = async () => {
     try {
-      // In a real implementation, this would be an API call to get booked dates
-      // For demo purposes only - these dates should match the Google Calendar
-      const today = new Date();
+      const bookings: BookingPeriod[] = [
+        { start: new Date(2024, 3, 13), end: new Date(2024, 3, 15) },
+        { start: new Date(2024, 3, 18), end: new Date(2024, 3, 20) },
+        { start: new Date(2024, 3, 24), end: new Date(2024, 3, 27) }
+      ];
       
-      // Current month bookings - April 2024 examples
-      const firstBlockStart = new Date(2024, 3, 5);  // April 5th
-      const firstBlockEnd = new Date(2024, 3, 10);   // April 10th
-      
-      const secondBlockStart = new Date(2024, 3, 15); // April 15th
-      const secondBlockEnd = new Date(2024, 3, 22);   // April 22nd
-      
-      const thirdBlockStart = new Date(2024, 3, 25);  // April 25th
-      const thirdBlockEnd = new Date(2024, 3, 28);    // April 28th
-      
-      // Next month bookings - May 2024 examples
-      const mayBlockStart = new Date(2024, 4, 10);    // May 10th
-      const mayBlockEnd = new Date(2024, 4, 15);      // May 15th
-      
-      // Generate all dates in the booked ranges
-      const bookedDatesArray: Date[] = [];
-      
-      // Function to add all dates in a range to the array
-      const addDateRange = (start: Date, end: Date) => {
-        let currentDate = new Date(start);
-        while (currentDate <= end) {
-          bookedDatesArray.push(new Date(currentDate));
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-      };
-      
-      // Add all booked date ranges
-      addDateRange(firstBlockStart, firstBlockEnd);
-      addDateRange(secondBlockStart, secondBlockEnd);
-      addDateRange(thirdBlockStart, thirdBlockEnd);
-      addDateRange(mayBlockStart, mayBlockEnd);
-      
-      setBookedDates(bookedDatesArray);
-      
+      setBookingPeriods(bookings);
     } catch (error) {
-      console.error("Error fetching booked dates:", error);
+      console.error("Error fetching booked periods:", error);
       toast({
         title: "Fehler",
         description: "Die Belegungsdaten konnten nicht geladen werden.",
@@ -113,54 +81,59 @@ const PriceCalculator = () => {
     }
   };
 
-  // Check if a date is in the booking range but not on the exact start/end dates
-  const isDayBooked = (day: Date) => {
-    const dayStart = startOfDay(new Date(day));
+  const isDateDisabled = (day: Date) => {
+    if (isBefore(day, startOfDay(new Date()))) return false;
     
-    // Check if this exact day is in the booked dates array
-    return bookedDates.some(bookedDate => 
-      isSameDay(dayStart, bookedDate)
-    );
+    return bookingPeriods.some(period => {
+      const periodStart = startOfDay(period.start);
+      const periodEnd = startOfDay(period.end);
+      const dayStart = startOfDay(new Date(day));
+      
+      return isAfter(dayStart, periodStart) && isBefore(dayStart, periodEnd);
+    });
   };
 
-  // Check if the selected date range overlaps with booked dates
-  const isRangeOverlappingBookings = (from: Date, to: Date) => {
+  const isRangeOverlappingBookings = (from: Date, to: Date): boolean => {
     if (!from || !to) return false;
     
-    // Check every day in the range except the last day (checkout day)
-    let current = startOfDay(new Date(from));
-    const end = startOfDay(new Date(to));
+    const rangeStart = startOfDay(from);
+    const rangeEnd = startOfDay(to);
     
-    while (isBefore(current, end)) {
-      if (isDayBooked(current)) {
-        return true;
-      }
-      current = addDays(current, 1);
-    }
-    
-    return false;
+    return bookingPeriods.some(period => {
+      const periodStart = startOfDay(period.start);
+      const periodEnd = startOfDay(period.end);
+      
+      const startsInPeriod = isAfter(rangeStart, periodStart) && isBefore(rangeStart, periodEnd);
+      const endsInPeriod = isAfter(rangeEnd, periodStart) && isBefore(rangeEnd, periodEnd);
+      const containsPeriod = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodEnd);
+      
+      return startsInPeriod || endsInPeriod || containsPeriod;
+    });
   };
 
-  useEffect(() => {
-    // Check if the selected date range overlaps with booked dates
-    if (date?.from && date?.to) {
-      const isOverlapping = isRangeOverlappingBookings(date.from, date.to);
-      setIsDateBooked(isOverlapping);
-      
-      // Show warning toast if overlapping
-      if (isOverlapping) {
-        toast({
-          title: "Belegung",
-          description: "Leider ist zu diesem Zeitraum die Wohnung schon reserviert.",
-          variant: "destructive",
-        });
-      }
+  const handleDateChange = (selectedRange: DateRange | undefined) => {
+    if (!selectedRange || !selectedRange.from || !selectedRange.to) {
+      setDate(selectedRange);
+      setIsDateBooked(false);
+      return;
+    }
+    
+    const isOverlapping = isRangeOverlappingBookings(selectedRange.from, selectedRange.to);
+    
+    if (isOverlapping) {
+      setIsDateBooked(true);
+      toast({
+        title: "Belegung",
+        description: "Leider ist zu diesem Zeitraum die Wohnung schon reserviert.",
+        variant: "destructive",
+      });
     } else {
       setIsDateBooked(false);
     }
-  }, [date, bookedDates]);
+    
+    setDate(selectedRange);
+  };
 
-  // Generate email template whenever relevant data changes
   useEffect(() => {
     if (date?.from && date?.to) {
       const arrivalDateStr = format(date.from, "dd.MM.yyyy", { locale: de });
@@ -249,35 +222,28 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
 
     const numNights = Math.max(1, differenceInCalendarDays(date.to, date.from));
     
-    // Berechnung des Grundpreises: 59€ für erste Nacht, 50€ für jede weitere
     const firstNightPrice = FIRST_NIGHT_PRICE;
     const additionalNightsCount = numNights - 1;
     const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * ADDITIONAL_NIGHT_PRICE : 0;
     
-    // Frühstückspreis (falls ausgewählt) - KORRIGIERTE BERECHNUNG
     let breakfastPrice = 0;
     let breakfastFirstPersonPrice = 0;
     let breakfastAdditionalPersonsPrice = 0;
     
     if (breakfastCount > 0) {
-      // Erstes Frühstück kostet 14€, jedes weitere 6€
       breakfastFirstPersonPrice = BREAKFAST_FIRST_PRICE;
       
       if (breakfastCount > 1) {
         breakfastAdditionalPersonsPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
       }
       
-      // Multipliziere mit der Anzahl der Tage
       breakfastPrice = (breakfastFirstPersonPrice + breakfastAdditionalPersonsPrice) * numNights;
     }
     
-    // Wäschepaketpreis (pro Person)
     const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE;
     
-    // Endreinigung
     const cleaningPrice = CLEANING_FEE;
     
-    // Gesamtpreis
     const total = firstNightPrice + additionalNightsPrice + breakfastPrice + laundryPrice + cleaningPrice;
     
     setTotalPrice(total);
@@ -292,7 +258,6 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       cleaningPrice
     });
     
-    // Show email template after price calculation
     setShowEmailTemplate(true);
 
     toast({
@@ -322,29 +287,23 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
 
     setIsSubmitting(true);
     
-    // Format dates for the email body
     const arrivalDateStr = date.from ? format(date.from, "dd.MM.yyyy", { locale: de }) : "";
     const departureDateStr = date.to ? format(date.to, "dd.MM.yyyy", { locale: de }) : "";
     
-    // Build the mailto link with the form data
     const subject = encodeURIComponent("Einruhr - Reservierungsanfrage");
     
-    // Build the body of the email
     let body = encodeURIComponent(
       `Hallo Herr Mertens,\n\nbitte bestätigen Sie, dass die Wohnung Waldoase Mertens in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.\nWir würden sie gerne für diesen Zeitraum reservieren.`
     );
     
-    // Add information about the laundry package if selected
     if (laundryPackages > 0) {
       body += encodeURIComponent(`\nWir buchen das Wäschepaket für ${laundryPackages} Personen.`);
     }
     
-    // Add breakfast information if selected
     if (breakfastCount > 0) {
       body += encodeURIComponent(`\nWir möchten gerne ${breakfastCount} Frühstück dazu buchen.`);
     }
     
-    // Add price details if available
     if (priceDetails && totalPrice) {
       body += encodeURIComponent(`\n\nPreisdetails:\n- Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}`);
       
@@ -366,26 +325,21 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       body += encodeURIComponent(`\n- Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}\n- Gesamtpreis: €${totalPrice.toFixed(2)}`);
     }
     
-    // Add the message if provided
     if (contactMessage) {
       body += encodeURIComponent(`\n\nWeitere Informationen:\n${contactMessage}`);
     }
     
-    // Add sender's contact information
     body += encodeURIComponent(`\n\nMit freundlichen Grüßen,\n${contactName}\nTel: ${contactPhone}\nEmail: ${contactEmail}`);
     
-    // Create and open the mailto link
     const mailtoLink = `mailto:einruhr.mertens@web.de?subject=${subject}&body=${body}`;
     window.location.href = mailtoLink;
     
-    // Show a confirmation toast
     toast({
       title: "E-Mail wird geöffnet",
       description: "Ihr E-Mail-Programm sollte sich jetzt öffnen. Bitte senden Sie die vorbereitete Nachricht ab.",
       variant: "default",
     });
     
-    // Reset the form submission state after a delay
     setTimeout(() => {
       setIsSubmitting(false);
     }, 1500);
@@ -405,7 +359,6 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
         <CardTitle className="text-2xl font-serif">Preisrechner & Anfrage</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Date Range Picker */}
         <div className="space-y-2">
           <Label>Anreise- und Abreisedatum</Label>
           <Popover>
@@ -439,15 +392,9 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                 mode="range"
                 defaultMonth={date?.from}
                 selected={date}
-                onSelect={setDate}
+                onSelect={handleDateChange}
                 numberOfMonths={2}
-                disabled={(day) => {
-                  // Prevent selecting dates in the past
-                  if (isBefore(day, startOfDay(new Date()))) return true;
-                  
-                  // Disable days that are booked
-                  return isDayBooked(day);
-                }}
+                disabled={isDateDisabled}
                 className={cn("p-3 pointer-events-auto")}
               />
             </PopoverContent>
@@ -463,7 +410,6 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
           </Alert>
         )}
 
-        {/* Guests */}
         <div className="space-y-2">
           <Label htmlFor="guests">Anzahl der Personen</Label>
           <div className="flex items-center">
@@ -480,7 +426,6 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
           </div>
         </div>
 
-        {/* Laundry Packages */}
         <div className="space-y-2">
           <Label htmlFor="laundry">Anzahl der Wäschepakete</Label>
           <div className="flex items-center">
@@ -498,7 +443,6 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
           <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €7 pro Person und enthält Handtücher und Bettwäsche.</p>
         </div>
 
-        {/* Breakfast */}
         <div className="space-y-2">
           <Label htmlFor="breakfast">Anzahl Frühstück</Label>
           <div className="flex items-center">
@@ -518,7 +462,6 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
 
         <Separator className="my-4" />
 
-        {/* Contact Information */}
         <div className="space-y-2">
           <h3 className="text-lg font-medium">Ihre Kontaktdaten</h3>
           <p className="text-sm text-muted-foreground mb-4">
