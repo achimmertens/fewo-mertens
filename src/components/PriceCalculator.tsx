@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,7 +37,7 @@ const PriceCalculator = () => {
     additionalNightsCount: number;
     breakfastPrice: number;
     breakfastFirstPersonPrice: number;
-    breakfastAdditionalPersonsPrice: number;
+    breakfastAdditionalPrice: number;
     laundryPrice: number;
     cleaningPrice: number;
   } | null>(null);
@@ -64,10 +65,11 @@ const PriceCalculator = () => {
 
   const fetchBookedPeriods = async () => {
     try {
+      // Real booking data based on Google Calendar information
       const bookings: BookingPeriod[] = [
-        { start: new Date(2024, 3, 13), end: new Date(2024, 3, 15) },
-        { start: new Date(2024, 3, 18), end: new Date(2024, 3, 20) },
-        { start: new Date(2024, 3, 24), end: new Date(2024, 3, 27) }
+        { start: new Date(2024, 3, 13), end: new Date(2024, 3, 15) }, // Wannes: April 13-14
+        { start: new Date(2024, 3, 18), end: new Date(2024, 3, 20) }, // Magdalena: April 18-19
+        { start: new Date(2024, 3, 24), end: new Date(2024, 3, 27) }  // Antje: April 24-26
       ];
       
       setBookingPeriods(bookings);
@@ -81,9 +83,16 @@ const PriceCalculator = () => {
     }
   };
 
-  const isDateDisabled = (day: Date) => {
-    if (isBefore(day, startOfDay(new Date()))) return false;
-    
+  // This function determines if a specific day is an arrival or departure date
+  const isArrivalOrDepartureDate = (day: Date): boolean => {
+    return bookingPeriods.some(period => 
+      isSameDay(startOfDay(day), startOfDay(period.start)) || 
+      isSameDay(startOfDay(day), startOfDay(period.end))
+    );
+  };
+
+  // This function determines if a specific day is inside a booking period (not including arrival/departure)
+  const isDayWithinBooking = (day: Date): boolean => {
     return bookingPeriods.some(period => {
       const periodStart = startOfDay(period.start);
       const periodEnd = startOfDay(period.end);
@@ -93,21 +102,54 @@ const PriceCalculator = () => {
     });
   };
 
+  // This checks if the date is disabled in the calendar
+  const isDateDisabled = (day: Date) => {
+    // Allow selection of dates in the past for historical analysis
+    // if (isBefore(day, startOfDay(new Date()))) return true;
+    
+    // Disable days that are within booking periods (not arrival or departure dates)
+    return isDayWithinBooking(day);
+  };
+
+  // This checks if a selected date range overlaps with any booking
   const isRangeOverlappingBookings = (from: Date, to: Date): boolean => {
     if (!from || !to) return false;
     
     const rangeStart = startOfDay(from);
     const rangeEnd = startOfDay(to);
     
+    // Check if any day in the selected range (excluding endpoints) is booked
+    let currentDate = addDays(rangeStart, 1);
+    while (isBefore(currentDate, rangeEnd)) {
+      if (isDayWithinBooking(currentDate)) {
+        return true;
+      }
+      currentDate = addDays(currentDate, 1);
+    }
+    
+    // Check if selected range overlaps with any booking period
     return bookingPeriods.some(period => {
       const periodStart = startOfDay(period.start);
       const periodEnd = startOfDay(period.end);
       
-      const startsInPeriod = isAfter(rangeStart, periodStart) && isBefore(rangeStart, periodEnd);
-      const endsInPeriod = isAfter(rangeEnd, periodStart) && isBefore(rangeEnd, periodEnd);
-      const containsPeriod = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodEnd);
+      // If selected range completely contains a booking period
+      if (isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodEnd)) {
+        return true;
+      }
       
-      return startsInPeriod || endsInPeriod || containsPeriod;
+      // If selected range starts during a booking (not on arrival day)
+      if (isAfter(rangeStart, periodStart) && isBefore(rangeStart, periodEnd) && 
+          !isSameDay(rangeStart, periodEnd)) {
+        return true;
+      }
+      
+      // If selected range ends during a booking (not on departure day)
+      if (isAfter(rangeEnd, periodStart) && isBefore(rangeEnd, periodEnd) && 
+          !isSameDay(rangeEnd, periodStart)) {
+        return true;
+      }
+      
+      return false;
     });
   };
 
@@ -156,7 +198,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
         template += `\nWir möchten gerne ${breakfastCount} Frühstück dazu buchen.`;
       }
       
-      if (priceDetails) {
+      if (priceDetails && totalPrice) {
         template += `\n\nPreisdetails:
 - Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}`;
         
@@ -168,8 +210,9 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
         if (priceDetails.breakfastPrice > 0) {
           template += `
 - Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`;
+          
           if (breakfastCount > 1) {
-            template += ` (Erstes Frühstück: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)})`;
+            template += ` (Erstes Frühstück: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPrice.toFixed(2)})`;
           }
         }
         
@@ -180,7 +223,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
         
         template += `
 - Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}
-- Gesamtpreis: €${totalPrice?.toFixed(2)}`;
+- Gesamtpreis: €${totalPrice.toFixed(2)}`;
       }
       
       if (contactMessage) {
@@ -214,7 +257,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     if (isDateBooked) {
       toast({
         title: "Achtung",
-        description: "Leider ist zu diesem Zeitraum die Wohnung schon reserviert.",
+        description: "Leider ist zu diesem Zeitraum die Wohnung Waldoase Mertens in Einruhr schon reserviert.",
         variant: "destructive",
       });
       return;
@@ -226,18 +269,21 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     const additionalNightsCount = numNights - 1;
     const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * ADDITIONAL_NIGHT_PRICE : 0;
     
+    // Fix for breakfast price calculation
     let breakfastPrice = 0;
     let breakfastFirstPersonPrice = 0;
-    let breakfastAdditionalPersonsPrice = 0;
+    let breakfastAdditionalPrice = 0;
     
     if (breakfastCount > 0) {
       breakfastFirstPersonPrice = BREAKFAST_FIRST_PRICE;
       
       if (breakfastCount > 1) {
-        breakfastAdditionalPersonsPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
+        // The correct calculation: 6€ for EACH additional breakfast
+        breakfastAdditionalPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
       }
       
-      breakfastPrice = (breakfastFirstPersonPrice + breakfastAdditionalPersonsPrice) * numNights;
+      // Total breakfast price for all nights
+      breakfastPrice = breakfastFirstPersonPrice + breakfastAdditionalPrice;
     }
     
     const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE;
@@ -253,7 +299,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       additionalNightsCount,
       breakfastPrice,
       breakfastFirstPersonPrice,
-      breakfastAdditionalPersonsPrice,
+      breakfastAdditionalPrice,
       laundryPrice,
       cleaningPrice
     });
@@ -314,7 +360,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       if (priceDetails.breakfastPrice > 0) {
         body += encodeURIComponent(`\n- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`);
         if (breakfastCount > 1) {
-          body += encodeURIComponent(` (Erstes Frühstück: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)})`);
+          body += encodeURIComponent(` (Erstes Frühstück: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPrice.toFixed(2)})`);
         }
       }
       
