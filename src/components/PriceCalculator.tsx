@@ -113,21 +113,28 @@ const PriceCalculator = () => {
   // Diese Funktion überprüft, ob ein ausgewählter Zeitraum über einen gebuchten Zeitraum hinausgeht
   const isRangeOverlappingBookings = (from: Date, to: Date): boolean => {
     if (!from || !to) return false;
-
+  
     const rangeStart = startOfDay(from);
     const rangeEnd = startOfDay(to);
-
-    // Überprüfen, ob der Zeitraum über einen gebuchten Zeitraum hinausgeht
+  
+    // Überprüfen, ob der Zeitraum über einen gebuchten Zeitraum hinausgeht oder exakt übereinstimmt
     return bookingPeriods.some(period => {
       const periodStart = startOfDay(period.start);
       const periodEnd = startOfDay(period.end);
-
-      // Überprüfung: Der Zeitraum darf nicht über den gebuchten Zeitraum hinausgehen
+  
+      // Überprüfung: Der Zeitraum darf nicht über den gebuchten Zeitraum hinausgehen oder exakt übereinstimmen
       const overlapsStart = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodStart);
       const overlapsEnd = isBefore(rangeEnd, periodEnd) && isAfter(rangeStart, periodEnd);
       const fullyContains = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodEnd);
+      const exactMatch = isSameDay(rangeStart, periodStart) && isSameDay(rangeEnd, addDays(period.end, -1));
+  
+          // Logging der relevanten Variablen
+    console.log("rangeStart:", rangeStart);
+    console.log("periodStart:", periodStart);
+    console.log("rangeEnd:", rangeEnd);
+    console.log("periodEnd:", periodEnd);
 
-      return overlapsStart || overlapsEnd || fullyContains;
+      return overlapsStart || overlapsEnd || fullyContains || exactMatch;
     });
   };
 
