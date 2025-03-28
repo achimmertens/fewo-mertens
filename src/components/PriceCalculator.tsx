@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -67,9 +66,9 @@ const PriceCalculator = () => {
     try {
       // Real booking data based on Google Calendar information
       const bookings: BookingPeriod[] = [
-        { start: new Date(2024, 3, 13), end: new Date(2024, 3, 15) }, // Wannes: April 13-14
-        { start: new Date(2024, 3, 18), end: new Date(2024, 3, 20) }, // Magdalena: April 18-19
-        { start: new Date(2024, 3, 24), end: new Date(2024, 3, 27) }  // Antje: April 24-26
+        { start: new Date(2025, 3, 13), end: new Date(2025, 3, 15) }, // Wannes: April 13-14
+        { start: new Date(2025, 3, 18), end: new Date(2025, 3, 20) }, // Magdalena: April 18-19
+        { start: new Date(2025, 3, 24), end: new Date(2025, 3, 27) }  // Antje: April 24-26
       ];
       
       setBookingPeriods(bookings);
@@ -83,82 +82,60 @@ const PriceCalculator = () => {
     }
   };
 
-  // This function determines if a specific day is an arrival or departure date
-  const isArrivalOrDepartureDate = (day: Date): boolean => {
-    return bookingPeriods.some(period => 
-      isSameDay(startOfDay(day), startOfDay(period.start)) || 
-      isSameDay(startOfDay(day), startOfDay(period.end))
-    );
-  };
-
-  // This function determines if a specific day is inside a booking period (not including arrival/departure)
+  // Diese Funktion bestimmt, ob ein bestimmter Tag innerhalb eines gebuchten Zeitraums liegt (ohne An- und Abreisetage)
   const isDayWithinBooking = (day: Date): boolean => {
     return bookingPeriods.some(period => {
       const periodStart = startOfDay(period.start);
       const periodEnd = startOfDay(period.end);
-      const dayStart = startOfDay(new Date(day));
-      
+      const dayStart = startOfDay(day);
+
       return isAfter(dayStart, periodStart) && isBefore(dayStart, periodEnd);
     });
   };
 
-  // This checks if the date is disabled in the calendar
-  const isDateDisabled = (day: Date) => {
-    // Disable days that are within booking periods (not arrival or departure dates)
-    return isDayWithinBooking(day);
-  };
+ // Diese Funktion bestimmt, ob ein bestimmter Tag deaktiviert werden soll
+ const isDateDisabled = (day: Date): boolean => {
+  return bookingPeriods.some(period => {
+    const periodStart = startOfDay(period.start);
+    const periodEnd = startOfDay(addDays(period.end,-1)); 
+    const dayStart = startOfDay(day);
 
-  // This checks if a selected date range overlaps with any booking
+    // Tage innerhalb eines gebuchten Zeitraums deaktivieren, aber An- und Abreisetage erlauben
+    return isAfter(dayStart, periodStart) && isBefore(dayStart, periodEnd);
+  });
+};
+
+  // Diese Funktion überprüft, ob ein ausgewählter Zeitraum über einen gebuchten Zeitraum hinausgeht
   const isRangeOverlappingBookings = (from: Date, to: Date): boolean => {
     if (!from || !to) return false;
-    
+
     const rangeStart = startOfDay(from);
     const rangeEnd = startOfDay(to);
-    
-    // Check if any day in the selected range (excluding endpoints) is booked
-    let currentDate = addDays(rangeStart, 1);
-    while (isBefore(currentDate, rangeEnd)) {
-      if (isDayWithinBooking(currentDate)) {
-        return true;
-      }
-      currentDate = addDays(currentDate, 1);
-    }
-    
-    // Check if selected range overlaps with any booking period
+
+    // Überprüfen, ob der Zeitraum über einen gebuchten Zeitraum hinausgeht
     return bookingPeriods.some(period => {
       const periodStart = startOfDay(period.start);
       const periodEnd = startOfDay(period.end);
-      
-      // If selected range completely contains a booking period
-      if (isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodEnd)) {
-        return true;
-      }
-      
-      // If selected range starts during a booking (not on arrival day)
-      if (isAfter(rangeStart, periodStart) && isBefore(rangeStart, periodEnd) && 
-          !isSameDay(rangeStart, periodEnd)) {
-        return true;
-      }
-      
-      // If selected range ends during a booking (not on departure day)
-      if (isAfter(rangeEnd, periodStart) && isBefore(rangeEnd, periodEnd) && 
-          !isSameDay(rangeEnd, periodStart)) {
-        return true;
-      }
-      
-      return false;
+
+      // Überprüfung: Der Zeitraum darf nicht über den gebuchten Zeitraum hinausgehen
+      const overlapsStart = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodStart);
+      const overlapsEnd = isBefore(rangeEnd, periodEnd) && isAfter(rangeStart, periodEnd);
+      const fullyContains = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodEnd);
+
+      return overlapsStart || overlapsEnd || fullyContains;
     });
   };
 
+  // Anpassung der Funktion handleDateChange
   const handleDateChange = (selectedRange: DateRange | undefined) => {
     if (!selectedRange || !selectedRange.from || !selectedRange.to) {
       setDate(selectedRange);
       setIsDateBooked(false);
       return;
     }
-    
+
     const isOverlapping = isRangeOverlappingBookings(selectedRange.from, selectedRange.to);
-    
+
     if (isOverlapping) {
       setIsDateBooked(true);
       toast({
@@ -169,7 +146,7 @@ const PriceCalculator = () => {
     } else {
       setIsDateBooked(false);
     }
-    
+
     setDate(selectedRange);
   };
 
