@@ -420,10 +420,15 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
   onSelect={handleDateChange}
   numberOfMonths={2}
   disabled={isDateDisabled}
-  className={cn(
-    "p-3 pointer-events-auto",
-    isDateBooked ? "bg-red-100" : "bg-green-100" // Dynamische Hintergrundfarbe
-  )}
+  modifiersClassNames={{
+    selected: isDateBooked
+      ? "bg-red-200 text-red-800" // Ungültiger Zeitraum: hellrot
+      : "bg-green-200 text-green-800", // Gültiger Zeitraum: hellgrün
+    today: "font-bold underline", // Heute hervorheben
+  }}
+  classNames={{
+    day: "p-2 rounded-full", // Standard-Tage
+  }}
 />
             </PopoverContent>
           </Popover>
