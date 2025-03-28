@@ -22,6 +22,7 @@ interface BookingPeriod {
 
 const PriceCalculator = () => {
   const { toast } = useToast();
+  const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
   const [date, setDate] = useState<DateRange | undefined>({
     from: undefined,
     to: undefined,
@@ -407,7 +408,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <Label>Anreise- und Abreisedatum</Label>
-          <Popover>
+          <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
@@ -415,6 +416,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                   "w-full justify-start text-left font-normal",
                   !date && "text-muted-foreground"
                 )}
+                onClick={() => setIsPopoverOpen(true)} // Öffnet den Popover
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {date?.from ? (
@@ -433,40 +435,48 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
-  <Calendar
-    initialFocus
-    mode="range"
-    defaultMonth={date?.from}
-    selected={date}
-    onSelect={handleDateChange}
-    numberOfMonths={2}
-    disabled={isDateDisabled}
-    modifiersClassNames={{
-      selected: isDateBooked
-        ? "bg-red-200 text-red-800" // Ungültiger Zeitraum: hellrot
-        : "bg-green-200 text-green-800", // Gültiger Zeitraum: hellgrün
-      today: "font-bold underline", // Heute hervorheben
-    }}
-    classNames={{
-      day: "p-2 rounded-full", // Standard-Tage
-    }}
-  />
-  <div className="mt-4 p-4 bg-gray-50 rounded-md">
-    <h3 className="font-medium text-lg mb-2 font-serif">Belegte Zeiträume der nächsten 90 Tage:</h3>
-    {bookingPeriods.length > 0 ? (
-      <ul className="list-disc pl-5 space-y-1 text-sm">
-        {bookingPeriods.map((period, index) => (
-          <li key={index}>
-            {format(period.start, "dd.MM.yyyy", { locale: de })} -{" "}
-            {format((addDays(period.end, -1)), "dd.MM.yyyy", { locale: de })}
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <p className="text-sm text-gray-500">Keine Belegungen gefunden.</p>
-    )}
-  </div>
-</PopoverContent>
+              <Calendar
+                initialFocus
+                mode="range"
+                defaultMonth={date?.from}
+                selected={date}
+                onSelect={handleDateChange}
+                numberOfMonths={2}
+                disabled={isDateDisabled}
+                modifiersClassNames={{
+                  selected: isDateBooked
+                    ? "bg-red-200 text-red-800" // Ungültiger Zeitraum: hellrot
+                    : "bg-green-200 text-green-800", // Gültiger Zeitraum: hellgrün
+                  today: "font-bold underline", // Heute hervorheben
+                }}
+                classNames={{
+                  day: "p-2 rounded-full", // Standard-Tage
+                }}
+              />
+              <div className="mt-4 p-4 bg-gray-50 rounded-md">
+                <h3 className="font-medium text-lg mb-2 font-serif">Belegte Zeiträume der nächsten 90 Tage:</h3>
+                {bookingPeriods.length > 0 ? (
+                  <ul className="list-disc pl-5 space-y-1 text-sm">
+                    {bookingPeriods.map((period, index) => (
+                      <li key={index}>
+                        {format(period.start, "dd.MM.yyyy", { locale: de })} -{" "}
+                        {format(addDays(period.end, -1), "dd.MM.yyyy", { locale: de })}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-gray-500">Keine Belegungen gefunden.</p>
+                )}
+              </div>
+              <div className="flex justify-end p-4">
+                <Button
+                  onClick={() => setIsPopoverOpen(false)} // Schließt den Popover
+                  className="bg-forest-600 hover:bg-forest-700 text-white"
+                >
+                  OK
+                </Button>
+              </div>
+            </PopoverContent>
           </Popover>
         </div>
 
