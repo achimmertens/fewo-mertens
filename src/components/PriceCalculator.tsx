@@ -218,7 +218,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
         
         if (priceDetails.laundryPrice > 0) {
           template += `
-- Wäschepakete: €${priceDetails.laundryPrice.toFixed(2)}`;
+- Wäschepakete (${laundryPackages}x): €${priceDetails.laundryPrice.toFixed(2)}`;
         }
         
         template += `
@@ -670,11 +670,17 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                 </>
               )}
               {priceDetails.laundryPrice > 0 && (
-                <div className="flex justify-between">
-                  <span>Wäschepakete:</span>
-                  <span>€{priceDetails.laundryPrice.toFixed(2)}</span>
-                </div>
-              )}
+  <>
+    <div className="flex justify-between">
+      <span>Wäschepakete ({laundryPackages}x):</span>
+      <span>€{priceDetails.laundryPrice.toFixed(2)}</span>
+    </div>
+    <div className="flex justify-between text-xs text-gray-500 pl-4">
+      <span>€7 pro Paket</span>
+      <span></span>
+    </div>
+  </>
+)}
               <div className="flex justify-between">
                 <span>Endreinigung:</span>
                 <span>€{priceDetails.cleaningPrice.toFixed(2)}</span>
