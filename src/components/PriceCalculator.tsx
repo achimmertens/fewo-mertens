@@ -436,7 +436,14 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent
+              className="w-auto p-0"
+              align="start"
+              side="bottom" // Standardmäßig unten anzeigen
+              sideOffset={8} // Abstand vom Trigger-Element
+              alignOffset={0} // Zentriert ausrichten
+              avoidCollisions={true} // Verhindert, dass das Fenster aus dem Bildschirm läuft
+            >
               <Calendar
                 initialFocus
                 mode="range"
