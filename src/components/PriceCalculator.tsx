@@ -104,9 +104,6 @@ const PriceCalculator = () => {
 
   // This checks if the date is disabled in the calendar
   const isDateDisabled = (day: Date) => {
-    // Allow selection of dates in the past for historical analysis
-    // if (isBefore(day, startOfDay(new Date()))) return true;
-    
     // Disable days that are within booking periods (not arrival or departure dates)
     return isDayWithinBooking(day);
   };
@@ -638,7 +635,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                     <div className="flex justify-between text-xs text-gray-500 pl-4">
                       <span>
                         (Erstes Frühstück: €{priceDetails.breakfastFirstPersonPrice.toFixed(2)}, 
-                        {breakfastCount > 1 ? ` ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPersonsPrice.toFixed(2)}` : ""}
+                        {breakfastCount > 1 ? ` ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPrice.toFixed(2)}` : ""}
                         )
                       </span>
                       <span></span>
