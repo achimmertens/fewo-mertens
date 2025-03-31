@@ -60,7 +60,7 @@ const ApartmentPage = () => {
                     </li>
                     <li className="flex items-center">
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
-                      French Press für Kaffee
+                      French Press + Kaffee
                     </li>
                     <li className="flex items-center">
                       <CheckSquare className="h-5 w-5 text-forest-600 mr-2" />
