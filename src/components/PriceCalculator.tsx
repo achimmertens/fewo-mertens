@@ -191,7 +191,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       }
       
       if (breakfastCount > 0) {
-        template += `\nWir möchten gerne ${breakfastCount} Frühstück dazu buchen.`;
+        template += `\nWir möchten gerne ${breakfastCount} Frühstück anfragen.`;
       }
       
       if (priceDetails && totalPrice) {
@@ -340,7 +340,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     }
     
     if (breakfastCount > 0) {
-      body += encodeURIComponent(`\nWir möchten gerne ${breakfastCount} Frühstück dazu buchen.`);
+      body += encodeURIComponent(`\nWir möchten gerne ${breakfastCount} Frühstück anfragen.`);
     }
     
     if (priceDetails && totalPrice) {
@@ -596,7 +596,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
               />
             </div>
           )}
-          <p className="text-sm text-muted-foreground">Das erste Frühstück kostet €14, jedes weitere Frühstück kostet €6. Wir bieten ein einfaches Frühstück nach Rücksprache an.</p>
+          <p className="text-sm text-muted-foreground">Wir bieten ein einfaches Frühstück nach Rücksprache an. Das erste Frühstück kostet €14, jedes weitere Frühstück kostet €6.</p>
         </div>
 
         <Separator className="my-4" />

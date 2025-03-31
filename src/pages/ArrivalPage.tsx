@@ -1,4 +1,3 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,22 +19,7 @@ const ArrivalPage = () => {
 
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
-            <Card className="mb-8">
-              <CardContent className="p-6">
-                <div className="mt-8">
-                  <h3 className="text-xl font-serif font-medium text-forest-700 mb-4">
-                    Anfahrt
-                  </h3>
-                  <p className="mb-4">
-                    Unsere Ferienwohnung ist gut mit dem Auto erreichbar. Parkplätze stehen direkt am Haus zur Verfügung.
-                  </p>
-                  <p>
-                    Die nächsten größeren Bahnhöfe befinden sich in Aachen und Düren. Von dort aus fahren regelmäßig Busse nach Einruhr.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="mb-8">
+          <Card className="mb-8">
               <CardContent className="p-6">
                 <div className="flex items-start">
                   <MapPin className="h-6 w-6 text-forest-600 mr-4 mt-1 flex-shrink-0" />
@@ -60,6 +44,33 @@ const ArrivalPage = () => {
               </CardContent>
             </Card>
 
+            <Card className="mb-8">
+              <CardContent className="p-6">
+                <div className="mt-8">
+                  <h3 className="text-xl font-serif font-medium text-forest-700 mb-4">
+                    Anfahrt
+                  </h3>
+                  <p className="mb-4">
+                    Das Dorf Einruhr befindet sich in der Nordeifel (Nordrhein-Westfalen), direkt am Rursee/Obersee. Unsere Ferienwohnung ist gut mit dem Auto über die B266 erreichbar. Parkplätze stehen direkt am Haus zur Verfügung.
+                  </p>
+                  <p>
+                    Die nächsten größeren Bahnhöfe befinden sich in Aachen und Düren. Von dort aus fahren regelmäßig Busse nach Einruhr.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+
+
+            
+            {/* Neues Bild eingefügt */}
+            <div className="mb-8">
+              <img
+                src="https://einruhr.wordpress.com/wp-content/uploads/2025/03/einruhr_eifel.jpg"
+                alt="Einruhr Eifel"
+                className="w-full h-auto rounded-lg shadow-md"
+              />
+            </div>
             <div className="space-y-16">
               <div>
                 <img
