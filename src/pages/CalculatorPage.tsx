@@ -4,9 +4,50 @@ import Footer from "@/components/Footer";
 import PriceCalculator from "@/components/PriceCalculator";
 import GoogleCalendar from "@/components/GoogleCalendar";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Calendar } from "lucide-react";
+import { useEffect, useState } from "react";
+import { format, addDays } from "date-fns";
+import { de } from "date-fns/locale";
+
+interface BookingPeriod {
+  start: Date;
+  end: Date;
+  name: string;
+}
 
 const CalculatorPage = () => {
+  const [bookingPeriods, setBookingPeriods] = useState<BookingPeriod[]>([]);
+
+  useEffect(() => {
+    fetchBookedPeriods();
+  }, []);
+
+  const fetchBookedPeriods = async () => {
+    try {
+      const calendarId = "6gk8bbmgm01bk625432gb33tk0@group.calendar.google.com";
+      const apiKey = "AIzaSyBiD1VUk3DaVOZ2omR9T4xbr9k8vu4gS1c";
+      const timeMin = new Date().toISOString();
+      const timeMax = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
+      const url = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`;
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Fehler beim Abrufen der Kalenderdaten");
+      }
+
+      const data = await response.json();
+      const bookings = data.items.map((event: any) => ({
+        start: new Date(event.start.date || event.start.dateTime),
+        end: new Date(event.end.date || event.end.dateTime),
+        name: event.summary || "Unbekannt",
+      }));
+
+      setBookingPeriods(bookings);
+    } catch (error) {
+      console.error("Error fetching booked periods:", error);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -37,6 +78,26 @@ const CalculatorPage = () => {
               </p>
               
               <GoogleCalendar />
+              
+              <div className="mt-8 bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-medium text-lg mb-4 font-serif flex items-center">
+                  <Calendar className="mr-2 h-5 w-5 text-forest-600" />
+                  Belegte Zeiträume der nächsten 90 Tage:
+                </h3>
+                {bookingPeriods.length > 0 ? (
+                  <ul className="list-disc pl-5 space-y-1 text-sm">
+                    {bookingPeriods.map((period, index) => (
+                      <li key={index}>
+                        {format(period.start, "dd.MM.yyyy", { locale: de })} -{" "}
+                        {format(addDays(period.end, -1), "dd.MM.yyyy", { locale: de })}{" "}
+                        ({period.name})
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-gray-500">Daten werden geladen...</p>
+                )}
+              </div>
               
               <div className="mt-8">
                 <h2 className="text-2xl font-serif font-bold text-forest-700 mb-6">

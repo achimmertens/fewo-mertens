@@ -20,9 +20,12 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const PriceCalculator = () => {
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
   const [date, setDate] = useState<DateRange | undefined>({
     from: undefined,
@@ -95,7 +98,6 @@ const PriceCalculator = () => {
     }
   };
 
-  // Diese Funktion bestimmt, ob ein bestimmter Tag innerhalb eines gebuchten Zeitraums liegt (ohne An- und Abreisetage)
   const isDayWithinBooking = (day: Date): boolean => {
     return bookingPeriods.some(period => {
       const periodStart = startOfDay(period.start);
@@ -106,56 +108,47 @@ const PriceCalculator = () => {
     });
   };
 
- // Diese Funktion bestimmt, ob ein bestimmter Tag deaktiviert werden soll
- const isDateDisabled = (day: Date): boolean => {
-  const today = startOfDay(new Date());
+  const isDateDisabled = (day: Date): boolean => {
+    const today = startOfDay(new Date());
 
-  return (
-    isBefore(day, today) || // Tage in der Vergangenheit deaktivieren
-    bookingPeriods.some(period => {
-      const periodStart = startOfDay(addDays(period.start, 0));
-      const periodEnd = startOfDay(addDays(period.end, -1));
-      const dayStart = startOfDay(day);
+    return (
+      isBefore(day, today) || // Tage in der Vergangenheit deaktivieren
+      bookingPeriods.some(period => {
+        const periodStart = startOfDay(addDays(period.start, 0));
+        const periodEnd = startOfDay(addDays(period.end, -1));
+        const dayStart = startOfDay(day);
 
-      // Tage innerhalb eines gebuchten Zeitraums deaktivieren, aber An- und Abreisetage erlauben
-      return isAfter(dayStart, periodStart) && isBefore(dayStart, periodEnd);
-    })
-  );
-};
+        return isAfter(dayStart, periodStart) && isBefore(dayStart, periodEnd);
+      })
+    );
+  };
 
-  // Diese Funktion überprüft, ob ein ausgewählter Zeitraum über einen gebuchten Zeitraum hinausgeht
   const isRangeOverlappingBookings = (from: Date, to: Date): boolean => {
     if (!from || !to) return false;
   
     const rangeStart = startOfDay(from);
     const rangeEnd = startOfDay(to);
   
-    // Überprüfen, ob der Zeitraum über einen gebuchten Zeitraum hinausgeht oder exakt übereinstimmt
     return bookingPeriods.some(period => {
       const periodStart = startOfDay(period.start);
       const periodEnd = startOfDay(period.end);
   
-      // Überprüfung: Der Zeitraum darf nicht über den gebuchten Zeitraum hinausgehen oder exakt übereinstimmen
       const overlapsStart = isBefore(rangeStart, addDays(periodEnd, -1)) && isAfter(rangeEnd, periodStart);
       const overlapsEnd = isBefore(rangeEnd, periodEnd) && isAfter(rangeStart, periodStart);
       const fullyContains = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodEnd);
       const exactMatch = isSameDay(rangeStart, periodStart) && isSameDay(rangeEnd, addDays(period.end, -1));
   
-      // Anpassung: Erlaube, dass rangeStart gleich periodEnd ist
       const startsOnPeriodEnd = isSameDay(rangeStart, periodEnd);
   
-      // Logging der relevanten Variablen
       console.log("rangeStart:", rangeStart);
       console.log("periodStart:", periodStart);
       console.log("rangeEnd:", rangeEnd);
       console.log("periodEnd:", periodEnd);
   
-      // Rückgabebedingung angepasst, um startsOnPeriodEnd zu berücksichtigen
       return (overlapsStart || overlapsEnd || fullyContains || exactMatch) && !startsOnPeriodEnd;
     });
   };
 
-  // Anpassung der Funktion handleDateChange
   const handleDateChange = (selectedRange: DateRange | undefined) => {
     if (!selectedRange || !selectedRange.from || !selectedRange.to) {
       setDate(selectedRange);
@@ -272,7 +265,6 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     const additionalNightsCount = numNights - 1;
     const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * ADDITIONAL_NIGHT_PRICE : 0;
     
-    // Fix for breakfast price calculation
     let breakfastPrice = 0;
     let breakfastFirstPersonPrice = 0;
     let breakfastAdditionalPrice = 0;
@@ -281,11 +273,9 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       breakfastFirstPersonPrice = BREAKFAST_FIRST_PRICE;
       
       if (breakfastCount > 1) {
-        // The correct calculation: 6€ for EACH additional breakfast
         breakfastAdditionalPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
       }
       
-      // Total breakfast price for all nights
       breakfastPrice = breakfastFirstPersonPrice + breakfastAdditionalPrice;
     }
     
@@ -402,6 +392,19 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
     });
   };
 
+  const createNumberOptions = (max: number, includeZero: boolean = true) => {
+    const options = [];
+    if (includeZero) options.push(0);
+    for (let i = 1; i <= max; i++) {
+      options.push(i);
+    }
+    return options;
+  };
+
+  const guestOptions = createNumberOptions(4, false);
+  const laundryOptions = createNumberOptions(4);
+  const breakfastOptions = createNumberOptions(8);
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -418,7 +421,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                   "w-full justify-start text-left font-normal",
                   !date && "text-muted-foreground"
                 )}
-                onClick={() => setIsPopoverOpen(true)} // Öffnet den Popover
+                onClick={() => setIsPopoverOpen(true)}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {date?.from ? (
@@ -438,11 +441,11 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
             </PopoverTrigger>
             <PopoverContent
               className="w-auto p-0"
-              align="start"
-              side="bottom" // Standardmäßig nach unten ausklappen
-              sideOffset={8} // Abstand vom Trigger-Element
-              alignOffset={0} // Zentriert ausrichten
-              avoidCollisions={true} // Verhindert, dass das Fenster aus dem Bildschirm läuft
+              align="center"
+              side="bottom" 
+              sideOffset={8}
+              alignOffset={0}
+              avoidCollisions={true}
             >
               <Calendar
                 initialFocus
@@ -450,37 +453,21 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
                 defaultMonth={date?.from}
                 selected={date}
                 onSelect={handleDateChange}
-                numberOfMonths={2}
+                numberOfMonths={isMobile ? 1 : 2}
                 disabled={isDateDisabled}
                 modifiersClassNames={{
                   selected: isDateBooked
-                    ? "bg-red-200 text-red-800" // Ungültiger Zeitraum: hellrot
-                    : "bg-green-200 text-green-800", // Gültiger Zeitraum: hellgrün
-                  today: "font-bold underline", // Heute hervorheben
+                    ? "bg-red-200 text-red-800"
+                    : "bg-green-200 text-green-800",
+                  today: "font-bold underline",
                 }}
                 classNames={{
-                  day: "p-2 rounded-full", // Standard-Tage
+                  day: "p-2 rounded-full",
                 }}
               />
-              <div className="mt-4 p-4 bg-gray-50 rounded-md">
-                <h3 className="font-medium text-lg mb-2 font-serif">Belegte Zeiträume der nächsten 90 Tage:</h3>
-                {bookingPeriods.length > 0 ? (
-                  <ul className="list-disc pl-5 space-y-1 text-sm">
-                    {bookingPeriods.map((period, index) => (
-                      <li key={index}>
-                        {format(period.start, "dd.MM.yyyy", { locale: de })} -{" "}
-                        {format(addDays(period.end, -1), "dd.MM.yyyy", { locale: de })}{" "}
-                        ({period.name})
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-sm text-gray-500">Keine Belegungen gefunden.</p>
-                )}
-              </div>
               <div className="flex justify-end p-4">
                 <Button
-                  onClick={() => setIsPopoverOpen(false)} // Schließt den Popover
+                  onClick={() => setIsPopoverOpen(false)}
                   className="bg-forest-600 hover:bg-forest-700 text-white"
                 >
                   OK
@@ -501,51 +488,114 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
 
         <div className="space-y-2">
           <Label htmlFor="guests">Anzahl der Personen</Label>
-          <div className="flex items-center">
-            <Users className="mr-2 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="guests"
-              type="number"
-              min={1}
-              max={4}
-              value={guests}
-              onChange={(e) => setGuests(parseInt(e.target.value) || 1)}
-              className="w-full"
-            />
-          </div>
+          {isMobile ? (
+            <RadioGroup
+              defaultValue={guests.toString()}
+              onValueChange={(value) => setGuests(parseInt(value))}
+              className="flex space-x-2"
+            >
+              {guestOptions.map((option) => (
+                <div key={option} className="flex items-center space-x-1">
+                  <RadioGroupItem value={option.toString()} id={`guests-${option}`} className="peer sr-only" />
+                  <Label
+                    htmlFor={`guests-${option}`}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-muted bg-background 
+                    peer-data-[state=checked]:bg-forest-100 peer-data-[state=checked]:border-forest-600 hover:bg-muted/10 cursor-pointer"
+                  >
+                    {option}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          ) : (
+            <div className="flex items-center">
+              <Users className="mr-2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="guests"
+                type="number"
+                min={1}
+                max={4}
+                value={guests}
+                onChange={(e) => setGuests(parseInt(e.target.value) || 1)}
+                className="w-full"
+              />
+            </div>
+          )}
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="laundry">Anzahl der Wäschepakete</Label>
-          <div className="flex items-center">
-            <ShoppingCart className="mr-2 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="laundry"
-              type="number"
-              min={0}
-              max={4}
-              value={laundryPackages}
-              onChange={(e) => setLaundryPackages(Math.min(4, Math.max(0, parseInt(e.target.value) || 0)))}
-              className="w-full"
-            />
-          </div>
+          {isMobile ? (
+            <RadioGroup
+              defaultValue={laundryPackages.toString()}
+              onValueChange={(value) => setLaundryPackages(parseInt(value))}
+              className="flex space-x-2"
+            >
+              {laundryOptions.map((option) => (
+                <div key={option} className="flex items-center space-x-1">
+                  <RadioGroupItem value={option.toString()} id={`laundry-${option}`} className="peer sr-only" />
+                  <Label
+                    htmlFor={`laundry-${option}`}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-muted bg-background 
+                    peer-data-[state=checked]:bg-forest-100 peer-data-[state=checked]:border-forest-600 hover:bg-muted/10 cursor-pointer"
+                  >
+                    {option}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          ) : (
+            <div className="flex items-center">
+              <ShoppingCart className="mr-2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="laundry"
+                type="number"
+                min={0}
+                max={4}
+                value={laundryPackages}
+                onChange={(e) => setLaundryPackages(Math.min(4, Math.max(0, parseInt(e.target.value) || 0)))}
+                className="w-full"
+              />
+            </div>
+          )}
           <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €7 pro Person und enthält Handtücher und Bettwäsche.</p>
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="breakfast">Anzahl Frühstück</Label>
-          <div className="flex items-center">
-            <Coffee className="mr-2 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="breakfast"
-              type="number"
-              min={0}
-              max={8}
-              value={breakfastCount}
-              onChange={(e) => setBreakfastCount(Math.min(8, Math.max(0, parseInt(e.target.value) || 0)))}
-              className="w-full"
-            />
-          </div>
+          {isMobile ? (
+            <RadioGroup
+              defaultValue={breakfastCount.toString()}
+              onValueChange={(value) => setBreakfastCount(parseInt(value))}
+              className="flex flex-wrap gap-2"
+            >
+              {breakfastOptions.map((option) => (
+                <div key={option} className="flex items-center space-x-1">
+                  <RadioGroupItem value={option.toString()} id={`breakfast-${option}`} className="peer sr-only" />
+                  <Label
+                    htmlFor={`breakfast-${option}`}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-muted bg-background 
+                    peer-data-[state=checked]:bg-forest-100 peer-data-[state=checked]:border-forest-600 hover:bg-muted/10 cursor-pointer"
+                  >
+                    {option}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          ) : (
+            <div className="flex items-center">
+              <Coffee className="mr-2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="breakfast"
+                type="number"
+                min={0}
+                max={8}
+                value={breakfastCount}
+                onChange={(e) => setBreakfastCount(Math.min(8, Math.max(0, parseInt(e.target.value) || 0)))}
+                className="w-full"
+              />
+            </div>
+          )}
           <p className="text-sm text-muted-foreground">Das erste Frühstück kostet €14, jedes weitere Frühstück kostet €6. Wir bieten ein einfaches Frühstück nach Rücksprache an.</p>
         </div>
 
