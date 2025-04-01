@@ -47,7 +47,7 @@ const Hero = () => {
                 <span className="text-sm">Ab 84 €/Nacht</span>
                 <span className="text-sm">für 1-4 Personen</span>
                 <span className="text-sm">inkl. Reinigung.</span>
-                <span className="text-sm">Jede weiter Nacht nur 50 €.</span>
+                <span className="text-sm">Jede weitere Nacht nur 50 €.</span>
                 <span>Jetzt Preis berechnen.</span>
               </span>
             </Link>
