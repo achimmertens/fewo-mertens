@@ -203,33 +203,14 @@ const ApartmentPage = () => {
                   Badezimmer
                 </h3>
 
-
-
-                <div className="flex flex-wrap -mx-2 my-4">
-                  <div className="w-full md:w-1/2 p-2">
-                    <img
-                      src="https://files.peakd.com/file/peakd-hive/achimmertens/243qFT8xgT6sDA1HwEcwVgyYzXDMFPLCQd3PhsTBXnKSeiLBSmfxdNfcGVHHKpoW3BtBa.png"
-                      alt="Badezimmer mit Dusche"
-                      className="rounded-lg w-full h-auto object-cover"
-                      style={{ height: '400px', objectFit: 'cover' }}
-                    />
-                  </div>
-                  <div className="w-full md:w-1/2 p-2">
-                    <img
-                      src="https://files.peakd.com/file/peakd-hive/achimmertens/Eo6NL96i6ka9xXgFXq2xJGFjzjBzGQuXFacDW6bKJnt7vZMoWQPypRt6eDF1cxRXizu.png"
-                      alt="Badezimmer mit Dusche"
-                      className="rounded-lg w-full h-auto object-cover"
-                      style={{ height: '400px', objectFit: 'cover' }}
-                    />
-                  </div>
-                  <div className="w-full p-2">
-                    <img
-                      src="https://files.peakd.com/file/peakd-hive/achimmertens/23xKzZ7W6CMAzBjfsU6bZBN5vxpPi3dYno4SpKR41rfddWvVUxv3ycdFXbVXLFs9j1af5.png"
-                      alt="Badezimmer mit Dusche"
-                      className="rounded-lg w-full h-auto object-cover"
-                    />
-                  </div>
+                <div className="w-full p-2">
+                  <img
+                    src="https://einruhr.wordpress.com/wp-content/uploads/2025/04/badezimmer_einruhr.jpg"
+                    alt="Badezimmer"
+                    className="rounded-lg w-full h-auto object-cover"
+                  />
                 </div>
+
 
                 <p>
                   Das Badezimmer ist mit einer Dusche ausgestattet. Handtücher können auf Wunsch als Wäschepaket dazugebucht werden.
