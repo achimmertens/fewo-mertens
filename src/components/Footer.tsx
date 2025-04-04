@@ -64,12 +64,22 @@ const Footer = () => {
                   Preise & Infos
                 </Link>
               </li>
+              <li>
+                <Link to="/impressum" className="hover:text-lake-300 transition-colors">
+                  Impressum
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-forest-700 mt-8 pt-6 text-center text-sm">
           <p>&copy; {currentYear} Ferienwohnung Waldoase Mertens in Einruhr. Alle Rechte vorbehalten.</p>
+          <p className="mt-2">
+            <Link to="/impressum" className="hover:text-lake-300 transition-colors">
+              Impressum
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
