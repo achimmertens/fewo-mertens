@@ -59,7 +59,7 @@ const PriceCalculator = () => {
   const FIRST_NIGHT_PRICE = 59;
   const ADDITIONAL_NIGHT_PRICE = 50;
   const BREAKFAST_FIRST_PRICE = 14;
-  const BREAKFAST_ADDITIONAL_PRICE = 6;
+  const BREAKFAST_ADDITIONAL_PRICE = 7;
   const LAUNDRY_PACKAGE_PRICE = 7;
   const CLEANING_FEE = 25;
 
@@ -596,7 +596,9 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
               />
             </div>
           )}
-          <p className="text-sm text-muted-foreground">Wir bieten ein einfaches Frühstück nach Rücksprache an. Das erste Frühstück kostet €14, jedes weitere Frühstück kostet €6.</p>
+          <p className="text-sm text-muted-foreground">
+  Wir bieten ein einfaches Frühstück nach Rücksprache an. Das erste Frühstück kostet €{BREAKFAST_FIRST_PRICE}, jedes weitere Frühstück kostet €{BREAKFAST_ADDITIONAL_PRICE}.
+</p>
         </div>
 
         <Separator className="my-4" />
