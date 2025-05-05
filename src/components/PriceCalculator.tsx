@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle, Mail, Phone, User, Copy } from "lucide-react";
+import { CalendarIcon, Users, ShoppingCart, Coffee, AlertCircle, Mail, Phone, User, Copy, Check, ClipboardCopy } from "lucide-react";
 import { format, differenceInCalendarDays, addDays, isSameDay, startOfDay, isBefore, isAfter, parseISO } from "date-fns";
 import { de } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -22,6 +22,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export const FIRST_NIGHT_PRICE = 59;
 export const ADDITIONAL_NIGHT_PRICE = 50;
@@ -62,6 +63,8 @@ const PriceCalculator = () => {
   const [contactPhone, setContactPhone] = useState("");
   const [contactMessage, setContactMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     fetchBookedPeriods();
@@ -149,97 +152,6 @@ const PriceCalculator = () => {
     });
   };
 
-  const handleDateChange = (selectedRange: DateRange | undefined) => {
-    if (!selectedRange || !selectedRange.from || !selectedRange.to) {
-      setDate(selectedRange);
-      setIsDateBooked(false);
-      return;
-    }
-
-    const isOverlapping = isRangeOverlappingBookings(selectedRange.from, selectedRange.to);
-
-    if (isOverlapping) {
-      setIsDateBooked(true);
-      toast({
-        title: "Belegung",
-        description: "Leider ist zu diesem Zeitraum die Wohnung schon reserviert.",
-        variant: "destructive",
-      });
-    } else {
-      setIsDateBooked(false);
-    }
-
-    setDate(selectedRange);
-  };
-
-  useEffect(() => {
-    if (date?.from && date?.to) {
-      const arrivalDateStr = format(date.from, "dd.MM.yyyy", { locale: de });
-      const departureDateStr = format(date.to, "dd.MM.yyyy", { locale: de });
-      const numNights = Math.max(1, differenceInCalendarDays(date.to, date.from));
-      
-      let template = 
-`Betreff: Einruhr - Reservierungsanfrage
-
-Hallo Herr Mertens,
-
-bitte bestätigen Sie, dass die Wohnung Waldoase Mertens in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.
-Wir würden sie gerne für diesen Zeitraum reservieren.`;
-      
-      if (laundryPackages > 0) {
-        template += `\nWir buchen das Wäschepaket für ${laundryPackages} Personen.`;
-      }
-      
-      if (breakfastCount > 0) {
-        template += `\nWir möchten gerne ${breakfastCount} Frühstück anfragen.`;
-      }
-      
-      if (priceDetails && totalPrice) {
-        template += `\n\nPreisdetails:
-- Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}`;
-        
-        if (priceDetails.additionalNightsCount > 0) {
-          template += `
-- Weitere Nächte (${priceDetails.additionalNightsCount}x): €${priceDetails.additionalNightsPrice.toFixed(2)}`;
-        }
-        
-        if (priceDetails.breakfastPrice > 0) {
-          template += `
-- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`;
-          
-          if (breakfastCount > 1) {
-            template += ` (Erstes Frühstück: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPrice.toFixed(2)})`;
-          }
-        }
-        
-        if (priceDetails.laundryPrice > 0) {
-          template += `
-- Wäschepakete (${laundryPackages}x): €${priceDetails.laundryPrice.toFixed(2)}`;
-        }
-        
-        template += `
-- Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}
-- Gesamtpreis: €${totalPrice.toFixed(2)}`;
-      }
-      
-      if (contactMessage) {
-        template += `\n\nWeitere Informationen:\n${contactMessage}`;
-      }
-      
-      template += `\n\nMit freundlichen Grüßen,\n${contactName || "[Ihr Name]"}`;
-      
-      if (contactPhone) {
-        template += `\nTel: ${contactPhone}`;
-      }
-      
-      if (contactEmail) {
-        template += `\nEmail: ${contactEmail || "[Ihre Email]"}`;
-      }
-      
-      setEmailTemplate(template);
-    }
-  }, [date, guests, laundryPackages, breakfastCount, contactName, contactEmail, contactPhone, contactMessage, totalPrice, priceDetails]);
-
   const calculatePrice = () => {
     if (!date?.from || !date?.to) {
       toast({
@@ -324,72 +236,37 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
       return;
     }
 
-    setIsSubmitting(true);
-    
-    const arrivalDateStr = date.from ? format(date.from, "dd.MM.yyyy", { locale: de }) : "";
-    const departureDateStr = date.to ? format(date.to, "dd.MM.yyyy", { locale: de }) : "";
-    
+    setShowEmailDialog(true);
+  };
+
+  const openDefaultEmailClient = () => {
     const subject = encodeURIComponent("Einruhr - Reservierungsanfrage");
-    
-    let body = encodeURIComponent(
-      `Hallo Herr Mertens,\n\nbitte bestätigen Sie, dass die Wohnung Waldoase Mertens in Einruhr vom ${arrivalDateStr} bis zum ${departureDateStr} für uns frei ist.\nWir würden sie gerne für diesen Zeitraum reservieren.`
+    // Erstelle eine kurze Email mit einem Hinweis auf die vollständige E-Mail im Anhang
+    const shortBody = encodeURIComponent(
+      `Hallo Herr Mertens,\n\nAnbei meine Reservierungsanfrage für die Ferienwohnung Waldoase Mertens in Einruhr.\n\nBitte finden Sie alle Details in der nachfolgenden Nachricht:\n\n${emailTemplate.substring(0, 150)}...`
     );
     
-    if (laundryPackages > 0) {
-      body += encodeURIComponent(`\nWir buchen das Wäschepaket für ${laundryPackages} Personen.`);
-    }
-    
-    if (breakfastCount > 0) {
-      body += encodeURIComponent(`\nWir möchten gerne ${breakfastCount} Frühstück anfragen.`);
-    }
-    
-    if (priceDetails && totalPrice) {
-      body += encodeURIComponent(`\n\nPreisdetails:\n- Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}`);
-      
-      if (priceDetails.additionalNightsCount > 0) {
-        body += encodeURIComponent(`\n- Weitere Nächte (${priceDetails.additionalNightsCount}x): €${priceDetails.additionalNightsPrice.toFixed(2)}`);
-      }
-      
-      if (priceDetails.breakfastPrice > 0) {
-        body += encodeURIComponent(`\n- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}`);
-        if (breakfastCount > 1) {
-          body += encodeURIComponent(` (Erstes Frühstück: €${priceDetails.breakfastFirstPersonPrice.toFixed(2)}, ${breakfastCount-1} weitere: €${priceDetails.breakfastAdditionalPrice.toFixed(2)})`);
-        }
-      }
-      
-      if (priceDetails.laundryPrice > 0) {
-        body += encodeURIComponent(`\n- Wäschepakete: €${priceDetails.laundryPrice.toFixed(2)}`);
-      }
-      
-      body += encodeURIComponent(`\n- Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}\n- Gesamtpreis: €${totalPrice.toFixed(2)}`);
-    }
-    
-    if (contactMessage) {
-      body += encodeURIComponent(`\n\nWeitere Informationen:\n${contactMessage}`);
-    }
-    
-    body += encodeURIComponent(`\n\nMit freundlichen Grüßen,\n${contactName}\nTel: ${contactPhone}\nEmail: ${contactEmail}`);
-    
-    const mailtoLink = `mailto:einruhr.mertens@web.de?subject=${subject}&body=${body}`;
+    // Verwende nur eine kurze E-Mail für das mailto
+    const mailtoLink = `mailto:einruhr.mertens@web.de?subject=${subject}&body=${shortBody}`;
     window.location.href = mailtoLink;
     
     toast({
       title: "E-Mail wird geöffnet",
-      description: "Ihr E-Mail-Programm sollte sich jetzt öffnen. Bitte senden Sie die vorbereitete Nachricht ab.",
-      variant: "default",
+      description: "Bitte fügen Sie die kopierte Nachricht in Ihre E-Mail ein.",
     });
-    
-    setTimeout(() => {
-      setIsSubmitting(false);
-    }, 1500);
   };
 
   const copyEmailTemplate = () => {
     navigator.clipboard.writeText(emailTemplate);
+    setIsCopied(true);
     toast({
       title: "Kopiert!",
       description: "Die E-Mail-Vorlage wurde in die Zwischenablage kopiert.",
     });
+    
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
   };
 
   const createNumberOptions = (max: number, includeZero: boolean = true) => {
@@ -441,11 +318,13 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
             </PopoverTrigger>
             <PopoverContent
               className="w-auto p-0"
-              align="center"
-              side="bottom" 
-              sideOffset={8}
+              align="center" 
+              side={isMobile ? "top" : "bottom"}
               alignOffset={0}
+              sideOffset={8}
               avoidCollisions={true}
+              collisionPadding={{ top: 20, bottom: 20 }}
+              className="max-h-[90vh] overflow-auto"
             >
               <Calendar
                 initialFocus
@@ -685,34 +564,10 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
             className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
           >
             <Mail className="h-4 w-4" />
-            {isSubmitting ? "Wird gesendet..." : "Via Email buchen"}
+            Via Email buchen
           </Button>
         </div>
           
-       <p className="text-gray-500 text-center">Sollte der Knopf "via Email buchen" nicht funktionieren, verschicken Sie bitte eine Mail an einruhr.mertens@web.de.</p>
-
-   
-
-        {showEmailTemplate && date?.from && date?.to && (
-          <div className="mt-4 p-4 bg-gray-50 rounded-md w-full">
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="font-medium text-lg font-serif">E-Mail-Vorlage:</h3>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="flex items-center gap-1"
-                onClick={copyEmailTemplate}
-              >
-                <Copy className="h-4 w-4" />
-                Kopieren
-              </Button>
-            </div>
-            <div className="whitespace-pre-wrap bg-white p-3 border rounded-md text-sm font-mono">
-              {emailTemplate}
-            </div>
-          </div>
-        )}
-
         {totalPrice !== null && priceDetails && (
           <div className="mt-4 p-4 bg-forest-50 rounded-md w-full">
             <h3 className="font-medium text-lg mb-2 font-serif">Preisdetails:</h3>
@@ -769,6 +624,82 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
             </div>
           </div>
         )}
+
+        {/* Email-Dialog */}
+        <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+          <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-serif">Reservierung versenden</DialogTitle>
+              <DialogDescription>
+                Die E-Mail-Vorlage wurde erstellt. Sie können sie jetzt kopieren und an einruhr.mertens@web.de senden.
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="mt-4 space-y-4">
+              <div className="bg-gray-50 p-4 rounded-md">
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="font-medium text-lg font-serif">E-Mail-Vorlage:</h3>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex items-center gap-1"
+                    onClick={copyEmailTemplate}
+                  >
+                    {isCopied ? (
+                      <>
+                        <Check className="h-4 w-4" />
+                        Kopiert!
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-4 w-4" />
+                        Kopieren
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <div className="whitespace-pre-wrap bg-white p-3 border rounded-md text-sm font-mono overflow-auto max-h-[250px]">
+                  {emailTemplate}
+                </div>
+              </div>
+              
+              <Alert className="bg-blue-50">
+                <div className="flex flex-col space-y-2">
+                  <p className="font-medium">So verschicken Sie Ihre Reservierungsanfrage:</p>
+                  <ol className="list-decimal list-inside space-y-1 text-sm">
+                    <li>Klicken Sie auf "Kopieren" um den Text zu kopieren</li>
+                    <li>Öffnen Sie Ihr E-Mail-Programm</li>
+                    <li>Erstellen Sie eine neue E-Mail an: <span className="font-medium">einruhr.mertens@web.de</span></li>
+                    <li>Fügen Sie den kopierten Text ein</li>
+                    <li>Senden Sie die E-Mail ab</li>
+                  </ol>
+                </div>
+              </Alert>
+            </div>
+
+            <DialogFooter className="flex flex-col sm:flex-row gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowEmailDialog(false)}
+                className="sm:order-1 order-2"
+              >
+                Schließen
+              </Button>
+              
+              <Button 
+                className="bg-forest-700 hover:bg-forest-800 flex items-center gap-2 sm:order-2 order-1 w-full sm:w-auto"
+                onClick={() => {
+                  copyEmailTemplate();
+                  openDefaultEmailClient();
+                }}
+              >
+                <Mail className="h-4 w-4" />
+                E-Mail-Programm öffnen
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </CardFooter>
     </Card>
   );
