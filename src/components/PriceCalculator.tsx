@@ -79,21 +79,81 @@ const PriceCalculator = () => {
       setIsDateBooked(isOverlapping);
       
       if (!isOverlapping) {
-        const numNights = Math.max(1, differenceInCalendarDays(newDate.to, newDate.from));
-        
-        // Create email template for booking request
-        const template = `Reservierungsanfrage für Ferienwohnung Waldoase Mertens in Einruhr
+        calculatePriceDetails(newDate);
+      }
+    }
+  };
+
+  // Helper function to create price details and update email template
+  const calculatePriceDetails = (dateRange: DateRange) => {
+    if (!dateRange.from || !dateRange.to) return;
+    
+    const numNights = Math.max(1, differenceInCalendarDays(dateRange.to, dateRange.from));
+    
+    const firstNightPrice = FIRST_NIGHT_PRICE;
+    const additionalNightsCount = numNights - 1;
+    const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * ADDITIONAL_NIGHT_PRICE : 0;
+    
+    let breakfastPrice = 0;
+    let breakfastFirstPersonPrice = 0;
+    let breakfastAdditionalPrice = 0;
+    
+    if (breakfastCount > 0) {
+      breakfastFirstPersonPrice = BREAKFAST_FIRST_PRICE;
+      
+      if (breakfastCount > 1) {
+        breakfastAdditionalPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
+      }
+      
+      breakfastPrice = breakfastFirstPersonPrice + breakfastAdditionalPrice;
+    }
+    
+    const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE;
+    
+    const cleaningPrice = CLEANING_FEE;
+    
+    const total = firstNightPrice + additionalNightsPrice + breakfastPrice + laundryPrice + cleaningPrice;
+    
+    setTotalPrice(total);
+    setPriceDetails({
+      firstNightPrice,
+      additionalNightsPrice,
+      additionalNightsCount,
+      breakfastPrice,
+      breakfastFirstPersonPrice,
+      breakfastAdditionalPrice,
+      laundryPrice,
+      cleaningPrice
+    });
+    
+    // Update email template with all details including price information
+    updateEmailTemplate(dateRange, numNights, total);
+  };
+
+  // Function to update email template with all booking and price information
+  const updateEmailTemplate = (dateRange: DateRange, numNights: number, total: number) => {
+    if (!dateRange.from || !dateRange.to) return;
+
+    const template = `Reservierungsanfrage für Ferienwohnung Waldoase Mertens in Einruhr
 
 Sehr geehrter Herr Mertens,
 
 ich möchte gerne folgende Reservierung anfragen:
 
-Anreisedatum: ${format(newDate.from, "dd.MM.yyyy", { locale: de })}
-Abreisedatum: ${format(newDate.to, "dd.MM.yyyy", { locale: de })}
+Anreisedatum: ${format(dateRange.from, "dd.MM.yyyy", { locale: de })}
+Abreisedatum: ${format(dateRange.to, "dd.MM.yyyy", { locale: de })}
 Anzahl Nächte: ${numNights}
 Anzahl Personen: ${guests}
 ${laundryPackages > 0 ? `Wäschepakete: ${laundryPackages}` : ''}
-${breakfastCount > 0 ? `Frühstück: ${breakfastCount}` : ''}
+${breakfastCount > 0 ? `Frühstück: ${breakfastCount} Person(en)` : ''}
+
+${priceDetails ? `Preisübersicht:
+- Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}
+${priceDetails.additionalNightsCount > 0 ? `- Weitere Nächte (${priceDetails.additionalNightsCount}x): €${priceDetails.additionalNightsPrice.toFixed(2)}` : ''}
+${priceDetails.breakfastPrice > 0 ? `- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}` : ''}
+${priceDetails.laundryPrice > 0 ? `- Wäschepakete (${laundryPackages}x): €${priceDetails.laundryPrice.toFixed(2)}` : ''}
+- Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}
+- Gesamtpreis: €${total.toFixed(2)}` : ''}
 
 ${contactName ? `Name: ${contactName}` : ''}
 ${contactEmail ? `E-Mail: ${contactEmail}` : ''}
@@ -104,10 +164,8 @@ Ich freue mich auf Ihre Rückmeldung.
 
 Mit freundlichen Grüßen,
 ${contactName || '[Ihr Name]'}`;
-        
-        setEmailTemplate(template);
-      }
-    }
+    
+    setEmailTemplate(template);
   };
 
   const fetchBookedPeriods = async () => {
@@ -211,49 +269,13 @@ ${contactName || '[Ihr Name]'}`;
       return;
     }
 
-    const numNights = Math.max(1, differenceInCalendarDays(date.to, date.from));
-    
-    const firstNightPrice = FIRST_NIGHT_PRICE;
-    const additionalNightsCount = numNights - 1;
-    const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * ADDITIONAL_NIGHT_PRICE : 0;
-    
-    let breakfastPrice = 0;
-    let breakfastFirstPersonPrice = 0;
-    let breakfastAdditionalPrice = 0;
-    
-    if (breakfastCount > 0) {
-      breakfastFirstPersonPrice = BREAKFAST_FIRST_PRICE;
-      
-      if (breakfastCount > 1) {
-        breakfastAdditionalPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
-      }
-      
-      breakfastPrice = breakfastFirstPersonPrice + breakfastAdditionalPrice;
-    }
-    
-    const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE;
-    
-    const cleaningPrice = CLEANING_FEE;
-    
-    const total = firstNightPrice + additionalNightsPrice + breakfastPrice + laundryPrice + cleaningPrice;
-    
-    setTotalPrice(total);
-    setPriceDetails({
-      firstNightPrice,
-      additionalNightsPrice,
-      additionalNightsCount,
-      breakfastPrice,
-      breakfastFirstPersonPrice,
-      breakfastAdditionalPrice,
-      laundryPrice,
-      cleaningPrice
-    });
-    
+    // Nutze die neue Helper-Funktion zum Berechnen der Preisdetails
+    calculatePriceDetails(date);
     setShowEmailTemplate(true);
 
     toast({
       title: "Preisberechnung abgeschlossen",
-      description: `Gesamtpreis für ${numNights} Nächte: €${total.toFixed(2)}`,
+      description: `Gesamtpreis: €${totalPrice?.toFixed(2) || "0.00"}`,
     });
   };
 
@@ -276,6 +298,11 @@ ${contactName || '[Ihr Name]'}`;
       return;
     }
 
+    // Stelle sicher, dass die Preisberechnung durchgeführt wurde
+    if (totalPrice === null) {
+      calculatePrice();
+    }
+    
     setShowEmailDialog(true);
   };
 
@@ -283,7 +310,7 @@ ${contactName || '[Ihr Name]'}`;
     const subject = encodeURIComponent("Einruhr - Reservierungsanfrage");
     // Erstelle eine kurze Email mit einem Hinweis auf die vollständige E-Mail im Anhang
     const shortBody = encodeURIComponent(
-      `Hallo Herr Mertens,\n\nAnbei meine Reservierungsanfrage für die Ferienwohnung Waldoase Mertens in Einruhr.\n\nBitte finden Sie alle Details in der nachfolgenden Nachricht:\n\n${emailTemplate.substring(0, 150)}...`
+      "Hallo Herr Mertens,\n\nAnbei meine Reservierungsanfrage für die Ferienwohnung Waldoase Mertens in Einruhr."
     );
     
     // Verwende nur eine kurze E-Mail für das mailto
