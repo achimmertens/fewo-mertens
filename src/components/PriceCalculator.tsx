@@ -269,7 +269,7 @@ ${contactName || '[Ihr Name]'}`;
       return;
     }
 
-    // Nutze die neue Helper-Funktion zum Berechnen der Preisdetails
+    // Nutze die Helper-Funktion zum Berechnen der Preisdetails
     calculatePriceDetails(date);
     setShowEmailTemplate(true);
 
