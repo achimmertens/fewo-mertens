@@ -98,7 +98,7 @@ const Index = () => {
                   className="bg-forest-600 hover:bg-forest-700 text-white px-8 py-6 w-full md:w-auto"
                 >
                   <Link to="/calculator">
-                    Preis berechnen
+                    Jetzt buchen
                   </Link>
                 </Button>
                 <Separator className="hidden md:block h-12 w-px bg-gray-300" orientation="vertical" />

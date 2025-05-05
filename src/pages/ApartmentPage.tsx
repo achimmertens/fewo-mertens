@@ -1,10 +1,10 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Bed, Users, Bath, CheckSquare, Flame, Phone } from "lucide-react";
+import { BREAKFAST_FIRST_PRICE, BREAKFAST_ADDITIONAL_PRICE, LAUNDRY_PACKAGE_PRICE } from "@/components/PriceCalculator";
 
 const ApartmentPage = () => {
   return (
@@ -30,14 +30,16 @@ const ApartmentPage = () => {
                 </h2>
 
                 <div className="flex flex-wrap -mx-2 mb-8">
-
                   <div className="flex flex-wrap -mx-2 my-4">
                     <div className="w-full p-2">
-                      <img
-                        src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/20240807_185001.jpg?w=2048"
-                        alt="Wohnzimmer mit Ausblick"
-                        className="rounded-lg w-full h-auto object-cover"
-                      />
+                      <figure>
+                        <img
+                          src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/20240807_185001.jpg?w=2048"
+                          alt="Wohnzimmer mit Ausblick"
+                          className="rounded-lg w-full h-auto object-cover"
+                        />
+                        <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Wohnzimmer</figcaption>
+                      </figure>
                     </div>
                   </div>
                 </div>
@@ -343,11 +345,11 @@ const ApartmentPage = () => {
                   </h3>
                   <div>
                     <h4 className="font-medium">Frühstück</h4>
-                    <p className="text-gray-700">Nach Rücksprache servieren wir Ihnen ein einfaches Frühstück (9 € pro Person/Tag).</p>
+                    <p className="text-gray-700">Nach Rücksprache servieren wir Ihnen ein einfaches Frühstück (€{BREAKFAST_FIRST_PRICE} für die erste Person, €{BREAKFAST_ADDITIONAL_PRICE} für jede weitere Person/Tag).</p>
                   </div>
                   <div>
                     <h4 className="font-medium">Wäschepaket</h4>
-                    <p className="text-gray-700">Handtücher und Bettwäsche können für 7 € pro Person dazugebucht werden.</p>
+                    <p className="text-gray-700">Handtücher und Bettwäsche können für €{LAUNDRY_PACKAGE_PRICE} pro Person dazugebucht werden.</p>
                   </div>
                 </div>
 

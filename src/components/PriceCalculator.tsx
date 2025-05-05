@@ -23,6 +23,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useIsMobile } from "@/hooks/use-mobile";
 
+export const FIRST_NIGHT_PRICE = 59;
+export const ADDITIONAL_NIGHT_PRICE = 50;
+export const BREAKFAST_FIRST_PRICE = 14;
+export const BREAKFAST_ADDITIONAL_PRICE = 7;
+export const LAUNDRY_PACKAGE_PRICE = 7;
+export const CLEANING_FEE = 25;
+
 const PriceCalculator = () => {
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -55,13 +62,6 @@ const PriceCalculator = () => {
   const [contactPhone, setContactPhone] = useState("");
   const [contactMessage, setContactMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const FIRST_NIGHT_PRICE = 59;
-  const ADDITIONAL_NIGHT_PRICE = 50;
-  const BREAKFAST_FIRST_PRICE = 14;
-  const BREAKFAST_ADDITIONAL_PRICE = 7;
-  const LAUNDRY_PACKAGE_PRICE = 7;
-  const CLEANING_FEE = 25;
 
   useEffect(() => {
     fetchBookedPeriods();
@@ -676,7 +676,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
             onClick={calculatePrice}
             className="w-full bg-forest-600 hover:bg-forest-700"
           >
-            Preis berechnen
+            Jetzt buchen
           </Button>
 
           <Button 

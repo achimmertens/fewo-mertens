@@ -56,7 +56,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/calculator" className="hover:text-lake-300 transition-colors">
-                  Preisrechner
+                  Buchen
                 </Link>
               </li>
               <li>

@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -19,13 +18,15 @@ const Hero = () => {
           <Button
             asChild
             size="lg"
-            className="bg-forest-600 hover:bg-forest-700 text-white font-medium relative overflow-hidden group w-full sm:w-auto"
+            className="bg-forest-600 hover:bg-forest-700 text-white font-medium relative overflow-hidden group w-full sm:w-auto border-2 border-white/80 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 active:translate-y-0 hover:scale-[1.02] active:scale-100"
             style={{
               backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/10/ferienwohnung-einruhr-mertens02.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               height: isMobile ? "150px" : "200px",
-              width: isMobile ? "100%" : "400px"
+              width: isMobile ? "100%" : "400px",
+              transform: "perspective(1000px) rotateX(0deg)",
+              transition: "transform 0.2s ease-out"
             }}
           >
             <Link to="/apartment">
@@ -36,10 +37,12 @@ const Hero = () => {
           <Button
             asChild
             size="lg"
-            className="bg-forest-600 hover:bg-forest-700 text-white font-medium relative overflow-hidden group w-full sm:w-auto"
+            className="bg-forest-600 hover:bg-forest-700 text-white font-medium relative overflow-hidden group w-full sm:w-auto border-2 border-white/80 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 active:translate-y-0 hover:scale-[1.02] active:scale-100"
             style={{
               height: isMobile ? "150px" : "200px",
-              width: isMobile ? "100%" : "400px"
+              width: isMobile ? "100%" : "400px",
+              transform: "perspective(100000px) rotateX(0deg)",
+              transition: "transform 0.2s ease-out"
             }}
           >
             <Link to="/calculator">
@@ -48,7 +51,8 @@ const Hero = () => {
                 <span className="text-sm">für 1-4 Personen</span>
                 <span className="text-sm">inkl. Reinigung.</span>
                 <span className="text-sm">Jede weitere Nacht nur 50 €.</span>
-                <span>Jetzt Preis berechnen.</span>
+                <span className="text-sm">Für Preisberechnung und Reservierungsanfrage</span>
+                <span>Hier Klicken</span>
               </span>
             </Link>
           </Button>

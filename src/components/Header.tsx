@@ -43,7 +43,7 @@ const Header = () => {
             Preise & Infos
           </Link>
           <Link to="/calculator" className="text-forest-700 hover:text-forest-500 font-medium">
-            Preisrechner
+            Preisrechner und Reservierungsanfrage
           </Link>
           <Link to="/arrival" className="text-forest-700 hover:text-forest-500 font-medium">
             Anreise
@@ -71,7 +71,7 @@ const Header = () => {
               Preise & Infos
             </Link>
             <Link to="/calculator" className="text-forest-700 hover:text-forest-500 font-medium py-2" onClick={toggleMenu}>
-              Preisrechner
+              Preisrechner und Reservierungsanfrage
             </Link>
             <Link to="/arrival" className="text-forest-700 hover:text-forest-500 font-medium py-2" onClick={toggleMenu}>
               Anreise

@@ -1,4 +1,3 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -77,11 +76,14 @@ const ContactPage = () => {
             </div>
             
             <div className="mt-8">
-              <img 
-                src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/gerumpel.jpg?w=2046" 
-                alt="Außenansicht Eingang" 
-                className="w-full h-auto rounded-lg shadow-md"
-              />
+              <figure>
+                <img 
+                  src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/gerumpel.jpg?w=2046" 
+                  alt="Wohnzimmer nach Einzug" 
+                  className="w-full h-auto rounded-lg shadow-md"
+                />
+                <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Annette und Achim im Wohnzimmer direkt nach Einzug</figcaption>
+              </figure>
             </div>
           </div>
         </div>
