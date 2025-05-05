@@ -676,7 +676,7 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
             onClick={calculatePrice}
             className="w-full bg-forest-600 hover:bg-forest-700"
           >
-            Jetzt buchen
+            Preis anzeigen
           </Button>
 
           <Button 
@@ -685,9 +685,13 @@ Wir würden sie gerne für diesen Zeitraum reservieren.`;
             className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
           >
             <Mail className="h-4 w-4" />
-            {isSubmitting ? "Wird gesendet..." : "Reservierungsanfrage senden"}
+            {isSubmitting ? "Wird gesendet..." : "Via Email buchen"}
           </Button>
         </div>
+          
+       <p className="text-gray-500 text-center">Sollte der Knopf "via Email buchen" nicht funktionieren, verschicken Sie bitte eine Mail an einruhr.mertens@web.de.</p>
+
+   
 
         {showEmailTemplate && date?.from && date?.to && (
           <div className="mt-4 p-4 bg-gray-50 rounded-md w-full">
