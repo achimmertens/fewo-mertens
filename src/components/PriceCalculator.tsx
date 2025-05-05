@@ -70,6 +70,46 @@ const PriceCalculator = () => {
     fetchBookedPeriods();
   }, []);
 
+  // Add handleDateChange function to handle date selection
+  const handleDateChange = (newDate: DateRange | undefined) => {
+    setDate(newDate);
+    
+    if (newDate?.from && newDate?.to) {
+      const isOverlapping = isRangeOverlappingBookings(newDate.from, newDate.to);
+      setIsDateBooked(isOverlapping);
+      
+      if (!isOverlapping) {
+        const numNights = Math.max(1, differenceInCalendarDays(newDate.to, newDate.from));
+        
+        // Create email template for booking request
+        const template = `Reservierungsanfrage für Ferienwohnung Waldoase Mertens in Einruhr
+
+Sehr geehrter Herr Mertens,
+
+ich möchte gerne folgende Reservierung anfragen:
+
+Anreisedatum: ${format(newDate.from, "dd.MM.yyyy", { locale: de })}
+Abreisedatum: ${format(newDate.to, "dd.MM.yyyy", { locale: de })}
+Anzahl Nächte: ${numNights}
+Anzahl Personen: ${guests}
+${laundryPackages > 0 ? `Wäschepakete: ${laundryPackages}` : ''}
+${breakfastCount > 0 ? `Frühstück: ${breakfastCount}` : ''}
+
+${contactName ? `Name: ${contactName}` : ''}
+${contactEmail ? `E-Mail: ${contactEmail}` : ''}
+${contactPhone ? `Telefon: ${contactPhone}` : ''}
+${contactMessage ? `Nachricht: ${contactMessage}` : ''}
+
+Ich freue mich auf Ihre Rückmeldung.
+
+Mit freundlichen Grüßen,
+${contactName || '[Ihr Name]'}`;
+        
+        setEmailTemplate(template);
+      }
+    }
+  };
+
   const fetchBookedPeriods = async () => {
     try {
       const calendarId = "6gk8bbmgm01bk625432gb33tk0@group.calendar.google.com"; // Einruhr-Kalender-ID
@@ -319,12 +359,11 @@ const PriceCalculator = () => {
             <PopoverContent
               className="w-auto p-0"
               align="center" 
-              side={isMobile ? "top" : "bottom"}
+              side={isMobile ? "bottom" : "bottom"}
               alignOffset={0}
               sideOffset={8}
               avoidCollisions={true}
               collisionPadding={{ top: 20, bottom: 20 }}
-              className="max-h-[90vh] overflow-auto"
             >
               <Calendar
                 initialFocus
