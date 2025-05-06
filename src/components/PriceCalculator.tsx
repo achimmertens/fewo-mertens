@@ -141,9 +141,7 @@ const PriceCalculator = () => {
   const updateEmailTemplate = (dateRange: DateRange, numNights: number, total: number) => {
     if (!dateRange.from || !dateRange.to) return;
 
-    const template = `Reservierungsanfrage für Ferienwohnung Waldoase Mertens in Einruhr
-
-Sehr geehrter Herr Mertens,
+    const template = `Sehr geehrter Herr Mertens,
 
 ich möchte gerne folgende Reservierung anfragen:
 
@@ -152,7 +150,7 @@ Abreisedatum: ${format(dateRange.to, "dd.MM.yyyy", { locale: de })}
 Anzahl Nächte: ${numNights}
 Anzahl Personen: ${guests}
 ${laundryPackages > 0 ? `Wäschepakete: ${laundryPackages} (${LAUNDRY_PACKAGE_PRICE}€ pro Paket)` : ''}
-${breakfastCount > 0 ? `Frühstück: ${breakfastCount} Person(en) (${BREAKFAST_FIRST_PRICE}€ für die erste Person, ${BREAKFAST_ADDITIONAL_PRICE}€ für jede weitere Person)` : ''}
+${breakfastCount > 0 ? `Frühstück: ${breakfastCount} Person(en) (${BREAKFAST_FIRST_PRICE}€ für erste Person, ${BREAKFAST_ADDITIONAL_PRICE}€ für jede weitere)` : ''}
 
 ${priceDetails ? `Preisübersicht:
 - Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}
@@ -162,16 +160,17 @@ ${priceDetails.laundryPrice > 0 ? `- Wäschepakete (${laundryPackages}x à ${LAU
 - Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}
 - Gesamtpreis: €${total.toFixed(2)}` : ''}
 
-Kontaktdaten:
-${contactName ? `Name: ${contactName}` : ''}
-${contactEmail ? `E-Mail: ${contactEmail}` : ''}
-${contactPhone ? `Telefon: ${contactPhone}` : ''}
-${contactMessage ? `\nMeine Nachricht/Wünsche:\n${contactMessage}` : ''}
+${contactMessage ? `Meine Nachricht/Wünsche:\n${contactMessage}\n` : ''}
 
 Ich freue mich auf Ihre Rückmeldung.
 
 Mit freundlichen Grüßen,
-${contactName || '[Ihr Name]'}`;
+${contactName || '[Ihr Name]'}
+
+Kontaktdaten:
+${contactName ? `Name: ${contactName}` : ''}
+${contactEmail ? `E-Mail: ${contactEmail}` : ''}
+${contactPhone ? `Telefon: ${contactPhone}` : ''}`;
     
     setEmailTemplate(template);
   };
@@ -314,12 +313,10 @@ ${contactName || '[Ihr Name]'}`;
     setShowEmailDialog(true);
   };
 
+  // Fix the email subject to remove redundancy
   const openDefaultEmailClient = () => {
-    const subject = encodeURIComponent("Einruhr - Reservierungsanfrage");
-    // Erstelle eine kurze Email mit einem Hinweis auf die vollständige E-Mail im Anhang
-    const shortBody = encodeURIComponent(
-      "Hallo Herr Mertens,\n\n"
-    );
+    const subject = encodeURIComponent("Reservierungsanfrage");
+    const shortBody = encodeURIComponent("");
     
     // Verwende nur eine kurze E-Mail für das mailto
     const mailtoLink = `mailto:einruhr.mertens@web.de?subject=${subject}&body=${shortBody}`;
@@ -624,19 +621,9 @@ ${contactName || '[Ihr Name]'}`;
       </CardContent>
 
       <CardFooter className="flex flex-col">
-        <div className="grid grid-cols-1 gap-4 w-full mb-4">
-          <Button 
-            onClick={sendReservationRequest}
-            disabled={isSubmitting || !date?.from || !date?.to || !contactName || !contactEmail}
-            className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
-          >
-            <Mail className="h-4 w-4" />
-            Via Email buchen
-          </Button>
-        </div>
-          
+        {/* Price details display section */}
         {totalPrice !== null && priceDetails && (
-          <div className="mt-4 p-4 bg-forest-50 rounded-md w-full">
+          <div className="mt-4 p-4 bg-forest-50 rounded-md w-full mb-4">
             <h3 className="font-medium text-lg mb-2 font-serif">Preisdetails:</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
@@ -668,17 +655,17 @@ ${contactName || '[Ihr Name]'}`;
                 </>
               )}
               {priceDetails.laundryPrice > 0 && (
-  <>
-    <div className="flex justify-between">
-      <span>Wäschepakete ({laundryPackages}x):</span>
-      <span>€{priceDetails.laundryPrice.toFixed(2)}</span>
-    </div>
-    <div className="flex justify-between text-xs text-gray-500 pl-4">
-      <span>€{LAUNDRY_PACKAGE_PRICE} pro Paket</span>
-      <span></span>
-    </div>
-  </>
-)}
+                <>
+                  <div className="flex justify-between">
+                    <span>Wäschepakete ({laundryPackages}x):</span>
+                    <span>€{priceDetails.laundryPrice.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-gray-500 pl-4">
+                    <span>€{LAUNDRY_PACKAGE_PRICE} pro Paket</span>
+                    <span></span>
+                  </div>
+                </>
+              )}
               <div className="flex justify-between">
                 <span>Endreinigung:</span>
                 <span>€{priceDetails.cleaningPrice.toFixed(2)}</span>
@@ -691,6 +678,18 @@ ${contactName || '[Ihr Name]'}`;
             </div>
           </div>
         )}
+        
+        {/* Button moved below price details */}
+        <div className="grid grid-cols-1 gap-4 w-full">
+          <Button 
+            onClick={sendReservationRequest}
+            disabled={isSubmitting || !date?.from || !date?.to || !contactName || !contactEmail}
+            className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
+          >
+            <Mail className="h-4 w-4" />
+            Via Email buchen
+          </Button>
+        </div>
 
         {/* Email-Dialog */}
         <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
