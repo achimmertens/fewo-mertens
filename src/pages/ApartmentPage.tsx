@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Bed, Users, Bath, CheckSquare, Flame, Phone } from "lucide-react";
-import { BREAKFAST_FIRST_PRICE, BREAKFAST_ADDITIONAL_PRICE, LAUNDRY_PACKAGE_PRICE } from "@/components/PriceCalculator";
+import { PRICES } from "@/components/PriceCalculator";
 
 const ApartmentPage = () => {
   return (
@@ -345,11 +345,11 @@ const ApartmentPage = () => {
                   </h3>
                   <div>
                     <h4 className="font-medium">Frühstück</h4>
-                    <p className="text-gray-700">Nach Rücksprache servieren wir Ihnen ein einfaches Frühstück (€{BREAKFAST_FIRST_PRICE} für die erste Person, €{BREAKFAST_ADDITIONAL_PRICE} für jede weitere Person/Tag).</p>
+                    <p className="text-gray-700">Nach Rücksprache servieren wir Ihnen ein einfaches Frühstück (€{PRICES.BREAKFAST.FIRST_PERSON} für die erste Person, €{PRICES.BREAKFAST.ADDITIONAL_PERSON} für jede weitere Person/Tag).</p>
                   </div>
                   <div>
                     <h4 className="font-medium">Wäschepaket</h4>
-                    <p className="text-gray-700">Handtücher und Bettwäsche können für €{LAUNDRY_PACKAGE_PRICE} pro Person dazugebucht werden.</p>
+                    <p className="text-gray-700">Handtücher und Bettwäsche können für €{PRICES.LAUNDRY_PACKAGE} pro Person dazugebucht werden.</p>
                   </div>
                 </div>
 

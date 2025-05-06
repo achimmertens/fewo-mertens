@@ -14,14 +14,7 @@ import {
   MapPin
 } from "lucide-react";
 import GoogleCalendar from "@/components/GoogleCalendar";
-import { 
-  FIRST_NIGHT_PRICE, 
-  ADDITIONAL_NIGHT_PRICE, 
-  BREAKFAST_FIRST_PRICE, 
-  BREAKFAST_ADDITIONAL_PRICE, 
-  LAUNDRY_PACKAGE_PRICE,
-  CLEANING_FEE 
-} from "@/components/PriceCalculator";
+import { PRICES } from "@/components/PriceCalculator";
 
 const InfoPage = () => {
   return (
@@ -46,16 +39,14 @@ const InfoPage = () => {
                   Preise
                 </h2>
 
-
-
                 <div className="space-y-6">
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="text-xl font-serif font-medium mb-4">Grundpreis</h3>
                     <div className="grid grid-cols-1 gap-4">
                       <div>
                         <h4 className="font-medium">Übernachtung</h4>
-                        <p className="text-forest-700 text-lg font-medium">{FIRST_NIGHT_PRICE} € für die erste Nacht</p>
-                        <p className="text-forest-700 text-lg font-medium">{ADDITIONAL_NIGHT_PRICE} € für jede weitere Nacht</p>
+                        <p className="text-forest-700 text-lg font-medium">{PRICES.FIRST_NIGHT} € für die erste Nacht</p>
+                        <p className="text-forest-700 text-lg font-medium">{PRICES.ADDITIONAL_NIGHT} € für jede weitere Nacht</p>
                         <p className="text-sm text-gray-600">Unabhängig von der Personenanzahl</p>
                       </div>
                     </div>
@@ -68,7 +59,7 @@ const InfoPage = () => {
                         <ShoppingCart className="h-5 w-5 text-forest-600 mr-3 flex-shrink-0 mt-1" />
                         <div>
                           <h4 className="font-medium">Wäschepaket</h4>
-                          <p className="text-forest-700 text-lg font-medium">{LAUNDRY_PACKAGE_PRICE} € pro Person</p>
+                          <p className="text-forest-700 text-lg font-medium">{PRICES.LAUNDRY_PACKAGE} € pro Person</p>
                           <p className="text-sm text-gray-600">Handtücher & Bettwäsche</p>
                           <p className="text-sm text-gray-600">Bitte dann buchen, wenn Sie keine eigene Bettwäsche und Handtücher mitbringen.</p>
                           <div className="w-full p-2 flex flex-col">
@@ -84,8 +75,8 @@ const InfoPage = () => {
                         <Coffee className="h-5 w-5 text-forest-600 mr-3 flex-shrink-0 mt-1" />
                         <div>
                           <h4 className="font-medium">Frühstück</h4>
-                          <p className="text-forest-700 text-lg font-medium">{BREAKFAST_FIRST_PRICE} € für die erste Person am ersten Tag</p>
-                          <p className="text-forest-700 text-lg font-medium">{BREAKFAST_ADDITIONAL_PRICE} € für jede weitere Person und/oder Tag</p>
+                          <p className="text-forest-700 text-lg font-medium">{PRICES.BREAKFAST.FIRST_PERSON} € für die erste Person am ersten Tag</p>
+                          <p className="text-forest-700 text-lg font-medium">{PRICES.BREAKFAST.ADDITIONAL_PERSON} € für jede weitere Person und/oder Tag</p>
                           <p className="text-sm text-gray-600">Einfaches Frühstück nach Rücksprache für max. zwei Tage</p>
                           <div className="w-full p-2 flex flex-col">
                             <img
@@ -104,7 +95,7 @@ const InfoPage = () => {
                     <div className="grid grid-cols-1 gap-4">
                       <div>
                         <h4 className="font-medium">Endreinigung</h4>
-                        <p className="text-forest-700 text-lg font-medium">{CLEANING_FEE} €</p>
+                        <p className="text-forest-700 text-lg font-medium">{PRICES.CLEANING_FEE} €</p>
                         <p className="text-sm text-gray-600">Wird immer erhoben</p>
                       </div>
                     </div>
@@ -211,8 +202,6 @@ const InfoPage = () => {
                       Nachdem Sie eine Reservierungsanfrage an uns gesendet haben und wir uns einig über die Konditionen geworden sind, erhalten Sie unsere Konto-Daten. Nach Geldeingang erhalten Sie die Beschreibung zum Schlüsseltresor und den dazugehörigen Code. Den Schlüssel hängen Sie bei der Abreise wieder in den Kasten.
                     </p>
                   </div>
-
-
                 </div>
               </section>
             </div>

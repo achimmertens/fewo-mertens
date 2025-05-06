@@ -1,3 +1,15 @@
+// Preiskonstanten
+export const PRICES = {
+  FIRST_NIGHT: 59,
+  ADDITIONAL_NIGHT: 50,
+  BREAKFAST: {
+    FIRST_PERSON: 14,
+    ADDITIONAL_PERSON: 7,
+  },
+  LAUNDRY_PACKAGE: 7,
+  CLEANING_FEE: 25,
+} as const;
+
 interface BookingPeriod {
   start: Date;
   end: Date;
@@ -24,12 +36,16 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-export const FIRST_NIGHT_PRICE = 59;
-export const ADDITIONAL_NIGHT_PRICE = 50;
-export const BREAKFAST_FIRST_PRICE = 14;
-export const BREAKFAST_ADDITIONAL_PRICE = 7;
-export const LAUNDRY_PACKAGE_PRICE = 7;
-export const CLEANING_FEE = 25;
+interface PriceDetails {
+  firstNightPrice: number;
+  additionalNightsPrice: number;
+  additionalNightsCount: number;
+  breakfastPrice: number;
+  breakfastFirstPersonPrice: number;
+  breakfastAdditionalPrice: number;
+  laundryPrice: number;
+  cleaningPrice: number;
+}
 
 const PriceCalculator = () => {
   const { toast } = useToast();
@@ -43,16 +59,7 @@ const PriceCalculator = () => {
   const [laundryPackages, setLaundryPackages] = useState<number>(0);
   const [breakfastCount, setBreakfastCount] = useState<number>(0);
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
-  const [priceDetails, setPriceDetails] = useState<{
-    firstNightPrice: number;
-    additionalNightsPrice: number;
-    additionalNightsCount: number;
-    breakfastPrice: number;
-    breakfastFirstPersonPrice: number;
-    breakfastAdditionalPrice: number;
-    laundryPrice: number;
-    cleaningPrice: number;
-  } | null>(null);
+  const [priceDetails, setPriceDetails] = useState<PriceDetails | null>(null);
   const [isDateBooked, setIsDateBooked] = useState<boolean>(false);
   const [bookingPeriods, setBookingPeriods] = useState<BookingPeriod[]>([]);
   const [emailTemplate, setEmailTemplate] = useState<string>("");
@@ -91,57 +98,16 @@ const PriceCalculator = () => {
     }
   };
 
-  // Helper function to create price details and update email template
-  const calculatePriceDetails = (dateRange: DateRange) => {
-    if (!dateRange.from || !dateRange.to) return;
-    
-    const numNights = Math.max(1, differenceInCalendarDays(dateRange.to, dateRange.from));
-    
-    const firstNightPrice = FIRST_NIGHT_PRICE;
-    const additionalNightsCount = numNights - 1;
-    const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * ADDITIONAL_NIGHT_PRICE : 0;
-    
-    let breakfastPrice = 0;
-    let breakfastFirstPersonPrice = 0;
-    let breakfastAdditionalPrice = 0;
-    
-    if (breakfastCount > 0) {
-      breakfastFirstPersonPrice = BREAKFAST_FIRST_PRICE;
-      
-      if (breakfastCount > 1) {
-        breakfastAdditionalPrice = (breakfastCount - 1) * BREAKFAST_ADDITIONAL_PRICE;
-      }
-      
-      breakfastPrice = breakfastFirstPersonPrice + breakfastAdditionalPrice;
-    }
-    
-    const laundryPrice = laundryPackages * LAUNDRY_PACKAGE_PRICE;
-    
-    const cleaningPrice = CLEANING_FEE;
-    
-    const total = firstNightPrice + additionalNightsPrice + breakfastPrice + laundryPrice + cleaningPrice;
-    
-    setTotalPrice(total);
-    setPriceDetails({
-      firstNightPrice,
-      additionalNightsPrice,
-      additionalNightsCount,
-      breakfastPrice,
-      breakfastFirstPersonPrice,
-      breakfastAdditionalPrice,
-      laundryPrice,
-      cleaningPrice
-    });
-    
-    // Update email template with all details including price information
-    updateEmailTemplate(dateRange, numNights, total);
-  };
+  // Helper function to create email template
+  const createEmailTemplate = (
+    dateRange: DateRange,
+    numNights: number,
+    total: number,
+    priceDetails: PriceDetails | null
+  ): string => {
+    if (!dateRange.from || !dateRange.to) return '';
 
-  // Function to update email template with all booking and price information
-  const updateEmailTemplate = (dateRange: DateRange, numNights: number, total: number) => {
-    if (!dateRange.from || !dateRange.to) return;
-
-    const template = `Sehr geehrter Herr Mertens,
+    return `Sehr geehrter Herr Mertens,
 
 ich möchte gerne folgende Reservierung anfragen:
 
@@ -149,14 +115,14 @@ Anreisedatum: ${format(dateRange.from, "dd.MM.yyyy", { locale: de })}
 Abreisedatum: ${format(dateRange.to, "dd.MM.yyyy", { locale: de })}
 Anzahl Nächte: ${numNights}
 Anzahl Personen: ${guests}
-${laundryPackages > 0 ? `Wäschepakete: ${laundryPackages} (${LAUNDRY_PACKAGE_PRICE}€ pro Paket)` : ''}
-${breakfastCount > 0 ? `Frühstück: ${breakfastCount} Person(en) (${BREAKFAST_FIRST_PRICE}€ für erste Person, ${BREAKFAST_ADDITIONAL_PRICE}€ für jede weitere)` : ''}
+${laundryPackages > 0 ? `Wäschepakete: ${laundryPackages} (${PRICES.LAUNDRY_PACKAGE}€ pro Paket)` : ''}
+${breakfastCount > 0 ? `Frühstück: ${breakfastCount} Person(en) (${PRICES.BREAKFAST.FIRST_PERSON}€ für erste Person, ${PRICES.BREAKFAST.ADDITIONAL_PERSON}€ für jede weitere)` : ''}
 
 ${priceDetails ? `Preisübersicht:
 - Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}
 ${priceDetails.additionalNightsCount > 0 ? `- Weitere Nächte (${priceDetails.additionalNightsCount}x): €${priceDetails.additionalNightsPrice.toFixed(2)}` : ''}
 ${priceDetails.breakfastPrice > 0 ? `- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}` : ''}
-${priceDetails.laundryPrice > 0 ? `- Wäschepakete (${laundryPackages}x à ${LAUNDRY_PACKAGE_PRICE}€): €${priceDetails.laundryPrice.toFixed(2)}` : ''}
+${priceDetails.laundryPrice > 0 ? `- Wäschepakete (${laundryPackages}x à ${PRICES.LAUNDRY_PACKAGE}€): €${priceDetails.laundryPrice.toFixed(2)}` : ''}
 - Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}
 - Gesamtpreis: €${total.toFixed(2)}` : ''}
 
@@ -171,7 +137,56 @@ Kontaktdaten:
 ${contactName ? `Name: ${contactName}` : ''}
 ${contactEmail ? `E-Mail: ${contactEmail}` : ''}
 ${contactPhone ? `Telefon: ${contactPhone}` : ''}`;
+  };
+
+  // Helper function to calculate price details
+  const calculatePriceDetails = (dateRange: DateRange): PriceDetails | null => {
+    if (!dateRange.from || !dateRange.to) return null;
     
+    const numNights = Math.max(1, differenceInCalendarDays(dateRange.to, dateRange.from));
+    
+    const firstNightPrice = PRICES.FIRST_NIGHT;
+    const additionalNightsCount = numNights - 1;
+    const additionalNightsPrice = additionalNightsCount > 0 ? additionalNightsCount * PRICES.ADDITIONAL_NIGHT : 0;
+    
+    let breakfastPrice = 0;
+    let breakfastFirstPersonPrice = 0;
+    let breakfastAdditionalPrice = 0;
+    
+    if (breakfastCount > 0) {
+      breakfastFirstPersonPrice = PRICES.BREAKFAST.FIRST_PERSON;
+      breakfastAdditionalPrice = (breakfastCount - 1) * PRICES.BREAKFAST.ADDITIONAL_PERSON;
+      breakfastPrice = breakfastFirstPersonPrice + breakfastAdditionalPrice;
+    }
+    
+    const laundryPrice = laundryPackages * PRICES.LAUNDRY_PACKAGE;
+    const cleaningPrice = PRICES.CLEANING_FEE;
+    
+    const total = firstNightPrice + additionalNightsPrice + breakfastPrice + laundryPrice + cleaningPrice;
+    
+    const details = {
+      firstNightPrice,
+      additionalNightsPrice,
+      additionalNightsCount,
+      breakfastPrice,
+      breakfastFirstPersonPrice,
+      breakfastAdditionalPrice,
+      laundryPrice,
+      cleaningPrice
+    };
+
+    setTotalPrice(total);
+    setPriceDetails(details);
+    
+    // Update email template
+    updateEmailTemplate(dateRange, numNights, total);
+
+    return details;
+  };
+
+  // Update email template function
+  const updateEmailTemplate = (dateRange: DateRange, numNights: number, total: number) => {
+    const template = createEmailTemplate(dateRange, numNights, total, priceDetails);
     setEmailTemplate(template);
   };
 
@@ -508,7 +523,7 @@ ${contactPhone ? `Telefon: ${contactPhone}` : ''}`;
               />
             </div>
           )}
-          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €{LAUNDRY_PACKAGE_PRICE} pro Person und enthält Handtücher und Bettwäsche.</p>
+          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €{PRICES.LAUNDRY_PACKAGE} pro Person und enthält Handtücher und Bettwäsche.</p>
         </div>
 
         <div className="space-y-2">
@@ -547,7 +562,7 @@ ${contactPhone ? `Telefon: ${contactPhone}` : ''}`;
             </div>
           )}
           <p className="text-sm text-muted-foreground">
-  Wir bieten ein einfaches Frühstück nach Rücksprache an. Das erste Frühstück kostet €{BREAKFAST_FIRST_PRICE}, jedes weitere Frühstück kostet €{BREAKFAST_ADDITIONAL_PRICE}.
+  Wir bieten ein einfaches Frühstück nach Rücksprache an. Das erste Frühstück kostet €{PRICES.BREAKFAST.FIRST_PERSON}, jedes weitere Frühstück kostet €{PRICES.BREAKFAST.ADDITIONAL_PERSON}.
 </p>
         </div>
 
@@ -661,7 +676,7 @@ ${contactPhone ? `Telefon: ${contactPhone}` : ''}`;
                     <span>€{priceDetails.laundryPrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-xs text-gray-500 pl-4">
-                    <span>€{LAUNDRY_PACKAGE_PRICE} pro Paket</span>
+                    <span>€{PRICES.LAUNDRY_PACKAGE} pro Paket</span>
                     <span></span>
                   </div>
                 </>
