@@ -1,4 +1,3 @@
-
 interface BookingPeriod {
   start: Date;
   end: Date;
@@ -76,7 +75,7 @@ const PriceCalculator = () => {
     if (date?.from && date?.to && !isDateBooked) {
       calculatePriceDetails(date);
     }
-  }, [date, guests, laundryPackages, breakfastCount]);
+  }, [date, guests, laundryPackages, breakfastCount, contactName, contactEmail, contactPhone, contactMessage]);
 
   // Add handleDateChange function to handle date selection
   const handleDateChange = (newDate: DateRange | undefined) => {
@@ -163,10 +162,11 @@ ${priceDetails.laundryPrice > 0 ? `- Wäschepakete (${laundryPackages}x à ${LAU
 - Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}
 - Gesamtpreis: €${total.toFixed(2)}` : ''}
 
+Kontaktdaten:
 ${contactName ? `Name: ${contactName}` : ''}
 ${contactEmail ? `E-Mail: ${contactEmail}` : ''}
 ${contactPhone ? `Telefon: ${contactPhone}` : ''}
-${contactMessage ? `Nachricht: ${contactMessage}` : ''}
+${contactMessage ? `\nMeine Nachricht/Wünsche:\n${contactMessage}` : ''}
 
 Ich freue mich auf Ihre Rückmeldung.
 
@@ -308,7 +308,7 @@ ${contactName || '[Ihr Name]'}`;
 
     // Stelle sicher, dass die Preisberechnung durchgeführt wurde
     if (totalPrice === null) {
-      calculatePrice();
+      calculatePriceDetails(date);
     }
     
     setShowEmailDialog(true);
@@ -624,21 +624,11 @@ ${contactName || '[Ihr Name]'}`;
       </CardContent>
 
       <CardFooter className="flex flex-col">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-4">
-          {/* "Preis anzeigen"-Button ist nur sichtbar, wenn noch kein Preis berechnet wurde */}
-          {totalPrice === null && (
-            <Button 
-              onClick={calculatePrice}
-              className="w-full bg-forest-600 hover:bg-forest-700"
-            >
-              Preis anzeigen
-            </Button>
-          )}
-
+        <div className="grid grid-cols-1 gap-4 w-full mb-4">
           <Button 
             onClick={sendReservationRequest}
             disabled={isSubmitting || !date?.from || !date?.to || !contactName || !contactEmail}
-            className={`${totalPrice === null ? 'col-span-1' : 'col-span-1 md:col-span-2'} w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2`}
+            className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
           >
             <Mail className="h-4 w-4" />
             Via Email buchen
