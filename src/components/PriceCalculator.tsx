@@ -1,3 +1,4 @@
+
 interface BookingPeriod {
   start: Date;
   end: Date;
@@ -69,6 +70,13 @@ const PriceCalculator = () => {
   useEffect(() => {
     fetchBookedPeriods();
   }, []);
+
+  // Automatically recalculate price when any parameter changes
+  useEffect(() => {
+    if (date?.from && date?.to && !isDateBooked) {
+      calculatePriceDetails(date);
+    }
+  }, [date, guests, laundryPackages, breakfastCount]);
 
   // Add handleDateChange function to handle date selection
   const handleDateChange = (newDate: DateRange | undefined) => {
@@ -144,14 +152,14 @@ Anreisedatum: ${format(dateRange.from, "dd.MM.yyyy", { locale: de })}
 Abreisedatum: ${format(dateRange.to, "dd.MM.yyyy", { locale: de })}
 Anzahl Nächte: ${numNights}
 Anzahl Personen: ${guests}
-${laundryPackages > 0 ? `Wäschepakete: ${laundryPackages}` : ''}
-${breakfastCount > 0 ? `Frühstück: ${breakfastCount} Person(en)` : ''}
+${laundryPackages > 0 ? `Wäschepakete: ${laundryPackages} (${LAUNDRY_PACKAGE_PRICE}€ pro Paket)` : ''}
+${breakfastCount > 0 ? `Frühstück: ${breakfastCount} Person(en) (${BREAKFAST_FIRST_PRICE}€ für die erste Person, ${BREAKFAST_ADDITIONAL_PRICE}€ für jede weitere Person)` : ''}
 
 ${priceDetails ? `Preisübersicht:
 - Erste Nacht: €${priceDetails.firstNightPrice.toFixed(2)}
 ${priceDetails.additionalNightsCount > 0 ? `- Weitere Nächte (${priceDetails.additionalNightsCount}x): €${priceDetails.additionalNightsPrice.toFixed(2)}` : ''}
 ${priceDetails.breakfastPrice > 0 ? `- Frühstück: €${priceDetails.breakfastPrice.toFixed(2)}` : ''}
-${priceDetails.laundryPrice > 0 ? `- Wäschepakete (${laundryPackages}x): €${priceDetails.laundryPrice.toFixed(2)}` : ''}
+${priceDetails.laundryPrice > 0 ? `- Wäschepakete (${laundryPackages}x à ${LAUNDRY_PACKAGE_PRICE}€): €${priceDetails.laundryPrice.toFixed(2)}` : ''}
 - Endreinigung: €${priceDetails.cleaningPrice.toFixed(2)}
 - Gesamtpreis: €${total.toFixed(2)}` : ''}
 
@@ -310,7 +318,7 @@ ${contactName || '[Ihr Name]'}`;
     const subject = encodeURIComponent("Einruhr - Reservierungsanfrage");
     // Erstelle eine kurze Email mit einem Hinweis auf die vollständige E-Mail im Anhang
     const shortBody = encodeURIComponent(
-      "Hallo Herr Mertens,\n\nAnbei meine Reservierungsanfrage für die Ferienwohnung Waldoase Mertens in Einruhr."
+      "Hallo Herr Mertens,\n\n"
     );
     
     // Verwende nur eine kurze E-Mail für das mailto
@@ -503,7 +511,7 @@ ${contactName || '[Ihr Name]'}`;
               />
             </div>
           )}
-          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €7 pro Person und enthält Handtücher und Bettwäsche.</p>
+          <p className="text-sm text-muted-foreground">Ein Wäschepaket kostet €{LAUNDRY_PACKAGE_PRICE} pro Person und enthält Handtücher und Bettwäsche.</p>
         </div>
 
         <div className="space-y-2">
@@ -617,17 +625,20 @@ ${contactName || '[Ihr Name]'}`;
 
       <CardFooter className="flex flex-col">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-4">
-          <Button 
-            onClick={calculatePrice}
-            className="w-full bg-forest-600 hover:bg-forest-700"
-          >
-            Preis anzeigen
-          </Button>
+          {/* "Preis anzeigen"-Button ist nur sichtbar, wenn noch kein Preis berechnet wurde */}
+          {totalPrice === null && (
+            <Button 
+              onClick={calculatePrice}
+              className="w-full bg-forest-600 hover:bg-forest-700"
+            >
+              Preis anzeigen
+            </Button>
+          )}
 
           <Button 
             onClick={sendReservationRequest}
             disabled={isSubmitting || !date?.from || !date?.to || !contactName || !contactEmail}
-            className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
+            className={`${totalPrice === null ? 'col-span-1' : 'col-span-1 md:col-span-2'} w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2`}
           >
             <Mail className="h-4 w-4" />
             Via Email buchen
@@ -673,7 +684,7 @@ ${contactName || '[Ihr Name]'}`;
       <span>€{priceDetails.laundryPrice.toFixed(2)}</span>
     </div>
     <div className="flex justify-between text-xs text-gray-500 pl-4">
-      <span>€7 pro Paket</span>
+      <span>€{LAUNDRY_PACKAGE_PRICE} pro Paket</span>
       <span></span>
     </div>
   </>
