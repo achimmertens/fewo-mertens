@@ -1,4 +1,3 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PriceCalculator from "@/components/PriceCalculator";
@@ -8,41 +7,20 @@ import { MapPin, Phone, Mail, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
 import { format, addDays } from "date-fns";
 import { de } from "date-fns/locale";
-
-interface BookingPeriod {
-  start: Date;
-  end: Date;
-  name: string;
-}
+import { BookingPeriod } from "@/types/booking";
+import { fetchBookedPeriods } from "@/utils/calendarUtils";
 
 const CalculatorPage = () => {
   const [bookingPeriods, setBookingPeriods] = useState<BookingPeriod[]>([]);
 
   useEffect(() => {
-    fetchBookedPeriods();
+    loadBookedPeriods();
   }, []);
 
-  const fetchBookedPeriods = async () => {
+  const loadBookedPeriods = async () => {
     try {
-      const calendarId = "6gk8bbmgm01bk625432gb33tk0@group.calendar.google.com";
-      const apiKey = "AIzaSyBiD1VUk3DaVOZ2omR9T4xbr9k8vu4gS1c";
-      const timeMin = new Date().toISOString();
-      const timeMax = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
-      const url = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`;
-
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("Fehler beim Abrufen der Kalenderdaten");
-      }
-
-      const data = await response.json();
-      const bookings = data.items.map((event: any) => ({
-        start: new Date(event.start.date || event.start.dateTime),
-        end: new Date(event.end.date || event.end.dateTime),
-        name: event.summary || "Unbekannt",
-      }));
-
-      setBookingPeriods(bookings);
+      const periods = await fetchBookedPeriods();
+      setBookingPeriods(periods);
     } catch (error) {
       console.error("Error fetching booked periods:", error);
     }
