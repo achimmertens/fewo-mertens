@@ -41,7 +41,7 @@ const Hero = () => {
             style={{
               height: isMobile ? "150px" : "200px",
               width: isMobile ? "100%" : "400px",
-              transform: "perspective(100000px) rotateX(0deg)",
+              transform: "perspective(1000px) rotateX(0deg)",
               transition: "transform 0.2s ease-out"
             }}
           >

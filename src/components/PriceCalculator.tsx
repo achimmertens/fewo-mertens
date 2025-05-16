@@ -702,7 +702,7 @@ ${contactPhone ? `Telefon: ${contactPhone}` : ''}`;
             className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
           >
             <Mail className="h-4 w-4" />
-            Via Email buchen
+            Via Email unverbindlich anfragen
           </Button>
         </div>
 
