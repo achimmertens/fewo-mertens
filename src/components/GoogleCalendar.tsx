@@ -1,14 +1,19 @@
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const GoogleCalendar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleCalendarClick = () => {
     // Speichern der Information, dass der Kalender geklickt wurde, im localStorage
     localStorage.setItem("openDateSelector", "true");
-    // Navigieren zur Preisrechnerseite
-    navigate("/calculator");
+    
+    // Wenn wir uns bereits auf der Preisrechnerseite befinden, nicht navigieren
+    if (location.pathname !== "/calculator") {
+      // Navigieren zur Preisrechnerseite
+      navigate("/calculator");
+    }
   };
 
   return (
