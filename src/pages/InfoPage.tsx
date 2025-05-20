@@ -199,7 +199,7 @@ const InfoPage = () => {
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="font-medium mb-2">Wie erfolgt die Schlüsselübergabe?</h3>
                     <p>
-                      Nachdem Sie eine Reservierungsanfrage an uns gesendet haben und wir uns einig über die Konditionen geworden sind, erhalten Sie unsere Konto-Daten. Nach Geldeingang erhalten Sie die Beschreibung zum Schlüsseltresor und den dazugehörigen Code. Den Schlüssel hängen Sie bei der Abreise wieder in den Kasten.
+                      Nachdem Sie eine Reservierungsanfrage an uns gesendet haben und wir uns einig über die Konditionen geworden sind, erhalten Sie unsere Konto-Daten. Nach Geldeingang erhalten Sie die Beschreibung zum Schlüsseltresor und den dazugehörigen Code. Den Schlüssel hängen Sie bitte bei der Abreise wieder in den Kasten.
                     </p>
                   </div>
                 </div>

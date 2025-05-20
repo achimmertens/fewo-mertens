@@ -232,7 +232,7 @@ const ApartmentPage = () => {
                   </div>
                 </div>
                 <p>
-                  Die offene Küchenzeile ist vollständig ausgestattet, sodass Sie sich während Ihres Aufenthalts selbst versorgen können. Sie finden hier alles, was Sie zum Kochen benötigen: Herd, Kühlschrank mit Gefrierfach, French Press für Kaffee, Wasserkocher, Toaster sowie Geschirr und Kochutensilien. Zudem haben wir immer einige Essensvorräte im Schrank für Sie.
+                  Die offene Küchenzeile ist vollständig ausgestattet, sodass Sie sich während Ihres Aufenthalts selbst versorgen können. Sie finden hier alles, was Sie zum Kochen benötigen: Herd, Kühlschrank mit Gefrierfach, French Press für Kaffee, Wasserkocher, Toaster sowie Geschirr und Kochutensilien. Zudem haben wir immer einige Essensvorräte im Schrank für Sie, die Sie gegen eine kleine Spende entnehmen dürfen.
                 </p>
 
                 <h3 className="text-xl font-serif font-bold text-forest-700 mb-4 mt-8">
@@ -255,32 +255,8 @@ const ApartmentPage = () => {
                     />
                   </div>
                 </div>
-
-                <div className="flex flex-wrap -mx-2 my-4">
-                  <div className="w-full md:w-1/2 p-2">
-                    <figure>
-                      <img
-                        src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/terasse_02-1.jpg"
-                        alt="Terrasse vor dem Umbau"
-                        className="rounded-lg w-full h-auto object-cover"
-                      />
-                      <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Archivbild</figcaption>
-                    </figure>
-                  </div>
-                  <div className="w-full md:w-1/2 p-2">
-                    <figure>
-                      <img
-                        src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/terasse03-1.jpg"
-                        alt="Alte Ansicht der Terrasse"
-                        className="rounded-lg w-full h-auto object-cover"
-                      />
-                      <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Archivbild</figcaption>
-                    </figure>
-                  </div>
-                </div>
-
                 <p>
-                  Die Ferienwohnung verfügt über eine schöne Terrasse, auf der Sie bei gutem Wetter entspannen und die Natur genießen können. Der Nationalpark Eifel fängt direkt neben und hinter der Terrasse an, Sie sitzen quasie mittendrin und können manchmal selten Vogelarten, Siebenschläfer oder sonstige Tiere sehen.
+                  Die Ferienwohnung verfügt über eine schöne Terrasse, auf der Sie bei gutem Wetter entspannen und die Natur genießen können. Der Nationalpark Eifel fängt direkt neben und hinter der Terrasse an, Sie sitzen quasie mittendrin und können manchmal seltene Vogelarten, Siebenschläfer oder sonstige Tiere sehen.
                 </p>
                    <div className="w-full md:w-1/2 p-2">
                     <figure>
