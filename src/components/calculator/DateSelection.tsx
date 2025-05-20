@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format, addDays, isSameDay, startOfDay, isBefore, isAfter } from "date-fns";
 import { de } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -28,6 +28,15 @@ const DateSelection = ({
 }: DateSelectionProps) => {
   const isMobile = useIsMobile();
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
+
+  // Überprüfen, ob der Kalender geklickt wurde und der Dialog geöffnet werden soll
+  useEffect(() => {
+    const shouldOpenDateSelector = localStorage.getItem("openDateSelector");
+    if (shouldOpenDateSelector === "true") {
+      setIsPopoverOpen(true);
+      localStorage.removeItem("openDateSelector"); // Entfernen nach einmaligem Verwenden
+    }
+  }, []);
 
   const isDayWithinBooking = (day: Date): boolean => {
     return bookingPeriods.some(period => {
