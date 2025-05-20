@@ -52,10 +52,10 @@ const CalculatorPage = () => {
             
             <div>
               <h2 className="text-2xl font-serif font-bold text-forest-700 mb-6">
-                Verfügbarkeit prüfen
+                Verfügbarkeit anschauen
               </h2>
               <p className="mb-6 text-gray-700">
-                Hier können Sie prüfen, ob unsere Ferienwohnung für Ihren Wunschtermin verfügbar ist. Die belegten Tage sind im Kalender markiert.
+                Hier können Sie nachschauen, ob unsere Ferienwohnung für Ihren Wunschtermin verfügbar ist. Die belegten Tage sind im Kalender markiert.
               </p>
               
               <GoogleCalendar />
