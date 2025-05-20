@@ -14,7 +14,7 @@ import {
   MapPin
 } from "lucide-react";
 import GoogleCalendar from "@/components/GoogleCalendar";
-import { PRICES } from "@/components/PriceCalculator";
+import { PRICES } from "@/constants/prices";
 
 const InfoPage = () => {
   return (
