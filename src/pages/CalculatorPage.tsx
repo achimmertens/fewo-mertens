@@ -106,7 +106,7 @@ const CalculatorPage = () => {
                           <Mail className="h-5 w-5 text-forest-600 mr-4 mt-1" />
                           <div>
                             <h3 className="font-medium mb-1">E-Mail</h3>
-                            <p className="text-forest-700">einruhr.mertens@web.de</p>
+                            <p className="text-forest-700">fewo@amertens.me</p>
                           </div>
                         </div>
                       </CardContent>

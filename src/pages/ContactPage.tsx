@@ -43,7 +43,7 @@ const ContactPage = () => {
                     <Mail className="h-5 w-5 text-forest-600 mr-3 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-medium mb-1">E-Mail</h3>
-                      <p className="text-forest-700 text-base sm:text-lg break-words">einruhr.mertens@web.de</p>
+                      <p className="text-forest-700 text-base sm:text-lg break-words">fewo@amertens.me</p>
                     </div>
                   </div>
                 </CardContent>

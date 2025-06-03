@@ -44,7 +44,7 @@ const EmailDialog = ({
         <DialogHeader>
           <DialogTitle className="text-2xl font-serif">Reservierung versenden</DialogTitle>
           <DialogDescription>
-            Die E-Mail-Vorlage wurde erstellt. Sie können sie jetzt kopieren und an einruhr.mertens@web.de senden.
+            Die E-Mail-Vorlage wurde erstellt. Sie können sie jetzt kopieren und an fewo@amertens.me senden.
           </DialogDescription>
         </DialogHeader>
         
@@ -82,7 +82,7 @@ const EmailDialog = ({
               <ol className="list-decimal list-inside space-y-1 text-sm">
                 <li>Klicken Sie auf "Kopieren" um den Text zu kopieren</li>
                 <li>Öffnen Sie Ihr E-Mail-Programm</li>
-                <li>Erstellen Sie eine neue E-Mail an: <span className="font-medium">einruhr.mertens@web.de</span></li>
+                <li>Erstellen Sie eine neue E-Mail an: <span className="font-medium">fewo@amertens.me</span></li>
                 <li>Fügen Sie den kopierten Text ein</li>
                 <li>Senden Sie die E-Mail ab</li>
               </ol>
