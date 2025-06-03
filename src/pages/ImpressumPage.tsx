@@ -26,7 +26,7 @@ const ImpressumPage = () => {
               <h2>Kontakt</h2>
               <p>
                 Telefon: +49 1517 4412216 oder 02403 837412<br />
-                E-Mail: einruhr.mertens@web.de
+                E-Mail: fewo@amertens.me
               </p>
               
               <h2>Umsatzsteuer-ID</h2>

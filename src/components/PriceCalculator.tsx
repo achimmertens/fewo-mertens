@@ -156,7 +156,7 @@ const PriceCalculator = () => {
     const subject = encodeURIComponent("Reservierungsanfrage");
     const shortBody = encodeURIComponent("");
     
-    const mailtoLink = `mailto:einruhr.mertens@web.de?subject=${subject}&body=${shortBody}`;
+    const mailtoLink = `mailto:fewo@amertens.me?subject=${subject}&body=${shortBody}`;
     window.location.href = mailtoLink;
     
     toast({

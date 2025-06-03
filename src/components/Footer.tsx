@@ -30,8 +30,8 @@ const Footer = () => {
             </div>
             <div className="flex items-center">
               <Mail className="h-5 w-5 mr-2" />
-              <a href="mailto:einruhr.mertens@web.de" className="hover:text-lake-300 transition-colors">
-                einruhr.mertens@web.de
+              <a href="mailto:fewo@amertens.me" className="hover:text-lake-300 transition-colors">
+                fewo@amertens.me
               </a>
             </div>
           </div>
