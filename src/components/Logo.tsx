@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <Link to="/" className="flex items-center justify-center">
       <img 
-        src="/lovable-uploads/Waldoase_Mertens_Logo.jpg" 
+        src="/lovable-uploads/Waldoase_Mertens_Logo.png" 
         alt="Waldoase Mertens Logo" 
         className="w-32 h-auto"
       />
