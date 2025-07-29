@@ -1,4 +1,3 @@
-
 import { startOfDay, isBefore, isAfter, addDays, isSameDay } from "date-fns";
 import { BookingPeriod } from "@/types/booking";
 
@@ -26,7 +25,7 @@ export const isRangeOverlappingBookings = (from: Date, to: Date, bookingPeriods:
 export const fetchBookedPeriods = async (): Promise<BookingPeriod[]> => {
   try {
     const calendarId = "6gk8bbmgm01bk625432gb33tk0@group.calendar.google.com";
-    const apiKey = "AIzaSyBiD1VUk3DaVOZ2omR9T4xbr9k8vu4gS1c";
+    const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
     const timeMin = new Date().toISOString();
     const timeMax = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
     const url = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`;
