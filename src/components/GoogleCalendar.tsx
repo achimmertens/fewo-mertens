@@ -37,7 +37,7 @@ const GoogleCalendar = () => {
         height="400"
         frameBorder="0"
         scrolling="no"
-        className="pointer-events-none" // Verhindert, dass der iframe Klicks erhält
+        className={!isCalculatorPage ? "pointer-events-none" : ""} // Nur auf anderen Seiten non-interactive
       ></iframe>
     </div>
   );
