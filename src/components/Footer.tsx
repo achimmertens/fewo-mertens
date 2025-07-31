@@ -80,7 +80,7 @@ const Footer = () => {
                       </span>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Datum des letzten Updates: {lastUpdateDate}</p>
+                      <p>Version V1.31 - geändert am {lastUpdateDate}</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
