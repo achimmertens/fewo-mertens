@@ -1,10 +1,12 @@
 
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Logo from './Logo';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const lastUpdateDate = new Date('2024-01-15').toLocaleDateString('de-DE');
 
   return (
     <footer className="bg-forest-800 text-white py-12">
@@ -68,6 +70,20 @@ const Footer = () => {
                 <Link to="/impressum" className="hover:text-lake-300 transition-colors">
                   Impressum
                 </Link>
+              </li>
+              <li>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="hover:text-lake-300 transition-colors cursor-default">
+                        Version
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Datum des letzten Updates: {lastUpdateDate}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </li>
             </ul>
           </div>
