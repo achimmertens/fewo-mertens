@@ -6,7 +6,7 @@ import Logo from './Logo';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const lastUpdateDate = new Date('2024-01-15').toLocaleDateString('de-DE');
+  const lastUpdateDate = new Date('2025-01-31').toLocaleDateString('de-DE');
 
   return (
     <footer className="bg-forest-800 text-white py-12">
