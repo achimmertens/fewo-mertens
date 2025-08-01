@@ -147,6 +147,13 @@ const PriceCalculator = () => {
       }
     }
     
+    // Google Ads Conversion Tracking
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-17408162748/nOG9CKjlr_waELz37exA'
+      });
+    }
+    
     updateEmailTemplate(date);
     setShowEmailDialog(true);
   };
