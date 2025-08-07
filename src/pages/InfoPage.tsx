@@ -207,8 +207,10 @@ const InfoPage = () => {
                 <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                   <h3 className="font-medium mb-2">Gibt es weitere Ferienwohnung in dem Haus?</h3>
                   <p>
-                    Ja. Z.B. die von unserer Tochter Ayleen Mertens bei <Link to="https://www.airbnb.de/rooms/607971960710618288" className="text-forest-600 hover:underline">airbnb</Link> 
-
+                    Ja. Das Haus hat derzeit vier Ferienwohnungnen. Die anderen drei sind hier zu finden: <p/>
+                    <Link to="https://www.airbnb.de/rooms/607971960710618288" className="text-forest-600 hover:underline">airbnb Dachgeschoss Seeblick</Link> <p/>
+                    <Link to="https://www.airbnb.de/rooms/1418908294068782739" className="text-forest-600 hover:underline">airbnb 1. Stock Seeblick</Link> <p/>
+                    <Link to="https://www.airbnb.de/rooms/713491294435463769" className="text-forest-600 hover:underline">airbnb Dachgeschoss Waldblick</Link>
                   </p>
                 </div>                                   
                 </div>
