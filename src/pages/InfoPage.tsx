@@ -202,6 +202,15 @@ const InfoPage = () => {
                       Nachdem Sie eine Reservierungsanfrage an uns gesendet haben und wir uns einig über die Konditionen geworden sind, erhalten Sie unsere Konto-Daten. Nach Geldeingang erhalten Sie die Beschreibung zum Schlüsseltresor und den dazugehörigen Code. Den Schlüssel hängen Sie bitte bei der Abreise wieder in den Kasten.
                     </p>
                   </div>
+
+
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                  <h3 className="font-medium mb-2">Gibt es weitere Ferienwohnung in dem Haus?</h3>
+                  <p>
+                    Ja. Z.B. die von unserer Tochter Ayleen Mertens bei <Link to="https://www.airbnb.de/rooms/607971960710618288" className="text-forest-600 hover:underline">airbnb</Link> 
+
+                  </p>
+                </div>                                   
                 </div>
               </section>
             </div>
