@@ -82,7 +82,7 @@ const ContactPage = () => {
                   alt="Wohnzimmer nach Einzug" 
                   className="w-full h-auto rounded-lg shadow-md"
                 />
-                <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Annette und Achim im Wohnzimmer direkt nach Einzug im Januar 2021</figcaption>
+                <figcaption className="text-sm text-gray-500 mt-1 italic text-center">Annette und Achim im Wohnzimmer direkt nach Einzug im Januar 2022</figcaption>
               </figure>
             </div>
           </div>
