@@ -78,6 +78,18 @@ npm install
 npm run build
 
 ➡️ Das erzeugt einen Ordner (z. B. dist/ oder build/), der die statische Version deiner Seite enthält.
+
+1.1 Regelmäßige Updates
+Die Browserliste muss alle paar Monate mal aktualisiert werden, damit die Seite auf aktuellen Browsern gut läuft.
+
+Dazu sollten folgende Befehle ausgeführt werden:
+
+npm update caniuse-lite
+npm audit fix
+npm run build
+npm run deploy
+
+
 2. Den statischen Build auf einen separaten Branch pushen
 
 GitHub Pages kann Inhalte aus einem Branch wie gh-pages anzeigen.
