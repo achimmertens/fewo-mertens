@@ -47,9 +47,9 @@ const Hero = () => {
           >
             <Link to="/calculator">
               <span className="relative z-10 text-center flex flex-col">
-                <span className="text-sm">Ab 84 €/Nacht</span>
-                <span className="text-sm">für 1-4 Personen</span>
+                <span className="text-sm">Ab 89 €/erste Nacht</span>
                 <span className="text-sm">inkl. Reinigung.</span>
+                <span className="text-sm">für 1-4 Personen</span>
                 <span className="text-sm">Jede weitere Nacht nur 50 €.</span>
                 <span className="text-sm">Für Preisberechnung und Reservierungsanfrage</span>
                 <span>Hier Klicken</span>
