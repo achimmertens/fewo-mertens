@@ -63,7 +63,7 @@ const CalculatorPage = () => {
               <div className="mt-8 bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-medium text-lg mb-4 font-serif flex items-center">
                   <Calendar className="mr-2 h-5 w-5 text-forest-600" />
-                  Belegte Zeiträume der nächsten 90 Tage:
+                  Belegte Zeiträume der nächsten 90 Tage (Abends bis Morgens):
                 </h3>
                 {bookingPeriods.length > 0 ? (
                   <ul className="list-disc pl-5 space-y-1 text-sm">
