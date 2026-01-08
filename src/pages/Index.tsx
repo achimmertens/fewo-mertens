@@ -1,5 +1,5 @@
 
-import { Bed, Map, Coffee, Mountain, Phone, Flame } from "lucide-react";
+import { Bed, Map, Coffee, Mountain, Phone, Flame, Dog } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -55,6 +55,11 @@ const Index = () => {
                 title="Gemütlicher Kamin"
                 description="An kalten Abenden bietet unser Kamin eine wohlige Wärme."
                 icon={Flame}
+              />
+              <FeatureCard
+                title="Tiere (nach Rücksprache) erlaubt"
+                description="Ihr vierbeiniger Begleiter ist bei uns herzlich willkommen! Bitte sprechen Sie uns vor der Buchung kurz an."
+                icon={Dog}
               />
             </div>
           </div>
