@@ -185,14 +185,14 @@ const InfoPage = () => {
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="font-medium mb-2">Wohin mit dem Müll?</h3>
                     <p>
-                      Unten vor dem Haus stehen Abfalleimer für Restmüll und Papier. Grüner Punkt kann zur Not im Restmüll entsorgt werden. Flaschen sollten mitgenommen oder auch im Restmüll entsorgt werden.
+                      Unten vor dem Haus stehen Abfalleimer für Restmüll, Grüner Punkt und Papier. Flaschen sollten mitgenommen oder auch im Restmüll entsorgt werden.
                     </p>
                   </div>
 
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="font-medium mb-2">Müssen wir Strom- und Heizkosten bezahlen?</h3>
                     <p>
-                      Nein. Wir gehen davon aus, dass Sie verantwortungsbewusst mit den Ressourcen umgehen. Sie dürfen gerne das in Körben bereitgestellte Holz für den Kamin benutzen. Gegen eine kleine Spende haben wir natürlich nichts ;-)
+                      Nein. Wir gehen davon aus, dass Sie verantwortungsbewusst mit den Ressourcen umgehen. Sie dürfen gerne das in Körben bereitgestellte Holz für den Kamin benutzen. Gegen eine kleine Spende haben wir natürlich nichts ;-). Bitte bedenken Sie, dass die Wohnung erst mal kalt ist, wenn Sie reinkommen. Der Kamin sollte aber in der Regel vorbereitet sein. Das Duschwasser ist aber in der Hauptsaison warm. (Im Winter schalten wir auch das ab, aber können es auch wieder einschalten).
                     </p>
                   </div>
 
