@@ -20,7 +20,7 @@ const Footer = () => {
               <span>Heilsteinstr. 39, 52152 Simmerath-Einruhr</span>
             </div>
             <div className="mt-4 w-28">
-              <Logo />
+              <Logo to="/insidertipps" />
             </div>
           </div>
           

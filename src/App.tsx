@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import ApartmentPage from "./pages/ApartmentPage";
 import LocationPage from "./pages/LocationPage";
 import InfoPage from "./pages/InfoPage";
+import Insidertipps from "./pages/Insidertipps";
 import CalculatorPage from "./pages/CalculatorPage";
 import ContactPage from "./pages/ContactPage";
 import ArrivalPage from "./pages/ArrivalPage";
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/apartment" element={<ApartmentPage />} />
           <Route path="/location" element={<LocationPage />} />
           <Route path="/info" element={<InfoPage />} />
+          <Route path="/insidertipps" element={<Insidertipps />} />
           <Route path="/calculator" element={<CalculatorPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/arrival" element={<ArrivalPage />} />
