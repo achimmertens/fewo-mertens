@@ -157,7 +157,7 @@ const InfoPage = () => {
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="font-medium mb-2">Sind Haustiere erlaubt?</h3>
                     <p>
-                      Ja, Haustiere sind in unserer Ferienwohnung erlaubt. Wir bitten Sie jedoch, alle Tierspuren (Haare, Dreck) vor der Abreise zu entfernen.
+                      Ja, Haustiere sind in unserer Ferienwohnung ausserhalb des im Schlafzimmers erlaubt. Wir bitten Sie jedoch, alle Tierspuren (Haare, Dreck) vor der Abreise zu entfernen.
                     </p>
                   </div>
 
@@ -199,7 +199,7 @@ const InfoPage = () => {
                   <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h3 className="font-medium mb-2">Wie erfolgt die Schlüsselübergabe?</h3>
                     <p>
-                      Nachdem Sie eine Reservierungsanfrage an uns gesendet haben und wir uns einig über die Konditionen geworden sind, erhalten Sie unsere Konto-Daten. Nach Geldeingang erhalten Sie die Beschreibung zum Schlüsseltresor und den dazugehörigen Code. Den Schlüssel hängen Sie bitte bei der Abreise wieder in den Kasten.
+                      Nachdem Sie eine Reservierungsanfrage an uns gesendet haben und wir uns einig über die Konditionen geworden sind, erhalten Sie unsere Konto-Daten. Nach Geldeingang erhalten Sie die Beschreibung zum Schlüsseltresor und den dazugehörigen Code. Den Schlüssel hängen Sie bitte bei der Abreise wieder in denselben Kasten.
                     </p>
                   </div>
 
