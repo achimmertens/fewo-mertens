@@ -14,6 +14,7 @@ import ContactPage from "./pages/ContactPage";
 import ArrivalPage from "./pages/ArrivalPage";
 import ImpressumPage from "./pages/ImpressumPage";
 import NotFound from "./pages/NotFound";
+import Handover from "./pages/Handover";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/location" element={<LocationPage />} />
           <Route path="/info" element={<InfoPage />} />
           <Route path="/insidertipps" element={<Insidertipps />} />
+          <Route path="/handover" element={<Handover />} />
           <Route path="/calculator" element={<CalculatorPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/arrival" element={<ArrivalPage />} />
