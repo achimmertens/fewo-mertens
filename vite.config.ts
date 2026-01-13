@@ -21,11 +21,10 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 1500, // in KB
     rollupOptions: {
       output: {
+        // Bundle all third-party dependencies into a single vendor chunk.
+        // This avoids circular cross-imports between split vendor chunks (e.g. react <> other libs).
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'vendor-react';
-            }
             return 'vendor';
           }
         }
