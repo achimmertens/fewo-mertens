@@ -1,4 +1,4 @@
-import{j as e,L as s}from"./vendor-react-DFie2-oP.js";import"./vendor-DwpvO82B.js";function l(){return e.jsxs("main",{className:"container mx-auto py-12 px-4",children:[e.jsx("h1",{className:"text-3xl font-bold mb-6",children:"handover"}),e.jsx("div",{className:"prose max-w-none",dangerouslySetInnerHTML:{__html:`
+import{j as e,L as s}from"./vendor-react-BLl6pyI1.js";import"./vendor-DWr11YkZ.js";function l(){return e.jsxs("main",{className:"container mx-auto py-12 px-4",children:[e.jsx("h1",{className:"text-3xl font-bold mb-6",children:"handover"}),e.jsx("div",{className:"prose max-w-none",dangerouslySetInnerHTML:{__html:`
 <div class="wp-block-group__inner-container is-layout-flow wp-block-group-is-layout-flow">
   <h2 class="wp-block-heading">Schlüsselübergabe</h2>
 
