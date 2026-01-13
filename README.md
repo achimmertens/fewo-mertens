@@ -89,6 +89,15 @@ npm audit fix
 npm run build
 npm run deploy
 
+1.2 Build überprüfen
+Vor einem Deployment kann es sinnvoll sein, den Build lokal zu überprüfen:
+dist-Ordner löschen (optional):
+
+rm -rf dist/
+npm run build
+npx http-server dist/
+
+➡️ Dann im Browser http://localhost:8080 öffnen und testen.
 
 2. Den statischen Build auf einen separaten Branch pushen
 
