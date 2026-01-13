@@ -121,7 +121,7 @@ Klicke auf Settings > Pages
 
 Wähle bei Source den Branch gh-pages und ggf. den Ordner /root aus
 
-![alt text](image-1.png)
+![alt text](image-1.webp)
 Speichern 
 Nach ein paar Sekunden ist deine Seite unter:
 https://dein-github-nutzername.github.io/repository-name/
@@ -164,7 +164,7 @@ b) Domain bei deinem Provider (Strato) umstellen:
 
 Für die root-Domain (amertens.me ohne www) musst du ggf. A-Records setzen, oder einen Redirect von Strato auf www.amertens.me einrichten (Strato kann das).
 
-![alt text](image.png)
+![alt text](image.webp)
 
 🧪 Testen
 

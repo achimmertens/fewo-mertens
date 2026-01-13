@@ -64,7 +64,7 @@ const InfoPage = () => {
                           <p className="text-sm text-gray-600">Bitte dann buchen, wenn Sie keine eigene Bettwäsche und Handtücher mitbringen.</p>
                           <div className="w-full p-2 flex flex-col">
                             <img
-                              src="https://einruhr.wordpress.com/wp-content/uploads/2023/03/image.png?w=2046"
+                              src="https://einruhr.wordpress.com/wp-content/uploads/2023/03/image.webp?w=2046"
                               alt="Frühstück"
                               className="w-full h-60 object-cover"
                             />

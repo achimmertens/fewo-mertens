@@ -16,6 +16,22 @@ export default defineConfig(({ mode }) => ({
     //mode === 'development' &&
     //componentTagger(),
   ].filter(Boolean),
+  build: {
+    // Increase warning limit a bit and provide manual chunking rules
+    chunkSizeWarningLimit: 1500, // in KB
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'vendor-react';
+            }
+            return 'vendor';
+          }
+        }
+      }
+    }
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

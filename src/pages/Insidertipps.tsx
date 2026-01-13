@@ -1,7 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
-import SicherungenImg from '../../dist/lovable-uploads/Sicherungen.png';
 
 const Insidertipps = () => {
   return (
@@ -12,11 +11,12 @@ const Insidertipps = () => {
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h1 className="text-3xl font-serif font-bold mb-4">Insidertipps</h1>
             <p className="text-lg text-gray-700 mb-6">Detailinformationen zur Ferienwohnung.</p>
-            <h2 className="mt-8">Link zur Schlüsselübergabe</h2>
+            <h2 className="mt-8">Link zur Schlüsselübergabe:</h2>
             <div className="text-center mt-6">
             <Link to="/handover" className="text-forest-700 hover:underline"> Beschreibung Schlüsselübergabe</Link>
             </div>
             <h2 className="mt-8">Sicherungskasten</h2>
+            <br />
             <p>
               Strom für Warmwasser ein/aus-schalten geht über die Sicherungen, die mit der grünen "5" markiert sind:
             </p>
@@ -24,7 +24,7 @@ const Insidertipps = () => {
               Sollte aus irgendwelchen Gründen einmal die Sicherungen für unsere Wohnung rausfliegen, schalten Sie diese bitte über die mit den blauen "4" markierten Sicherungen wieder ein.
             </p>
             {/* Bitte füge hier das Bild aus D:\Users\User\git\fewo-mertens\dist\lovable-uploads\Sicherungen.png ein */}
-            <img src={SicherungenImg} alt="Sicherungskasten" className="w-full h-full object-cover rounded-lg border" />
+            <img src="/lovable-uploads/Sicherungen.webp" alt="Sicherungskasten" className="w-full h-full object-cover rounded-lg border" />
             <div className="mt-8">
             <h2>Videoanleitung</h2>
             </div>
