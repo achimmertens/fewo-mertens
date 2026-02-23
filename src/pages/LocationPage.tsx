@@ -92,65 +92,45 @@ const LocationPage = () => {
                   Zahlreiche Wanderrouten, Startpunkt Einruhr
                 </p>
               </div>
-            </section>
-            
-            <section className="mb-12">
-              <h2 className="text-2xl font-serif font-bold text-forest-700 mb-6">
-                Aktivitäten in der Umgebung
-              </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-forest-50 p-6 rounded-lg">
-                  <div className="flex items-center mb-4">
-                    <Mountain className="h-6 w-6 text-forest-600 mr-3" />
-                    <h3 className="text-xl font-serif font-medium">Wandern</h3>
-                  </div>
-                  <p>
-                    Die Region bietet ein umfangreiches Netz an Wanderwegen mit unterschiedlichen Schwierigkeitsgraden. Besonders empfehlenswert ist der Wildnis-Trail, der durch den gesamten Nationalpark führt, sowie der Eifelsteig, der auf 313 Kilometern von Aachen bis Trier verläuft.
-                  </p>
-                </div>
-                
-                <div className="bg-forest-50 p-6 rounded-lg">
-                  <div className="flex items-center mb-4">
-                    <Bike className="h-6 w-6 text-forest-600 mr-3" />
-                    <h3 className="text-xl font-serif font-medium">Radfahren</h3>
-                  </div>
-                  <p>
-                    Die Eifel ist ein Paradies für Radfahrer. Die gut ausgebauten Radwege führen Sie entlang der malerischen Seen und durch die hügelige Landschaft. Der Rur-Ufer-Radweg und der Eifel-Radweg sind besonders beliebt und bieten spektakuläre Ausblicke.
-                  </p>
-                </div>
-                
-                <div className="bg-forest-50 p-6 rounded-lg">
-                  <div className="flex items-center mb-4">
-                    <Ship className="h-6 w-6 text-forest-600 mr-3" />
-                    <h3 className="text-xl font-serif font-medium">Wassersport</h3>
-                  </div>
-                  <p>
-                    Im nahegelegenen Untersee können Sie verschiedene Wassersportarten ausüben. Der See ist natürlich geblieben und bietet ideale Bedingungen zum Paddeln, Stand-up-Paddling oder Schwimmen in naturbelassener Umgebung.
-                  </p>
-                </div>
-                
-                <div className="bg-forest-50 p-6 rounded-lg">
-                  <div className="flex items-center mb-4">
-                    <Compass className="h-6 w-6 text-forest-600 mr-3" />
-                    <h3 className="text-xl font-serif font-medium">Ausflugsziele</h3>
-                  </div>
-                  <p>
-                    Entdecken Sie die charmanten Städte und Dörfer der Region wie Monschau mit seinen historischen Fachwerkhäusern, das mittelalterliche Heimbach oder die ehemalige Ordensburg Vogelsang. Auch die Städte Aachen und Köln sind für Tagesausflüge erreichbar.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="mt-8">
-                <img 
-                  src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/herbertseck.jpg?w=1024" 
-                  alt="Herberts Eck" 
-                  className="w-full h-auto rounded-lg shadow-md mb-2"
-                />
-                <p className="text-sm text-gray-600 italic text-center">
+              <div className="mb-6">
+                  <img
+                    src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/herbertseck.jpg?w=1024"
+                    alt="Aktivitäten in der Umgebung"
+                     className="w-full h-auto rounded-lg shadow-md mb-2"
+                  />
+                                  <p className="text-sm text-gray-600 italic text-center">
                   Herberts Eck in Einruhr
                 </p>
               </div>
+            </section>
+            
+            <section className="section-padding bg-card">
+              
+              <h2 className="text-2xl font-serif font-bold text-forest-700 mb-6">
+                Aktivitäten in der Umgebung
+              </h2>
+
+              <p className="mb-4">
+                Von geführten Wandertouren über Museen oder Brotbacken bis hin zu Kanu- und Fahrradverleih — auf der Aktivitäten-Seite finden Sie Links, Termine und Empfehlungen.
+              </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                  <div className="mb-6">
+                    <img
+                      src="https://images.hive.blog/p/YpihifdXP4WNbGMdjw7e3DuhJWBvCw4SfuLZsrnJYHEpsqZFkiGGNCPvxdmKJPqJ34qfbzdvZMg7s7uHULEqhh36zbNo6wMpRpd1fdYoZ66rgQjqGrtRQ9TNgyTAsjgMuMmCsUYPBjePPK6QEP73nHqCxLZ1QFP3tLBfpmdYBCwY?format=match&mode=fit"
+                      alt="Aktivitäten in der Umgebung"
+                      className="w-full h-auto rounded-lg shadow-md mb-2"
+                    />
+                    <p className="text-sm text-gray-600 italic text-center">
+                    Kanutour auf dem Rursee
+                    </p>
+                  </div>
+                  <div>
+                    <Button asChild className="bg-forest-600 hover:bg-forest-700">
+                      <Link to="/activities">Zu den Aktivitäten</Link>
+                    </Button>
+                  </div>
+
+                </div>
             </section>
             
             <section className="mb-12">
@@ -171,8 +151,6 @@ const LocationPage = () => {
             </section>
             
             <section>
-
-              
               <div className="mt-8 flex justify-center">
                 <Button asChild className="bg-forest-600 hover:bg-forest-700">
                   <Link to="/calculator">Verfügbarkeit prüfen</Link>
