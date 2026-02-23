@@ -102,7 +102,7 @@ const PriceCalculator = () => {
   };
 
   // Update email template
-  const updateEmailTemplate = (dateRange: DateRange) => {
+  const updateEmailTemplate = (dateRange: DateRange, bindingBooking: boolean = false) => {
     if (!dateRange.from || !dateRange.to) return;
     
     const template = createEmailTemplate(
@@ -112,14 +112,15 @@ const PriceCalculator = () => {
       breakfastCount,
       contactInfo,
       priceDetails,
-      totalPrice
+      totalPrice,
+      bindingBooking
     );
     
     setEmailTemplate(template);
   };
 
   // Handle reservation request
-  const sendReservationRequest = () => {
+  const sendReservationRequest = (bindingBooking: boolean = false) => {
     if (!date?.from || !date?.to) {
       toast({
         title: "Fehler",
@@ -154,7 +155,7 @@ const PriceCalculator = () => {
       });
     }
     
-    updateEmailTemplate(date);
+    updateEmailTemplate(date, bindingBooking);
     setShowEmailDialog(true);
   };
 
@@ -217,14 +218,22 @@ const PriceCalculator = () => {
         )}
         
         {/* Request Button */}
-        <div className="grid grid-cols-1 gap-4 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
           <Button 
-            onClick={sendReservationRequest}
+            onClick={() => sendReservationRequest(false)}
             disabled={!date?.from || !date?.to || !contactInfo.name || !contactInfo.email}
             className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
           >
             <Mail className="h-4 w-4" />
             Via Email unverbindlich anfragen
+          </Button>
+          <Button 
+            onClick={() => sendReservationRequest(true)}
+            disabled={!date?.from || !date?.to || !contactInfo.name || !contactInfo.email}
+            className="w-full bg-forest-900 hover:bg-forest-950 flex items-center gap-2"
+          >
+            <Mail className="h-4 w-4" />
+            Termin reservieren und verbindlich buchen
           </Button>
         </div>
 

@@ -53,15 +53,20 @@ export const createEmailTemplate = (
   breakfastCount: number,
   contactInfo: { name: string; email: string; phone: string; message: string },
   priceDetails: PriceDetails | null,
-  totalPrice: number | null
+  totalPrice: number | null,
+  bindingBooking: boolean = false
 ): string => {
   if (!dateRange.from || !dateRange.to) return '';
   
   const numNights = Math.max(1, differenceInCalendarDays(dateRange.to, dateRange.from));
 
+  const intro = bindingBooking
+    ? "ich möchte gerne folgenden Termin verbindlich buchen:"
+    : "ich möchte gerne folgende Reservierung anfragen:";
+
   let emailBody = `Sehr geehrter Herr Mertens,
 
-ich möchte gerne folgende Reservierung anfragen:
+${intro}
 
 Anreisedatum: ${dateRange.from.toLocaleDateString('de-DE')}
 Abreisedatum: ${dateRange.to.toLocaleDateString('de-DE')}
