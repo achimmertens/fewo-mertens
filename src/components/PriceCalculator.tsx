@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "@/components/ui/separator";
 import { DateRange } from "react-day-picker";
 import { Mail } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { format, differenceInCalendarDays } from "date-fns";
 import { de } from "date-fns/locale";
 import { useToast } from "@/components/ui/use-toast";
@@ -218,30 +219,54 @@ const PriceCalculator = () => {
         )}
         
         {/* Request Button */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-          <div className="flex flex-col">
-            <Button 
-              onClick={() => sendReservationRequest(false)}
-              disabled={!date?.from || !date?.to || !contactInfo.name || !contactInfo.email}
-              className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
-            >
-              <Mail className="h-4 w-4" />
-              Via Email unverbindlich anfragen
-            </Button>
-            <p className="text-xs text-muted-foreground mt-2 text-center">Dies ist nur eine Kontaktaufnahme. Es wird noch nichts festgelegt.</p>
+        <TooltipProvider>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+            <div className="flex flex-col">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="w-full">
+                    <Button 
+                      onClick={() => sendReservationRequest(false)}
+                      disabled={!date?.from || !date?.to || !contactInfo.name || !contactInfo.email}
+                      className="w-full bg-forest-700 hover:bg-forest-800 flex items-center gap-2"
+                    >
+                      <Mail className="h-4 w-4" />
+                      Via Email unverbindlich anfragen
+                    </Button>
+                  </span>
+                </TooltipTrigger>
+                {(!date?.from || !date?.to || !contactInfo.name || !contactInfo.email) && (
+                  <TooltipContent>
+                    <p>Bitte füllen Sie alle mit * markierten Felder aus.</p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+              <p className="text-xs text-muted-foreground mt-2 text-center">Dies ist nur eine Kontaktaufnahme. Es wird noch nichts festgelegt.</p>
+            </div>
+            <div className="flex flex-col">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="w-full">
+                    <Button 
+                      onClick={() => sendReservationRequest(true)}
+                      disabled={!date?.from || !date?.to || !contactInfo.name || !contactInfo.email}
+                      className="w-full bg-forest-900 hover:bg-forest-950 flex items-center gap-2"
+                    >
+                      <Mail className="h-4 w-4" />
+                      Reservieren und verbindlich buchen
+                    </Button>
+                  </span>
+                </TooltipTrigger>
+                {(!date?.from || !date?.to || !contactInfo.name || !contactInfo.email) && (
+                  <TooltipContent>
+                    <p>Bitte füllen Sie alle mit * markierten Felder aus.</p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+              <p className="text-xs text-muted-foreground mt-2 text-center">Hiermit wird der Termin für Sie reserviert. Weitere Details folgen dann via Email.</p>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <Button 
-              onClick={() => sendReservationRequest(true)}
-              disabled={!date?.from || !date?.to || !contactInfo.name || !contactInfo.email}
-              className="w-full bg-forest-900 hover:bg-forest-950 flex items-center gap-2"
-            >
-              <Mail className="h-4 w-4" />
-              Reservieren und verbindlich buchen
-            </Button>
-            <p className="text-xs text-muted-foreground mt-2 text-center">Hiermit wird der Termin für Sie reserviert. Weitere Details folgen dann via Email.</p>
-          </div>
-        </div>
+        </TooltipProvider>
 
         {/* Email Dialog Component */}
         <EmailDialog 
