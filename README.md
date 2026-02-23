@@ -178,6 +178,12 @@ Für die root-Domain (amertens.me ohne www) musst du ggf. A-Records setzen, oder
 🧪 Testen
 
 Nach ein paar Minuten sollte deine Webseite unter amertens.me erreichbar sein.
+
+5. Pflege und Updates
+
+git tag -a v1.0.0 -m "Erstes Release"
+
+
 # 📝 Zusammenfassung
 - npm run build	 -> Statischen Build erstellen
 - npm run deploy -> Mit gh-pages auf GitHub hochladen

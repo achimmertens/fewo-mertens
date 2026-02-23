@@ -1,14 +1,14 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Footprints, CookingPot, Landmark, ExternalLink } from 'lucide-react';
+import { Footprints, CookingPot, Landmark, Bike, ExternalLink } from 'lucide-react';
 
 const activities = [
   {
-    title: 'Wandertouren',
+    title: 'Geführte Wandertouren',
     icon: Footprints,
     description:
-      'Einruhr liegt direkt am Obersee der Rurtalsperre und am Rande des Nationalparks Eifel – ein idealer Ausgangspunkt für Wanderer. Von gemütlichen Spaziergängen entlang des Sees bis hin zu anspruchsvollen Touren durch den Nationalpark gibt es für jeden Geschmack die passende Route. Besonders reizvoll sind Wanderungen zu den stillen Buchten des Obersees oder den urwüchsigen Wäldern, wo man mit etwas Glück seltene Tierarten wie die Wildkatze oder den Schwarzstorch entdecken kann.',
+      'Direkt neben unserem Haus wohnt zufälligerweise der Vorsitzende des Eifelvereins Einruhr-Erkensruhr Frank Wiesen. Er bietet regelmäßig geführte Wandertouren durch den Nationalpark Eifel an, die sowohl für Anfänger als auch für erfahrene Wanderer geeignet sind. Die Touren führen durch die wunderschönen Landschaften der direkten Umgebung und bieten die Möglichkeit, die vielfältige Flora und Fauna der Region zu entdecken. Die Termine entnehmen Sie bitte der Webseite des Eifelvereins Einruhr-Erkensruhr.',
     link: 'https://eifelverein-einruhr-erkensruhr.de/',
     linkLabel: 'Eifelverein Einruhr-Erkensruhr',
     image: 'https://eifelverein-einruhr-erkensruhr.de//images/ev/Bilder/2024/Einruhr/DJI_0798-1.jpg',
@@ -17,7 +17,7 @@ const activities = [
     title: 'Brot backen in Erkensruhr',
     icon: CookingPot,
     description:
-      'Im kleinen Backhaus „Et Backes" im Fachwerkstil wird jeden ersten Samstag im Monat frisches Steinofenbrot gebacken. Weizen-Roggenmischbrot auf Sauerteigbasis – direkt aus dem Ofen. Verkauf ab ca. 10:30 Uhr. Das Backhaus wird vom Bürgerverein Erkensruhr/Hirschrott e.V. betrieben. Ein echtes Erlebnis für alle, die traditionelles Handwerk schätzen!',
+      'Im kleinen Backhaus „Et Backes" im Fachwerkstil wird jeden ersten Samstag im Monat frisches Steinofenbrot gebacken. Weizen-Roggenmischbrot auf Sauerteigbasis – direkt aus dem Ofen. Verkauf ab ca. 10:30 Uhr. Das Backhaus, im ca. 3 km entfernten Nachbardorf Erkensruhr, wird vom Bürgerverein Erkensruhr/Hirschrott e.V. betrieben. Ein echtes Erlebnis für alle, die traditionelles Handwerk schätzen!',
     link: 'https://www.erkensruhr.de/dorfleben/et-backes/',
     linkLabel: 'Et Backes – Backhaus Erkensruhr',
     image: 'http://www.erkensruhr.de/wordpress/wp-content/uploads/2019/08/20160618_IMG_0913-300x225.jpg',
@@ -26,10 +26,19 @@ const activities = [
     title: 'Das Rote Haus in Monschau',
     icon: Landmark,
     description:
-      'Das Museum Rotes Haus in Monschau bietet eine faszinierende Reise zurück ins 18. Jahrhundert. Der Tuchmacher Johann Heinrich Scheibler ließ sich um 1760 dieses repräsentative Wohnhaus errichten. Mit 13 vollständig eingerichteten Wohnräumen, kostbaren Leinwandtapeten und der weltberühmten Prunktreppe aus Eichenholz ist es ein unvergessliches Erlebnis. Geöffnet von April bis November, Dienstag bis Sonntag.',
+      'Das Museum Rotes Haus in Monschau bietet eine faszinierende Reise zurück ins 18. Jahrhundert. Der Tuchmacher Johann Heinrich Scheibler ließ sich um 1760 dieses repräsentative Wohnhaus errichten. Mit 13 vollständig eingerichteten Wohnräumen, kostbaren Leinwandtapeten und der weltberühmten Prunktreppe aus Eichenholz ist es ein unvergessliches Erlebnis. Geöffnet von April bis November, Dienstags bis Sonntags.',
     link: 'https://rotes-haus-monschau.de/',
     linkLabel: 'Museum Rotes Haus Monschau',
-    image: '',
+    image: 'https://rotes-haus-monschau.de/wp-content/uploads/2022/12/Ni000611-1920x1152.jpg',
+  },
+  {
+    title: 'Kanu- und Fahrradverleih in Rurberg',
+    icon: Bike,
+    description:
+      'Mieten Sie Kanus oder Fahrräder in Rurberg, nur wenige Kilometer von Einruhr entfernt. Erkunden Sie die malerische Landschaft des Nationalparks Eifel auf dem Wasser oder auf zwei Rädern.',
+    link: 'https://www.eifel.de/go/freizeitmoeglichkeiten-detail/fahrrad_und_kanuverleih_rurberg.html',
+    linkLabel: 'Kanu- und Fahrradverleih Rurberg',
+    image: 'https://images.hive.blog/p/YpihifdXP4WNbGMdjw7e3DuhJWBvCw4SfuLZsrnJYHEpsqZFkiGGNCPvxdmKJPqJ34qfbzdvZMg7s7uHULEqhh36zbNo6wMpRpd1fdYoZ66rgQjqGrtRQ9TNgyTAsjgMuMmCsUYPBjePPK6QEP73nHqCxLZ1QFP3tLBfpmdYBCwY?format=match&mode=fit',
   },
 ];
 
