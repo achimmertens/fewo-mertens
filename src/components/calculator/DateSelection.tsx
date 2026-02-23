@@ -65,7 +65,7 @@ const DateSelection = ({
 
   return (
     <div className="space-y-2">
-      <Label>Anreise- und Abreisedatum</Label>
+      <Label>Anreise- und Abreisedatum *</Label>
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger asChild>
           <Button
