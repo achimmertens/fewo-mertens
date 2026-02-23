@@ -39,6 +39,9 @@ const Header = () => {
           <Link to="/location" className="text-forest-700 hover:text-forest-500 font-medium">
             Umgebung
           </Link>
+          <Link to="/activities" className="text-forest-700 hover:text-forest-500 font-medium">
+            Aktivitäten
+          </Link>
           <Link to="/info" className="text-forest-700 hover:text-forest-500 font-medium">
             Preise & Infos
           </Link>
@@ -66,6 +69,9 @@ const Header = () => {
             </Link>
             <Link to="/location" className="text-forest-700 hover:text-forest-500 font-medium py-2" onClick={toggleMenu}>
               Umgebung
+            </Link>
+            <Link to="/activities" className="text-forest-700 hover:text-forest-500 font-medium py-2" onClick={toggleMenu}>
+              Aktivitäten
             </Link>
             <Link to="/info" className="text-forest-700 hover:text-forest-500 font-medium py-2" onClick={toggleMenu}>
               Preise & Infos

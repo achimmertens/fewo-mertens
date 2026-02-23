@@ -11,6 +11,7 @@ const ApartmentPage = lazy(() => import("./pages/ApartmentPage"));
 const LocationPage = lazy(() => import("./pages/LocationPage"));
 const InfoPage = lazy(() => import("./pages/InfoPage"));
 const Insidertipps = lazy(() => import("./pages/Insidertipps"));
+const ActivitiesPage = lazy(() => import("./pages/ActivitiesPage"));
 const CalculatorPage = lazy(() => import("./pages/CalculatorPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const ArrivalPage = lazy(() => import("./pages/ArrivalPage"));
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/apartment" element={<ApartmentPage />} />
             <Route path="/location" element={<LocationPage />} />
+            <Route path="/activities" element={<ActivitiesPage />} />
             <Route path="/info" element={<InfoPage />} />
             <Route path="/insidertipps" element={<Insidertipps />} />
             <Route path="/handover" element={<Handover />} />
