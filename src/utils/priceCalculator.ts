@@ -62,7 +62,7 @@ export const createEmailTemplate = (
 
   const intro = bindingBooking
     ? "ich möchte gerne folgenden Termin verbindlich buchen:"
-    : "ich möchte gerne folgende Reservierung anfragen:";
+    : "ich möchte gerne folgende Reservierung unverbindlich anfragen:";
 
   let emailBody = `Sehr geehrter Herr Mertens,
 

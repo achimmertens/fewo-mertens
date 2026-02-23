@@ -233,7 +233,7 @@ const PriceCalculator = () => {
             className="w-full bg-forest-900 hover:bg-forest-950 flex items-center gap-2"
           >
             <Mail className="h-4 w-4" />
-            Termin reservieren und verbindlich buchen
+            Reservieren und verbindlich buchen
           </Button>
         </div>
 
