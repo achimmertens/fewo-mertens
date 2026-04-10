@@ -1,18 +1,20 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Hero = () => {
   const isMobile = useIsMobile();
+  const { t } = useLanguage();
 
   return (
     <div className="hero-image w-full min-h-[70vh] flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('https://einruhr.wordpress.com/wp-content/uploads/2022/09/pxl_20220729_164415339-1.jpg?w=1024&h=768')" }}>
       <div className="container mx-auto px-4 text-center relative py-8">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 sm:mb-6 drop-shadow-lg mt-8 sm:mt-16 text-black bg-white/70 py-2 rounded-lg">
-          Ferienwohnung Waldoase Mertens in Einruhr
+          {t('hero.title')}
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto mb-6 sm:mb-8 drop-shadow-md text-black bg-white/70 py-2 rounded-lg">
-          Entdecken Sie Ihren perfekten Rückzugsort im Herzen des Nationalparks Eifel
+          {t('hero.subtitle')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
@@ -30,7 +32,7 @@ const Hero = () => {
             }}
           >
             <Link to="/apartment">
-              <span className="relative z-10 drop-shadow-md">Die Wohnung entdecken</span>
+              <span className="relative z-10 drop-shadow-md">{t('hero.discoverApartment')}</span>
               <div className="absolute inset-0 bg-forest-600/60 group-hover:bg-forest-700/70 transition-colors"></div>
             </Link>
           </Button>
@@ -47,12 +49,12 @@ const Hero = () => {
           >
             <Link to="/calculator">
               <span className="relative z-10 text-center flex flex-col">
-                <span className="text-sm">Ab 89 €/erste Nacht</span>
-                <span className="text-sm">inkl. Reinigung.</span>
-                <span className="text-sm">für 1-4 Personen</span>
-                <span className="text-sm">Jede weitere Nacht nur 50 €.</span>
-                <span className="text-sm">Für Preisberechnung und Reservierungsanfrage</span>
-                <span>Hier Klicken</span>
+                <span className="text-sm">{t('hero.fromPrice')}</span>
+                <span className="text-sm">{t('hero.inclCleaning')}</span>
+                <span className="text-sm">{t('hero.forPersons')}</span>
+                <span className="text-sm">{t('hero.additionalNight')}</span>
+                <span className="text-sm">{t('hero.forPriceCalc')}</span>
+                <span>{t('hero.clickHere')}</span>
               </span>
             </Link>
           </Button>

@@ -1,18 +1,16 @@
 
 import { useNavigate, useLocation } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const GoogleCalendar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isCalculatorPage = location.pathname === "/calculator";
+  const { t } = useLanguage();
 
   const handleCalendarClick = () => {
-    // Speichern der Information, dass der Kalender geklickt wurde, im localStorage
     localStorage.setItem("openDateSelector", "true");
-    
-    // Wenn wir bereits auf der Preisrechnerseite sind, dann nicht navigieren
     if (!isCalculatorPage) {
-      // Navigieren zur Preisrechnerseite
       navigate("/calculator");
     }
   };
@@ -25,7 +23,7 @@ const GoogleCalendar = () => {
       {!isCalculatorPage && (
         <div className="absolute inset-0 bg-forest-700/0 group-hover:bg-forest-700/10 transition-all duration-200 flex items-center justify-center z-10">
           <div className="bg-white/0 group-hover:bg-white/80 text-transparent group-hover:text-forest-700 px-4 py-2 rounded transition-all duration-200">
-            Verfügbarkeit prüfen und buchen
+            {t('calendar.checkAndBook')}
           </div>
         </div>
       )}
@@ -37,7 +35,7 @@ const GoogleCalendar = () => {
         height="400"
         frameBorder="0"
         scrolling="no"
-        className={!isCalculatorPage ? "pointer-events-none" : ""} // Nur auf anderen Seiten non-interactive
+        className={!isCalculatorPage ? "pointer-events-none" : ""}
       ></iframe>
     </div>
   );
