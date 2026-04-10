@@ -3,56 +3,54 @@ import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Footprints, CookingPot, Landmark, Bike, ExternalLink } from 'lucide-react';
 import rangerImage from '@/assets/ranger.jpg';
-
-const activities = [
-  {
-    title: 'Geführte Wandertouren',
-    icon: Footprints,
-    description:
-      'Direkt neben unserem Haus wohnt zufälligerweise der Vorsitzende des Eifelvereins Einruhr-Erkensruhr Frank Wiesen. Er bietet regelmäßig geführte Wandertouren durch den Nationalpark Eifel an, die sowohl für Anfänger als auch für erfahrene Wanderer geeignet sind. Die Touren führen durch die wunderschönen Landschaften der direkten Umgebung und bieten die Möglichkeit, die vielfältige Flora und Fauna der Region zu entdecken. Die Termine entnehmen Sie bitte der Webseite des Eifelvereins Einruhr-Erkensruhr.',
-    link: 'https://eifelverein-einruhr-erkensruhr.de/',
-    linkLabel: 'Eifelverein Einruhr-Erkensruhr',
-    image: 'https://eifelverein-einruhr-erkensruhr.de//images/ev/Bilder/2024/Einruhr/DJI_0798-1.jpg',
-  },
-  {
-    title: 'Brot backen in Erkensruhr',
-    icon: CookingPot,
-    description:
-      'Im kleinen Backhaus „Et Backes" im Fachwerkstil wird jeden ersten Samstag im Monat frisches Steinofenbrot gebacken. Weizen-Roggenmischbrot auf Sauerteigbasis – direkt aus dem Ofen. Verkauf ab ca. 10:30 Uhr. Das Backhaus, im ca. 3 km entfernten Nachbardorf Erkensruhr, wird vom Bürgerverein Erkensruhr/Hirschrott e.V. betrieben. Ein echtes Erlebnis für alle, die traditionelles Handwerk schätzen!',
-    link: 'https://www.erkensruhr.de/dorfleben/et-backes/',
-    linkLabel: 'Et Backes – Backhaus Erkensruhr',
-    image: 'http://www.erkensruhr.de/wordpress/wp-content/uploads/2019/08/20160618_IMG_0913-300x225.jpg',
-  },
-  {
-    title: 'Das Rote Haus in Monschau',
-    icon: Landmark,
-    description:
-      'Das Museum Rotes Haus in Monschau bietet eine faszinierende Reise zurück ins 18. Jahrhundert. Der Tuchmacher Johann Heinrich Scheibler ließ sich um 1760 dieses repräsentative Wohnhaus errichten. Mit 13 vollständig eingerichteten Wohnräumen, kostbaren Leinwandtapeten und der weltberühmten Prunktreppe aus Eichenholz ist es ein unvergessliches Erlebnis. Geöffnet von April bis November, Dienstags bis Sonntags.',
-    link: 'https://rotes-haus-monschau.de/',
-    linkLabel: 'Museum Rotes Haus Monschau',
-    image: 'https://rotes-haus-monschau.de/wp-content/uploads/2022/12/Ni000611-1920x1152.jpg',
-  },
-  {
-    title: 'Geführte Rangertouren im Nationalpark Eifel',
-    icon: Footprints,
-    description:
-      'Erleben Sie den Nationalpark Eifel hautnah bei einer geführten Rangertour. Die zertifizierten Ranger des Nationalparks nehmen Sie mit auf spannende Entdeckungsreisen durch Buchenwälder, über Wildwiesen und entlang malerischer Gewässer. Dabei erfahren Sie Wissenswertes über die heimische Tier- und Pflanzenwelt sowie die Besonderheiten des Schutzgebiets. Touren finden regelmäßig statt – aktuelle Termine und Anmeldung über die Webseite des Nationalparks.',
-    link: 'https://www.nationalpark-eifel.de/de/nationalpark-erleben/veranstaltungen/#/veranstaltungen',
-    linkLabel: 'Veranstaltungen im Nationalpark Eifel',
-    image: rangerImage,
-  },
-  {
-    title: 'Kanu- und Fahrradverleih in Rurberg',
-    icon: Bike,
-    description:
-      'Mieten Sie Kanus oder Fahrräder in Rurberg, nur wenige Kilometer von Einruhr entfernt. Erkunden Sie die malerische Landschaft des Nationalparks Eifel auf dem Wasser oder auf zwei Rädern.',
-    link: 'https://www.eifel.de/go/freizeitmoeglichkeiten-detail/fahrrad_und_kanuverleih_rurberg.html',
-    linkLabel: 'Kanu- und Fahrradverleih Rurberg',
-    image: 'https://images.hive.blog/p/YpihifdXP4WNbGMdjw7e3DuhJWBvCw4SfuLZsrnJYHEpsqZFkiGGNCPvxdmKJPqJ34qfbzdvZMg7s7uHULEqhh36zbNo6wMpRpd1fdYoZ66rgQjqGrtRQ9TNgyTAsjgMuMmCsUYPBjePPK6QEP73nHqCxLZ1QFP3tLBfpmdYBCwY?format=match&mode=fit',
-  },
-];
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ActivitiesPage = () => {
+  const { t } = useLanguage();
+
+  const activities = [
+    {
+      titleKey: 'activities.hiking.title',
+      icon: Footprints,
+      descriptionKey: 'activities.hiking.description',
+      link: 'https://eifelverein-einruhr-erkensruhr.de/',
+      linkLabelKey: 'activities.hiking.linkLabel',
+      image: 'https://eifelverein-einruhr-erkensruhr.de//images/ev/Bilder/2024/Einruhr/DJI_0798-1.jpg',
+    },
+    {
+      titleKey: 'activities.baking.title',
+      icon: CookingPot,
+      descriptionKey: 'activities.baking.description',
+      link: 'https://www.erkensruhr.de/dorfleben/et-backes/',
+      linkLabelKey: 'activities.baking.linkLabel',
+      image: 'http://www.erkensruhr.de/wordpress/wp-content/uploads/2019/08/20160618_IMG_0913-300x225.jpg',
+    },
+    {
+      titleKey: 'activities.museum.title',
+      icon: Landmark,
+      descriptionKey: 'activities.museum.description',
+      link: 'https://rotes-haus-monschau.de/',
+      linkLabelKey: 'activities.museum.linkLabel',
+      image: 'https://rotes-haus-monschau.de/wp-content/uploads/2022/12/Ni000611-1920x1152.jpg',
+    },
+    {
+      titleKey: 'activities.ranger.title',
+      icon: Footprints,
+      descriptionKey: 'activities.ranger.description',
+      link: 'https://www.nationalpark-eifel.de/de/nationalpark-erleben/veranstaltungen/#/veranstaltungen',
+      linkLabelKey: 'activities.ranger.linkLabel',
+      image: rangerImage,
+    },
+    {
+      titleKey: 'activities.canoe.title',
+      icon: Bike,
+      descriptionKey: 'activities.canoe.description',
+      link: 'https://www.eifel.de/go/freizeitmoeglichkeiten-detail/fahrrad_und_kanuverleih_rurberg.html',
+      linkLabelKey: 'activities.canoe.linkLabel',
+      image: 'https://images.hive.blog/p/YpihifdXP4WNbGMdjw7e3DuhJWBvCw4SfuLZsrnJYHEpsqZFkiGGNCPvxdmKJPqJ34qfbzdvZMg7s7uHULEqhh36zbNo6wMpRpd1fdYoZ66rgQjqGrtRQ9TNgyTAsjgMuMmCsUYPBjePPK6QEP73nHqCxLZ1QFP3tLBfpmdYBCwY?format=match&mode=fit',
+    },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -60,43 +58,33 @@ const ActivitiesPage = () => {
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl font-serif font-bold text-forest-700 mb-4 text-center">
-              Aktivitäten in der Umgebung
+              {t('activities.title')}
             </h1>
             <p className="text-lg text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-              Entdecken Sie spannende Ausflugsziele und Aktivitäten rund um Einruhr im Nationalpark Eifel.
+              {t('activities.subtitle')}
             </p>
 
             <div className="space-y-8 max-w-4xl mx-auto">
               {activities.map((activity) => (
-                <Card key={activity.title} className="overflow-hidden">
+                <Card key={activity.titleKey} className="overflow-hidden">
                   <div className="md:flex">
                     {activity.image && (
                       <div className="md:w-1/3 h-56 md:h-auto">
-                        <img
-                          src={activity.image}
-                          alt={activity.title}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
+                        <img src={activity.image} alt={t(activity.titleKey)} className="w-full h-full object-cover" loading="lazy" />
                       </div>
                     )}
                     <div className={activity.image ? 'md:w-2/3' : 'w-full'}>
                       <CardHeader>
                         <CardTitle className="flex items-center gap-3 text-forest-700">
                           <activity.icon className="h-6 w-6 text-forest-500" />
-                          {activity.title}
+                          {t(activity.titleKey)}
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                        <p className="text-muted-foreground leading-relaxed">{activity.description}</p>
-                        <a
-                          href={activity.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-forest-600 hover:text-forest-800 font-medium transition-colors"
-                        >
+                        <p className="text-muted-foreground leading-relaxed">{t(activity.descriptionKey)}</p>
+                        <a href={activity.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-forest-600 hover:text-forest-800 font-medium transition-colors">
                           <ExternalLink className="h-4 w-4" />
-                          {activity.linkLabel}
+                          {t(activity.linkLabelKey)}
                         </a>
                       </CardContent>
                     </div>
