@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Footprints, CookingPot, Landmark, Bike, ExternalLink } from 'lucide-react';
+import rangerImage from '@/assets/ranger.jpg';
 
 const activities = [
   {
@@ -38,7 +39,7 @@ const activities = [
       'Erleben Sie den Nationalpark Eifel hautnah bei einer geführten Rangertour. Die zertifizierten Ranger des Nationalparks nehmen Sie mit auf spannende Entdeckungsreisen durch Buchenwälder, über Wildwiesen und entlang malerischer Gewässer. Dabei erfahren Sie Wissenswertes über die heimische Tier- und Pflanzenwelt sowie die Besonderheiten des Schutzgebiets. Touren finden regelmäßig statt – aktuelle Termine und Anmeldung über die Webseite des Nationalparks.',
     link: 'https://www.nationalpark-eifel.de/de/nationalpark-erleben/veranstaltungen/#/veranstaltungen',
     linkLabel: 'Veranstaltungen im Nationalpark Eifel',
-    image: 'https://www.nationalpark-eifel.de/cache/bc2aef53529c154b806179112c3660d9.png',
+    image: rangerImage,
   },
   {
     title: 'Kanu- und Fahrradverleih in Rurberg',
