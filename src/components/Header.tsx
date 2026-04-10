@@ -37,27 +37,6 @@ const Header = () => {
           </span>
         </Link>
 
-        <div className="flex items-center gap-2">
-          {/* Language Switcher */}
-          <button
-            onClick={toggleLanguage}
-            className="px-3 py-1.5 text-sm font-medium rounded-md border border-forest-200 bg-forest-50 text-forest-700 hover:bg-forest-100 transition-colors"
-            aria-label="Switch language"
-          >
-            {language === 'de' ? 'EN' : 'DE'}
-          </button>
-
-          {/* Mobile menu button */}
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="md:hidden" 
-            onClick={toggleMenu}
-          >
-            {isMenuOpen ? <X /> : <Menu />}
-          </Button>
-        </div>
-
         {/* Desktop navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
@@ -65,7 +44,28 @@ const Header = () => {
               {link.label}
             </Link>
           ))}
+          <button
+            onClick={toggleLanguage}
+            className="px-3 py-1.5 text-sm font-medium rounded-md border border-forest-200 bg-forest-50 text-forest-700 hover:bg-forest-100 transition-colors"
+            aria-label="Switch language"
+          >
+            {language === 'de' ? 'EN' : 'DE'}
+          </button>
         </nav>
+
+        {/* Mobile: language + hamburger */}
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={toggleLanguage}
+            className="px-3 py-1.5 text-sm font-medium rounded-md border border-forest-200 bg-forest-50 text-forest-700 hover:bg-forest-100 transition-colors"
+            aria-label="Switch language"
+          >
+            {language === 'de' ? 'EN' : 'DE'}
+          </button>
+          <Button variant="ghost" size="icon" onClick={toggleMenu}>
+            {isMenuOpen ? <X /> : <Menu />}
+          </Button>
+        </div>
       </div>
 
       {/* Mobile menu */}
