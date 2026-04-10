@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const Index = lazy(() => import("./pages/Index"));
 const ApartmentPage = lazy(() => import("./pages/ApartmentPage"));
@@ -23,28 +24,30 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Suspense fallback={<div>Loading…</div>}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/apartment" element={<ApartmentPage />} />
-            <Route path="/location" element={<LocationPage />} />
-            <Route path="/activities" element={<ActivitiesPage />} />
-            <Route path="/info" element={<InfoPage />} />
-            <Route path="/insidertipps" element={<Insidertipps />} />
-            <Route path="/handover" element={<Handover />} />
-            <Route path="/calculator" element={<CalculatorPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/arrival" element={<ArrivalPage />} />
-            <Route path="/impressum" element={<ImpressumPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </TooltipProvider>
+    <LanguageProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Suspense fallback={<div>Loading…</div>}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/apartment" element={<ApartmentPage />} />
+              <Route path="/location" element={<LocationPage />} />
+              <Route path="/activities" element={<ActivitiesPage />} />
+              <Route path="/info" element={<InfoPage />} />
+              <Route path="/insidertipps" element={<Insidertipps />} />
+              <Route path="/handover" element={<Handover />} />
+              <Route path="/calculator" element={<CalculatorPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/arrival" element={<ArrivalPage />} />
+              <Route path="/impressum" element={<ImpressumPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </TooltipProvider>
+    </LanguageProvider>
   </QueryClientProvider>
 );
 

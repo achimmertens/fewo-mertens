@@ -3,18 +3,20 @@ import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Logo from './Logo';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const lastUpdateDate = new Date('2026-01-08').toLocaleDateString('de-DE');
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-forest-800 text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-serif font-bold mb-4">Ferienwohnung Waldoase Mertens in Einruhr</h3>
-            <p className="mb-2">Ihr gemütliches Zuhause im Nationalpark Eifel</p>
+            <h3 className="text-xl font-serif font-bold mb-4">{t('hero.title')}</h3>
+            <p className="mb-2">{t('footer.slogan')}</p>
             <div className="flex items-center mt-4">
               <MapPin className="h-5 w-5 mr-2" />
               <span>Heilsteinstr. 39, 52152 Simmerath-Einruhr</span>
@@ -25,7 +27,7 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-xl font-serif font-bold mb-4">Kontakt</h3>
+            <h3 className="text-xl font-serif font-bold mb-4">{t('footer.contact')}</h3>
             <div className="flex items-center mb-3">
               <Phone className="h-5 w-5 mr-2" />
               <span>+49 1517 4412216 oder 02403 837412</span>
@@ -39,41 +41,41 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-xl font-serif font-bold mb-4">Links</h3>
+            <h3 className="text-xl font-serif font-bold mb-4">{t('footer.links')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/" className="hover:text-lake-300 transition-colors">
-                  Home
+                  {t('footer.home')}
                 </Link>
               </li>
               <li>
                 <Link to="/apartment" className="hover:text-lake-300 transition-colors">
-                  Die Wohnung
+                  {t('footer.apartment')}
                 </Link>
               </li>
               <li>
                 <Link to="/location" className="hover:text-lake-300 transition-colors">
-                  Umgebung
+                  {t('footer.location')}
                 </Link>
               </li>
               <li>
                 <Link to="/activities" className="hover:text-lake-300 transition-colors">
-                  Aktivitäten
+                  {t('footer.activities')}
                 </Link>
               </li>
               <li>
                 <Link to="/calculator" className="hover:text-lake-300 transition-colors">
-                  Buchen
+                  {t('footer.book')}
                 </Link>
               </li>
               <li>
                 <Link to="/info" className="hover:text-lake-300 transition-colors">
-                  Preise & Infos
+                  {t('footer.pricesInfo')}
                 </Link>
               </li>
               <li>
                 <Link to="/impressum" className="hover:text-lake-300 transition-colors">
-                  Impressum
+                  {t('footer.impressum')}
                 </Link>
               </li>
               <li>
@@ -81,7 +83,7 @@ const Footer = () => {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <span className="hover:text-lake-300 transition-colors cursor-default">
-                        Version
+                        {t('footer.version')}
                       </span>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -95,10 +97,10 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-forest-700 mt-8 pt-6 text-center text-sm">
-          <p>&copy; {currentYear} Ferienwohnung Waldoase Mertens in Einruhr. Alle Rechte vorbehalten.</p>
+          <p>&copy; {currentYear} {t('hero.title')}. {t('footer.allRightsReserved')}</p>
           <p className="mt-2">
             <Link to="/impressum" className="hover:text-lake-300 transition-colors">
-              Impressum
+              {t('footer.impressum')}
             </Link>
           </p>
         </div>
