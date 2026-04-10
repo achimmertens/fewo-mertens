@@ -32,6 +32,15 @@ const activities = [
     image: 'https://rotes-haus-monschau.de/wp-content/uploads/2022/12/Ni000611-1920x1152.jpg',
   },
   {
+    title: 'Geführte Rangertouren im Nationalpark Eifel',
+    icon: Footprints,
+    description:
+      'Erleben Sie den Nationalpark Eifel hautnah bei einer geführten Rangertour. Die zertifizierten Ranger des Nationalparks nehmen Sie mit auf spannende Entdeckungsreisen durch Buchenwälder, über Wildwiesen und entlang malerischer Gewässer. Dabei erfahren Sie Wissenswertes über die heimische Tier- und Pflanzenwelt sowie die Besonderheiten des Schutzgebiets. Touren finden regelmäßig statt – aktuelle Termine und Anmeldung über die Webseite des Nationalparks.',
+    link: 'https://www.nationalpark-eifel.de/de/nationalpark-erleben/veranstaltungen/#/veranstaltungen',
+    linkLabel: 'Veranstaltungen im Nationalpark Eifel',
+    image: 'https://www.nationalpark-eifel.de/cache/bc2aef53529c154b806179112c3660d9.png',
+  },
+  {
     title: 'Kanu- und Fahrradverleih in Rurberg',
     icon: Bike,
     description:
