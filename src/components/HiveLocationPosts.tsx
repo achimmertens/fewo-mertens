@@ -19,8 +19,12 @@ type RawHivePost = Omit<HivePost, "json_metadata"> & {
   json_metadata: string | HivePost["json_metadata"];
 };
 
-async function fetchPage(startAuthor?: string, startPermlink?: string): Promise<RawHivePost[]> {
-  const query: Record<string, unknown> = { tag: "achimmertens", limit: 20 };
+async function fetchTagPage(
+  tag: string,
+  startAuthor?: string,
+  startPermlink?: string,
+): Promise<RawHivePost[]> {
+  const query: Record<string, unknown> = { tag, limit: 20 };
   if (startAuthor && startPermlink) {
     query.start_author = startAuthor;
     query.start_permlink = startPermlink;
@@ -30,7 +34,7 @@ async function fetchPage(startAuthor?: string, startPermlink?: string): Promise<
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       jsonrpc: "2.0",
-      method: "condenser_api.get_discussions_by_blog",
+      method: "condenser_api.get_discussions_by_created",
       params: [query],
       id: 1,
     }),
@@ -57,30 +61,31 @@ function parsePost(p: RawHivePost): HivePost {
 async function fetchLocationPosts(): Promise<HivePost[]> {
   const collected: HivePost[] = [];
   const seen = new Set<string>();
-  let startAuthor: string | undefined;
-  let startPermlink: string | undefined;
-  const MAX_PAGES = 10;
-  for (let i = 0; i < MAX_PAGES; i++) {
-    const page = await fetchPage(startAuthor, startPermlink);
-    if (page.length === 0) break;
-    const fresh = i === 0 ? page : page.slice(1);
-    for (const raw of fresh) {
-      const key = `${raw.author}/${raw.permlink}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      const post = parsePost(raw);
-      const tags = post.json_metadata?.tags ?? [];
-      if (post.author === "achimmertens" && (tags.includes("haveyoubeenhere") || tags.includes("einruhr"))) {
-        collected.push(post);
-        if (collected.length >= 10) return collected;
+  const tags = ["eifel", "einruhr"];
+  const MAX_PAGES_PER_TAG = 20;
+  for (const tag of tags) {
+    let startAuthor: string | undefined;
+    let startPermlink: string | undefined;
+    for (let i = 0; i < MAX_PAGES_PER_TAG; i++) {
+      const page = await fetchTagPage(tag, startAuthor, startPermlink);
+      if (page.length === 0) break;
+      const fresh = i === 0 ? page : page.slice(1);
+      for (const raw of fresh) {
+        const key = `${raw.author}/${raw.permlink}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const post = parsePost(raw);
+        if (post.author === "achimmertens") {
+          collected.push(post);
+        }
       }
+      const last = page[page.length - 1];
+      if (!last || page.length < 20) break;
+      startAuthor = last.author;
+      startPermlink = last.permlink;
     }
-    const last = page[page.length - 1];
-    if (!last || page.length < 20) break;
-    startAuthor = last.author;
-    startPermlink = last.permlink;
   }
-  return collected;
+  return collected.sort((a, b) => (a.created > b.created ? -1 : 1));
 }
 
 function formatDate(iso: string) {
@@ -121,7 +126,7 @@ const HiveLocationPosts = () => {
         Blogbeiträge aus der Hive Blockchain
       </h2>
       <p className="text-sm text-gray-500 mb-6">
-        Beiträge von Achim Mertens mit den Tags #haveyoubeenhere und #einruhr – 
+        Beiträge von Achim Mertens mit den Tags #eifel und #einruhr – 
         direkt aus der dezentralen Hive Blockchain geladen.
       </p>
 

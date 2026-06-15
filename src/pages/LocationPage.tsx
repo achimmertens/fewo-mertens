@@ -69,7 +69,7 @@ const LocationPage = () => {
               <p className="mb-4">{t('location.activitiesDesc')}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                 <div className="mb-6">
-                  <img src="https://images.hive.blog/p/YpihifdXP4WNbGMdjw7e3DuhJWBvCw4SfuLZsrnJYHEpsqZFkiGGNCPvxdmKJPqJ34qfbzdvZMg7s7uHULEqhh36zbNo6wMpRpd1fdYoZ66rgQjqGrtRQ9TNgyTAsjgMuMmCsUYPBjePPK6QEP73nHqCxLZ1QFP3tLBfpmdYBCwY?format=match&mode=fit" alt={t('location.canoeTrip')} className="w-full h-auto rounded-lg shadow-md mb-2" />
+                  <img src="https://cdn01.eifel.de/Fahrrad-und-Kanuverleih-am-Rursee-d26fad3963b3c210f16736ff8666e8ec.jpeg" alt={t('location.canoeTrip')} className="w-full h-auto rounded-lg shadow-md mb-2" />
                   <p className="text-sm text-gray-600 italic text-center">{t('location.canoeTrip')}</p>
                 </div>
                 <div>
