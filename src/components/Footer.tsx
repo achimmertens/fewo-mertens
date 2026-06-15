@@ -7,7 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const lastUpdateDate = new Date('2026-01-08').toLocaleDateString('de-DE');
+  const lastUpdateDate = new Date('2026-06-15').toLocaleDateString('de-DE');
   const { t } = useLanguage();
 
   return (
