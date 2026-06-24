@@ -10,6 +10,8 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "pretest": "npm run build",
+    "test": "bash tests/run-seo-tests.sh --skip-build",
     "predeploy": "npm run build && echo fewo.amertens.me > dist/CNAME && cp visitenkarte-fewo.html dist/visitenkarte-fewo.html",
     "deploy": "gh-pages -d dist"
   },
