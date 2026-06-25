@@ -69,6 +69,25 @@ const ContactPage = () => {
               </Card>
             </div>
             
+            <div className="mt-6">
+              <Card>
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex items-start">
+                    <div className="h-5 w-5 text-forest-600 mr-3 mt-1 flex-shrink-0 flex items-center justify-center font-semibold text-sm">🏠</div>
+                    <div>
+                      <h3 className="font-medium mb-1">Visitenkarte zum Mitnehmen</h3>
+                      <p className="text-sm text-muted-foreground mb-3">Unsere Visitenkarte – druckfertig im 85×55 mm-Format, 9 Karten pro A4-Bogen.</p>
+                      <a href="/visitenkarte-fewo.html" target="_blank"
+                        className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Visitenkarte öffnen
+                      </a>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            
             <div className="mt-8">
               <figure>
                 <img src="https://einruhr.wordpress.com/wp-content/uploads/2022/09/gerumpel.jpg?w=2046" alt={t('contact.photoCaption')} className="w-full h-auto rounded-lg shadow-md" />
