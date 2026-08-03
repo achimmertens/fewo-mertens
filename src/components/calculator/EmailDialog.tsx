@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Alert } from "@/components/ui/alert";
 import { Copy, Check, Mail } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -45,18 +44,7 @@ const EmailDialog = ({ showEmailDialog, setShowEmailDialog, emailTemplate, handl
             </div>
             <div className="whitespace-pre-wrap bg-white p-3 border rounded-md text-sm font-mono overflow-auto max-h-[250px]">{emailTemplate}</div>
           </div>
-          <Alert className="bg-blue-50">
-            <div className="flex flex-col space-y-2">
-              <p className="font-medium">{t('priceCalculator.howToSend')}</p>
-              <ol className="list-decimal list-inside space-y-1 text-sm">
-                <li>{t('priceCalculator.step1')}</li>
-                <li>{t('priceCalculator.step2')}</li>
-                <li>{t('priceCalculator.step3')} <span className="font-medium">fewo@amertens.me</span></li>
-                <li>{t('priceCalculator.step4')}</li>
-                <li>{t('priceCalculator.step5')}</li>
-              </ol>
-            </div>
-          </Alert>
+
         </div>
         <DialogFooter className="flex flex-col sm:flex-row gap-2">
           <Button type="button" variant="outline" onClick={() => setShowEmailDialog(false)} className="sm:order-1 order-2">{t('priceCalculator.close')}</Button>

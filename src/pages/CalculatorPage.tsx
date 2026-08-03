@@ -5,7 +5,7 @@ import GoogleCalendar from "@/components/GoogleCalendar";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Mail, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
-import { format, addDays } from "date-fns";
+import { format } from "date-fns";
 import { de, enUS } from "date-fns/locale";
 import { BookingPeriod } from "@/types/booking";
 import { fetchBookedPeriods } from "@/utils/calendarUtils";
@@ -64,7 +64,7 @@ const CalculatorPage = () => {
                     {bookingPeriods.map((period, index) => (
                       <li key={index}>
                         {format(period.start, "dd.MM.yyyy", { locale: dateLocale })} -{" "}
-                        {format(addDays(period.end, -1), "dd.MM.yyyy", { locale: dateLocale })}{" "}
+                        {format(period.end, "dd.MM.yyyy", { locale: dateLocale })}{" "}
                         ({period.name})
                       </li>
                     ))}

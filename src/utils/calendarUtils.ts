@@ -1,5 +1,5 @@
 
-import { startOfDay, isBefore, isAfter, addDays, isSameDay } from "date-fns";
+import { startOfDay, isBefore, isAfter, isSameDay } from "date-fns";
 import { BookingPeriod } from "@/types/booking";
 
 export const isRangeOverlappingBookings = (from: Date, to: Date, bookingPeriods: BookingPeriod[]): boolean => {
@@ -12,11 +12,13 @@ export const isRangeOverlappingBookings = (from: Date, to: Date, bookingPeriods:
     const periodStart = startOfDay(period.start);
     const periodEnd = startOfDay(period.end);
 
-    const overlapsStart = isBefore(rangeStart, addDays(periodEnd, -1)) && isAfter(rangeEnd, periodStart);
+    // period.end ist jetzt der Abreisetag (normalisiert, kein exklusives Enddatum mehr)
+    const overlapsStart = isBefore(rangeStart, periodEnd) && isAfter(rangeEnd, periodStart);
     const overlapsEnd = isBefore(rangeEnd, periodEnd) && isAfter(rangeStart, periodStart);
     const fullyContains = isBefore(rangeStart, periodStart) && isAfter(rangeEnd, periodEnd);
-    const exactMatch = isSameDay(rangeStart, periodStart) && isSameDay(rangeEnd, addDays(period.end, -1));
+    const exactMatch = isSameDay(rangeStart, periodStart) && isSameDay(rangeEnd, periodEnd);
 
+    // Anreise am Abreisetag ist ok (Abreise vormittags, Anreise nachmittags)
     const startsOnPeriodEnd = isSameDay(rangeStart, periodEnd);
 
     return (overlapsStart || overlapsEnd || fullyContains || exactMatch) && !startsOnPeriodEnd;
@@ -37,11 +39,21 @@ export const fetchBookedPeriods = async (): Promise<BookingPeriod[]> => {
     }
 
     const data = await response.json();
-    return data.items.map((event: any) => ({
-      start: new Date(event.start.date || event.start.dateTime),
-      end: new Date(event.end.date || event.end.dateTime),
-      name: event.summary || "Unbekannt",
-    }));
+    return data.items.map((event: any) => {
+      const isAllDay = !!event.start.date;
+      let end = new Date(event.end.date || event.end.dateTime);
+      // Google Calendar API: bei Ganztages-Ereignissen ist end.date exklusiv
+      // (Tag nach Abreise), bei Termin-Ereignissen ist end.dateTime der
+      // tatsächliche Abreisezeitpunkt → normalisieren auf Abreisetag
+      if (isAllDay) {
+        end = new Date(end.getTime() - 24 * 60 * 60 * 1000);
+      }
+      return {
+        start: new Date(event.start.date || event.start.dateTime),
+        end,
+        name: event.summary || "Unbekannt",
+      };
+    });
   } catch (error) {
     console.error("Error fetching booked periods:", error);
     return [];

@@ -101,7 +101,7 @@ const PriceCalculator = () => {
 
   const openDefaultEmailClient = () => {
     const subject = encodeURIComponent(t('priceCalculator.reservationSubject'));
-    const mailtoLink = `mailto:fewo@amertens.me?subject=${subject}&body=${encodeURIComponent("")}`;
+    const mailtoLink = `mailto:fewo@amertens.me?subject=${subject}&body=${encodeURIComponent(emailTemplate)}`;
     window.location.href = mailtoLink;
     toast({ title: t('priceCalculator.emailOpening'), description: t('priceCalculator.emailOpeningDesc') });
   };
