@@ -71,7 +71,7 @@ const de: Record<string, any> = {
     forPersons: 'für 1-4 Personen',
     additionalNight: 'Jede weitere Nacht nur 50 €.',
     forPriceCalc: 'Für Preisberechnung und Reservierungsanfrage',
-    clickHere: 'Hier Klicken',
+    clickHere: 'Preis und Verfügbarkeit prüfen',
   },
   index: {
     homeTitle: 'Ihr Zuhause im Nationalpark Eifel',
@@ -432,7 +432,7 @@ const en: Record<string, any> = {
     forPersons: 'for 1-4 persons',
     additionalNight: 'Each additional night only €50.',
     forPriceCalc: 'For price calculation and reservation request',
-    clickHere: 'Click Here',
+    clickHere: 'Check price and availability',
   },
   index: {
     homeTitle: 'Your Home in the Eifel National Park',

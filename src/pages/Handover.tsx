@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function Handover() {
   return (
     <main className="container mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-6">handover</h1>
+      <h1 className="text-3xl font-bold mb-6">Schlüsselübergabe und Ankunft</h1>
 
       {(() => {
         const html = `
