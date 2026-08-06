@@ -3,12 +3,19 @@ import { FileText } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Seo from "@/components/Seo";
 
 const ImpressumPage = () => {
   const { t } = useLanguage();
 
   return (
     <>
+      <Seo
+        titleDe={"Impressum | Ferienwohnung Waldoase Mertens"}
+        titleEn={"Legal Notice | Waldoase Mertens Holiday Apartment"}
+        descriptionDe={"Impressum und rechtliche Angaben zur Ferienwohnung Waldoase Mertens in Einruhr."}
+        descriptionEn={"Legal notice and provider information for the Waldoase Mertens holiday apartment in Einruhr."}
+      />
       <Header />
       <main className="py-16 bg-white">
         <div className="container mx-auto px-4">

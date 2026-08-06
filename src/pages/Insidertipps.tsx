@@ -2,12 +2,20 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import Seo from "@/components/Seo";
 
 const Insidertipps = () => {
   const { t } = useLanguage();
 
   return (
     <>
+      <Seo
+        titleDe={"Insidertipps für Gäste | Waldoase Mertens"}
+        titleEn={"Insider Tips for Guests | Waldoase Mertens"}
+        descriptionDe={"Praktische Hinweise für Gäste der Ferienwohnung Waldoase Mertens: Sicherungen, Warmwasser, Holzschuppen und mehr."}
+        descriptionEn={"Practical tips for guests of the Waldoase Mertens apartment: fuse box, hot water, wood shed and more."}
+        noindex
+      />
       <Header />
       <main className="py-16 bg-white">
         <div className="container mx-auto px-4">

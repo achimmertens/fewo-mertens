@@ -6,12 +6,19 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MapPin, Mountain, Compass, Bike, Ship, Utensils } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Seo from "@/components/Seo";
 
 const LocationPage = () => {
   const { t } = useLanguage();
 
   return (
     <>
+      <Seo
+        titleDe={"Lage in Einruhr am Nationalpark Eifel | Waldoase Mertens"}
+        titleEn={"Location in Einruhr, Eifel National Park | Waldoase Mertens"}
+        descriptionDe={"Die Lage der Ferienwohnung in Einruhr: direkt am Rursee und Obersee, mitten im Nationalpark Eifel, ideal für Natur- und Wanderurlaub."}
+        descriptionEn={"Location of the holiday apartment in Einruhr: right by Lake Rur and Obersee, inside Eifel National Park, ideal for nature and hiking holidays."}
+      />
       <Header />
       <main className="pb-16">
         <div className="bg-forest-700 py-16 text-white">

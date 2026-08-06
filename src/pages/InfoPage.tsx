@@ -7,12 +7,19 @@ import { Calendar, DollarSign, Users, Clock, ShoppingCart, Coffee, HelpCircle, M
 import GoogleCalendar from "@/components/GoogleCalendar";
 import { PRICES } from "@/constants/prices";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Seo from "@/components/Seo";
 
 const InfoPage = () => {
   const { t } = useLanguage();
 
   return (
     <>
+      <Seo
+        titleDe={"Preise & Informationen zur Ferienwohnung | Waldoase Mertens"}
+        titleEn={"Prices & Information | Waldoase Mertens"}
+        descriptionDe={"Preise, Nebenkosten, Frühstück, Haustiere und alle wichtigen Informationen zur Ferienwohnung Waldoase Mertens in Einruhr."}
+        descriptionEn={"Prices, extra costs, breakfast, pets and all key information about the Waldoase Mertens holiday apartment in Einruhr."}
+      />
       <Header />
       <main className="pb-16">
         <div className="bg-forest-700 py-16 text-white">

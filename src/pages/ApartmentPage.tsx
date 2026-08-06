@@ -6,12 +6,19 @@ import { Button } from "@/components/ui/button";
 import { Bed, Users, Bath, CheckSquare, Flame, Phone } from "lucide-react";
 import { PRICES } from "@/constants/prices";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Seo from "@/components/Seo";
 
 const ApartmentPage = () => {
   const { t } = useLanguage();
 
   return (
     <>
+      <Seo
+        titleDe={"Die Ferienwohnung – Ausstattung & Bilder | Waldoase Mertens"}
+        titleEn={"The Apartment – Facilities & Photos | Waldoase Mertens"}
+        descriptionDe={"Alle Räume, Ausstattung und Bilder der Ferienwohnung Waldoase Mertens in Einruhr: Kamin, Küche, Bad, Schlafzimmer für bis zu 4 Personen."}
+        descriptionEn={"All rooms, facilities and photos of the Waldoase Mertens holiday apartment in Einruhr: fireplace, kitchen, bathroom and beds for up to 4 guests."}
+      />
       <Header />
       <main className="pb-16">
         <div className="bg-forest-700 py-16 text-white">

@@ -62,7 +62,7 @@ const Header = () => {
           >
             {language === 'de' ? 'EN' : 'DE'}
           </button>
-          <Button variant="ghost" size="icon" onClick={toggleMenu}>
+          <Button variant="ghost" size="icon" onClick={toggleMenu} aria-label={isMenuOpen ? 'Menü schließen' : 'Menü öffnen'} aria-expanded={isMenuOpen}>
             {isMenuOpen ? <X /> : <Menu />}
           </Button>
         </div>

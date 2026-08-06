@@ -9,12 +9,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GoogleCalendar from "@/components/GoogleCalendar";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Seo from "@/components/Seo";
 
 const Index = () => {
   const { t } = useLanguage();
 
   return (
     <>
+      <Seo
+        titleDe={"Ferienwohnung Einruhr am Rursee | Waldoase Mertens"}
+        titleEn={"Holiday Apartment Einruhr, Rursee | Waldoase Mertens"}
+        descriptionDe={"Ferienwohnung Waldoase Mertens in Einruhr am Nationalpark Eifel und Rursee. Für 1–4 Personen, Hund auf Wunsch, Kamin – ideal zum Wandern und Radfahren."}
+        descriptionEn={"Holiday apartment Waldoase Mertens in Einruhr at Eifel National Park and Lake Rur. For 1–4 guests, dogs welcome, fireplace – perfect for hiking and cycling."}
+      />
       <Header />
       <main>
         <Hero />
