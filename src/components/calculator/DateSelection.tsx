@@ -40,9 +40,10 @@ const DateSelection = ({ date, isDateBooked, bookingPeriods, onDateChange }: Dat
     return (
       isBefore(day, today) ||
       bookingPeriods.some(period => {
-        const periodStart = startOfDay(addDays(period.start, 0));
-        const periodEnd = startOfDay(addDays(period.end, -1));
+        const periodStart = startOfDay(period.start);
+        const periodEnd = startOfDay(period.end);
         const dayStart = startOfDay(day);
+        // period.end ist jetzt der Abreisetag (normalisiert in fetchBookedPeriods)
         return isAfter(dayStart, periodStart) && isBefore(dayStart, periodEnd);
       })
     );

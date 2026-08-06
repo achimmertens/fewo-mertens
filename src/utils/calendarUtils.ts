@@ -30,7 +30,7 @@ export const fetchBookedPeriods = async (): Promise<BookingPeriod[]> => {
     const calendarId = "6gk8bbmgm01bk625432gb33tk0@group.calendar.google.com";
     const apiKey = "AIzaSyBiD1VUk3DaVOZ2omR9T4xbr9k8vu4gS1c";
     const timeMin = new Date().toISOString();
-    const timeMax = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
+    const timeMax = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
     const url = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`;
 
     const response = await fetch(url);
