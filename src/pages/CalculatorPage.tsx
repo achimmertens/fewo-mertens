@@ -10,6 +10,7 @@ import { de, enUS } from "date-fns/locale";
 import { BookingPeriod } from "@/types/booking";
 import { fetchBookedPeriods } from "@/utils/calendarUtils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Seo from "@/components/Seo";
 
 const CalculatorPage = () => {
   const [bookingPeriods, setBookingPeriods] = useState<BookingPeriod[]>([]);
@@ -32,6 +33,12 @@ const CalculatorPage = () => {
 
   return (
     <>
+      <Seo
+        titleDe={"Preisrechner & Reservierungsanfrage | Waldoase Mertens"}
+        titleEn={"Price Calculator & Booking Request | Waldoase Mertens"}
+        descriptionDe={"Berechnen Sie den Preis für Ihren Aufenthalt in der Ferienwohnung Einruhr und senden Sie direkt eine Reservierungsanfrage."}
+        descriptionEn={"Calculate the price for your stay at the Einruhr holiday apartment and send a booking request directly."}
+      />
       <Header />
       <main className="pb-16">
         <div className="bg-forest-700 py-16 text-white">

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Footprints, CookingPot, Landmark, Bike, ExternalLink } from 'lucide-react';
 import rangerImage from '@/assets/ranger.jpg';
 import { useLanguage } from '@/contexts/LanguageContext';
+import Seo from "@/components/Seo";
 
 const ActivitiesPage = () => {
   const { t } = useLanguage();
@@ -53,6 +54,12 @@ const ActivitiesPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Seo
+        titleDe={"Aktivitäten am Rursee & Nationalpark Eifel | Waldoase Mertens"}
+        titleEn={"Activities at Lake Rur & Eifel National Park | Waldoase Mertens"}
+        descriptionDe={"Wandern, Radfahren, Wassersport und geführte Rangertouren rund um Einruhr, Rursee und den Nationalpark Eifel."}
+        descriptionEn={"Hiking, cycling, water sports and guided ranger tours around Einruhr, Lake Rur and Eifel National Park."}
+      />
       <Header />
       <main className="flex-grow">
         <section className="py-16 bg-muted/30">

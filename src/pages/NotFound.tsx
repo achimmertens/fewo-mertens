@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Seo from "@/components/Seo";
 
 const NotFound = () => {
   const location = useLocation();
@@ -17,6 +18,13 @@ const NotFound = () => {
 
   return (
     <>
+      <Seo
+        titleDe={"Seite nicht gefunden | Waldoase Mertens"}
+        titleEn={"Page not found | Waldoase Mertens"}
+        descriptionDe={"Diese Seite existiert nicht. Zurück zur Startseite der Ferienwohnung Waldoase Mertens."}
+        descriptionEn={"This page does not exist. Return to the Waldoase Mertens holiday apartment homepage."}
+        noindex
+      />
       <Header />
       <main className="py-24">
         <div className="container mx-auto px-4 text-center">

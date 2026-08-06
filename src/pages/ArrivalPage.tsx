@@ -3,12 +3,19 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Seo from "@/components/Seo";
 
 const ArrivalPage = () => {
   const { t } = useLanguage();
 
   return (
     <>
+      <Seo
+        titleDe={"Anreise nach Einruhr in der Eifel | Waldoase Mertens"}
+        titleEn={"Getting to Einruhr in the Eifel | Waldoase Mertens"}
+        descriptionDe={"Anfahrt zur Ferienwohnung Waldoase Mertens in Einruhr mit Auto, Bahn und Bus – inklusive Adresse und Parkmöglichkeiten."}
+        descriptionEn={"How to reach the Waldoase Mertens holiday apartment in Einruhr by car, train and bus – including address and parking."}
+      />
       <Header />
       <main className="pb-16">
         <div className="bg-forest-700 py-16 text-white">

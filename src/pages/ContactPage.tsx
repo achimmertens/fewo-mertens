@@ -3,12 +3,19 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Seo from "@/components/Seo";
 
 const ContactPage = () => {
   const { t } = useLanguage();
 
   return (
     <>
+      <Seo
+        titleDe={"Kontakt & Reservierung | Waldoase Mertens Einruhr"}
+        titleEn={"Contact & Booking | Waldoase Mertens Einruhr"}
+        descriptionDe={"Kontaktieren Sie Annette und Achim Mertens für Fragen und Reservierungen der Ferienwohnung in Einruhr am Rursee."}
+        descriptionEn={"Contact Annette and Achim Mertens for questions and bookings of the holiday apartment in Einruhr at Lake Rur."}
+      />
       <Header />
       <main className="pb-16">
         <div className="bg-forest-700 py-12 sm:py-16 text-white">
