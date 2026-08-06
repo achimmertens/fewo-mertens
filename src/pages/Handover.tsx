@@ -1,9 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Seo from '@/components/Seo';
 
 export default function Handover() {
   return (
     <main className="container mx-auto py-12 px-4">
+      <Seo
+        titleDe="Schlüsselübergabe und Ankunft | Waldoase Mertens"
+        titleEn="Key Handover and Arrival | Waldoase Mertens"
+        descriptionDe="Informationen zur Schlüsselübergabe und Ankunft für Gäste der Ferienwohnung Waldoase Mertens in Einruhr."
+        descriptionEn="Key handover and arrival information for guests of the Waldoase Mertens holiday apartment in Einruhr."
+        noindex
+      />
       <h1 className="text-3xl font-bold mb-6">Schlüsselübergabe und Ankunft</h1>
 
       {(() => {
