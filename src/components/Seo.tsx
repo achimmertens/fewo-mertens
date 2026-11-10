@@ -24,18 +24,27 @@ const Seo = ({ titleDe, titleEn, descriptionDe, descriptionEn, noindex }: SeoPro
   const description = language === "de" ? descriptionDe : descriptionEn;
   const url = `${SITE_URL}${pathname === "/" ? "/" : pathname.replace(/\/$/, "")}`;
 
+  const keywords =
+    language === "de"
+      ? "Ferienwohnung Einruhr, Ferienwohnung Nationalpark Eifel, Ferienwohnung Rursee, Ferienwohnung Obersee, Ferienwohnung Eifel mit Hund, Urlaub Nationalpark Eifel, Wandern, Radfahren, Wassersport"
+      : "holiday apartment Einruhr, holiday apartment Eifel National Park, holiday apartment Rursee, dog friendly holiday apartment Eifel, hiking, cycling, water sports";
+
   return (
     <Helmet>
       <html lang={language} />
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
+      <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
       <link rel="canonical" href={url} />
-      {noindex && <meta name="robots" content="noindex, follow" />}
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Ferienwohnung Waldoase Mertens" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={OG_IMAGE} />
       <meta property="og:locale" content={language === "de" ? "de_DE" : "en_US"} />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={OG_IMAGE} />

@@ -22,12 +22,15 @@ const getNestedValue = (obj: any, path: string): string => {
 };
 
 const detectBrowserLanguage = (): Language => {
+  if (typeof navigator === 'undefined') return 'de';
   const lang = navigator.language || (navigator as any).userLanguage || 'de';
   return lang.startsWith('en') ? 'en' : 'de';
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>(() => {
+    // Server-side rendering: no window/localStorage available.
+    if (typeof window === 'undefined') return 'de';
     const saved = localStorage.getItem('language');
     if (saved === 'de' || saved === 'en') return saved;
     return detectBrowserLanguage();
