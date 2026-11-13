@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -73,6 +74,19 @@ const Seo = ({ titleDe, titleEn, descriptionDe, descriptionEn, noindex, jsonLd }
   };
 
   const jsonLdBlocks = [breadcrumbLd, ...(jsonLd ?? [])];
+
+  // GA4: manual page_view per route (config uses send_page_view: false).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const w = window as typeof window & { gtag?: (...args: unknown[]) => void };
+    if (typeof w.gtag !== "function") return;
+    w.gtag("event", "page_view", {
+      page_path: path,
+      page_location: window.location.href,
+      page_title: title,
+      page_language: language,
+    });
+  }, [path, title, language]);
 
   return (
     <Helmet>
