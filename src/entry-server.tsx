@@ -6,6 +6,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { langFromPath } from "@/lib/langPath";
 
 // Eagerly import every page so that server rendering does not need to await
 // React.lazy() chunks (renderToString does not wait for lazy boundaries).
@@ -36,14 +37,16 @@ export interface RenderResult {
 export function render(url: string): RenderResult {
   const queryClient = new QueryClient();
   const helmetContext: Record<string, any> = {};
+  const language = langFromPath(url);
 
   const app = (
     <HelmetProvider context={helmetContext}>
       <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
+        <LanguageProvider language={language}>
           <TooltipProvider>
             <StaticRouter location={url}>
               <Routes>
+                {/* German (default, no prefix) */}
                 <Route path="/" element={<Index />} />
                 <Route path="/apartment" element={<ApartmentPage />} />
                 <Route path="/location" element={<LocationPage />} />
@@ -55,6 +58,20 @@ export function render(url: string): RenderResult {
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/arrival" element={<ArrivalPage />} />
                 <Route path="/impressum" element={<ImpressumPage />} />
+
+                {/* English (/en prefix) */}
+                <Route path="/en" element={<Index />} />
+                <Route path="/en/apartment" element={<ApartmentPage />} />
+                <Route path="/en/location" element={<LocationPage />} />
+                <Route path="/en/activities" element={<ActivitiesPage />} />
+                <Route path="/en/info" element={<InfoPage />} />
+                <Route path="/en/insidertipps" element={<Insidertipps />} />
+                <Route path="/en/handover" element={<Handover />} />
+                <Route path="/en/calculator" element={<CalculatorPage />} />
+                <Route path="/en/contact" element={<ContactPage />} />
+                <Route path="/en/arrival" element={<ArrivalPage />} />
+                <Route path="/en/impressum" element={<ImpressumPage />} />
+
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </StaticRouter>

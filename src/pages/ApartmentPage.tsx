@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
+import Link from "@/components/LocalLink";
 import { Button } from "@/components/ui/button";
 import { Bed, Users, Bath, CheckSquare, Flame, Phone } from "lucide-react";
 import { PRICES } from "@/constants/prices";

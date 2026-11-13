@@ -36,6 +36,16 @@ const routes = [
   "/contact",
   "/arrival",
   "/impressum",
+  "/en",
+  "/en/apartment",
+  "/en/location",
+  "/en/activities",
+  "/en/info",
+  "/en/insidertipps",
+  "/en/calculator",
+  "/en/contact",
+  "/en/arrival",
+  "/en/impressum",
 ];
 
 if (!fs.existsSync(templatePath)) {
@@ -95,6 +105,8 @@ function buildPage(route) {
   }
   page = page.replace(/<div id="root">\s*<\/div>/, `<div id="root">${html}</div>`);
   page = page.replace("</head>", `${head}\n  </head>`);
+  // react-helmet serialises the prop as hrefLang; normalise to lowercase.
+  page = page.replace(/hrefLang=/g, "hreflang=");
   return page;
 }
 

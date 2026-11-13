@@ -1,6 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Link } from 'react-router-dom';
+import Link from '@/components/LocalLink';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Seo from "@/components/Seo";
 

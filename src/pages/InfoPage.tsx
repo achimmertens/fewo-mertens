@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Link } from "react-router-dom";
+import Link from "@/components/LocalLink";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Calendar, DollarSign, Users, Clock, ShoppingCart, Coffee, HelpCircle, MapPin } from "lucide-react";

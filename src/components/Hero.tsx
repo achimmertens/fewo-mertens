@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "@/components/LocalLink";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/contexts/LanguageContext";

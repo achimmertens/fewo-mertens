@@ -2,7 +2,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HiveLocationPosts from "@/components/HiveLocationPosts";
-import { Link } from "react-router-dom";
+import Link from "@/components/LocalLink";
 import { Button } from "@/components/ui/button";
 import { MapPin, Mountain, Compass, Bike, Ship, Utensils } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";

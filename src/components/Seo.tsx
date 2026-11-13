@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { langPath, stripLang } from "@/lib/langPath";
 
 const SITE_URL = "https://fewo.amertens.me";
 const OG_IMAGE = `${SITE_URL}/og-image.webp`;
@@ -39,9 +40,13 @@ const Seo = ({ titleDe, titleEn, descriptionDe, descriptionEn, noindex, jsonLd }
 
   const title = language === "de" ? titleDe : titleEn;
   const description = language === "de" ? descriptionDe : descriptionEn;
-  // Normalised path (no trailing slash, except the root "/").
+  // Localised path (may start with /en), normalised without a trailing slash.
   const path = pathname === "/" ? "/" : pathname.replace(/\/$/, "");
+  // Language-independent path used for alternates and breadcrumbs.
+  const logicalPath = stripLang(path);
   const url = `${SITE_URL}${path}`;
+  const deUrl = `${SITE_URL}${langPath(logicalPath, "de")}`;
+  const enUrl = `${SITE_URL}${langPath(logicalPath, "en")}`;
 
   const keywords =
     language === "de"
@@ -55,11 +60,11 @@ const Seo = ({ titleDe, titleEn, descriptionDe, descriptionEn, noindex, jsonLd }
       "@type": "ListItem",
       position: 1,
       name: homeLabel,
-      item: `${SITE_URL}/`,
+      item: `${SITE_URL}${langPath("/", language)}`,
     },
   ];
-  if (path !== "/") {
-    const label = BREADCRUMB_LABELS[path];
+  if (logicalPath !== "/") {
+    const label = BREADCRUMB_LABELS[logicalPath];
     crumbItems.push({
       "@type": "ListItem",
       position: 2,
@@ -96,6 +101,9 @@ const Seo = ({ titleDe, titleEn, descriptionDe, descriptionEn, noindex, jsonLd }
       <meta name="keywords" content={keywords} />
       <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
       <link rel="canonical" href={url} />
+      <link rel="alternate" hrefLang="de" href={deUrl} />
+      <link rel="alternate" hrefLang="en" href={enUrl} />
+      <link rel="alternate" hrefLang="x-default" href={deUrl} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="Ferienwohnung Waldoase Mertens" />
       <meta property="og:title" content={title} />

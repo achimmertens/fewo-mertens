@@ -1,18 +1,19 @@
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { langPath, stripLang } from "@/lib/langPath";
 import AvailabilityCalendar from "./AvailabilityCalendar";
 
 const GoogleCalendar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isCalculatorPage = location.pathname === "/calculator";
-  const { t } = useLanguage();
+  const isCalculatorPage = stripLang(location.pathname) === "/calculator";
+  const { t, language } = useLanguage();
 
   const handleCalendarClick = () => {
     localStorage.setItem("openDateSelector", "true");
     if (!isCalculatorPage) {
-      navigate("/calculator");
+      navigate(langPath("/calculator", language));
     }
   };
 

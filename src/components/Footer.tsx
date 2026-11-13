@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router-dom';
+import Link from '@/components/LocalLink';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Logo from './Logo';

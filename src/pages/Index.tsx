@@ -1,6 +1,6 @@
 
 import { Bed, Map, Coffee, Mountain, Phone, Flame, Dog } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "@/components/LocalLink";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Hero from "@/components/Hero";
