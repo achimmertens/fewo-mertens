@@ -12,6 +12,34 @@ import Seo from "@/components/Seo";
 const InfoPage = () => {
   const { t } = useLanguage();
 
+  // Visible FAQ of this page, reused verbatim for the FAQPage structured data.
+  const faqItems = [
+    { q: t('info.faqPets'), a: t('info.faqPetsAnswer') },
+    { q: t('info.faqParking'), a: t('info.faqParkingAnswer') },
+    { q: t('info.faqWifi'), a: t('info.faqWifiAnswer') },
+    { q: t('info.faqTrash'), a: t('info.faqTrashAnswer') },
+    { q: t('info.faqHeating'), a: t('info.faqHeatingAnswer') },
+    { q: t('info.faqKey'), a: t('info.faqKeyAnswer') },
+    {
+      q: t('info.faqBooking'),
+      a: `${t('info.faqBookingAnswer1')} ${t('info.faqBookingLink')} ${t('info.faqBookingAnswer2')}`,
+    },
+    {
+      q: t('info.faqOtherApartments'),
+      a: `${t('info.faqOtherApartmentsAnswer')} ${t('info.faqAirbnbRoof')}, ${t('info.faqAirbnbFirst')}, ${t('info.faqAirbnbForest')}`,
+    },
+  ];
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+
   return (
     <>
       <Seo
@@ -19,6 +47,7 @@ const InfoPage = () => {
         titleEn={"Prices & Information | Waldoase Mertens"}
         descriptionDe={"Preise, Nebenkosten, Frühstück, Haustiere und alle wichtigen Informationen zur Ferienwohnung Waldoase Mertens in Einruhr."}
         descriptionEn={"Prices, extra costs, breakfast, pets and all key information about the Waldoase Mertens holiday apartment in Einruhr."}
+        jsonLd={[faqJsonLd]}
       />
       <Header />
       <main className="pb-16">
