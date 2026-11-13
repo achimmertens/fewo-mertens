@@ -7,6 +7,11 @@ import { langPath, stripLang } from "@/lib/langPath";
 const SITE_URL = "https://fewo.amertens.me";
 const OG_IMAGE = `${SITE_URL}/og-image.webp`;
 
+/** True on the production domain; also true during prerender (no window). */
+const isProdHost = () =>
+  typeof window === "undefined" ||
+  /^(www\.)?fewo\.amertens\.me$/.test(window.location.hostname);
+
 interface SeoProps {
   /** German title (without brand suffix) */
   titleDe: string;
@@ -37,6 +42,7 @@ const BREADCRUMB_LABELS: Record<string, { de: string; en: string }> = {
 const Seo = ({ titleDe, titleEn, descriptionDe, descriptionEn, noindex, jsonLd }: SeoProps) => {
   const { language } = useLanguage();
   const { pathname } = useLocation();
+  const prodHost = isProdHost();
 
   const title = language === "de" ? titleDe : titleEn;
   const description = language === "de" ? descriptionDe : descriptionEn;
@@ -99,7 +105,7 @@ const Seo = ({ titleDe, titleEn, descriptionDe, descriptionEn, noindex, jsonLd }
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
+      <meta name="robots" content={noindex ? "noindex, follow" : prodHost ? "index, follow" : "noindex, nofollow"} />
       <link rel="canonical" href={url} />
       <link rel="alternate" hrefLang="de" href={deUrl} />
       <link rel="alternate" hrefLang="en" href={enUrl} />

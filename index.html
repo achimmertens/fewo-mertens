@@ -24,6 +24,19 @@
     <meta name="twitter:image" content="https://fewo.amertens.me/og-image.webp" />
 
 
+    <!-- Staging-/Preview-Hosts (z. B. *.lovable.app) duerfen nicht indexiert werden -->
+    <script>
+      (function () {
+        var host = window.location.hostname;
+        if (host === "fewo.amertens.me" || host === "www.fewo.amertens.me") return;
+        if (host === "localhost" || host === "127.0.0.1" || host === "") return;
+        var m = document.createElement("meta");
+        m.name = "robots";
+        m.content = "noindex, nofollow";
+        document.head.appendChild(m);
+      })();
+    </script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17408162748"></script>
     <script>
