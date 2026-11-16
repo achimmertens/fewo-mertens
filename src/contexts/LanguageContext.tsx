@@ -123,7 +123,7 @@ const de: Record<string, any> = {
     livingRoomDesc1: 'Im Wohnzimmer befindet sich eine ausziehbare Schlafcouch, auf der bequem zwei weitere Personen schlafen können.',
     livingRoomDesc2: 'Die weiche Sitzecke ist auf den Kamin ausgerichtet, der sowohl wohlige Wärme, als auch Ruhe und Gemütlichkeit ausstrahlt. Hier können Sie die schöne Aussicht in den Wald genießen, abends entspannen oder ein Buch lesen.',
     heatingFireplace: 'Heizung & Kamin',
-    heatingDesc: 'Die Wohnung verfügt über keine klassische Heizung, dafür aber über einen wunderschönen, gemütlichen Kamin, der an kühlen Tagen für eine angenehme Wärme und eine besondere Atmosphäre sorgt. Holz ist genügend kostenlos vorhanden. Über eine kleine Spende würden wir uns aber freuen. Der Kamin ist eigentlich einfach zu bedienen. Sollten Sie aber eine Anleitung wünschen, finden Sie diese in unserem Erklärvideo.',
+    heatingDesc: 'Die Wohnung verfügt über eine Nachtspeicherheizung und über einen wunderschönen, gemütlichen Kamin, der an kühlen Tagen für eine angenehme Wärme und eine besondere Atmosphäre sorgt. Holz ist genügend kostenlos vorhanden. Über eine kleine Spende würden wir uns aber freuen. Der Kamin ist eigentlich einfach zu bedienen. Sollten Sie aber eine Anleitung wünschen, finden Sie diese in unserem Erklärvideo.',
     bedroomTitle: 'Das Schlafzimmer',
     bedroomDesc: 'Die Wohnung verfügt über ein hochwertiges Boxspringbett (180x200 cm)',
     bathroomTitle: 'Badezimmer',
