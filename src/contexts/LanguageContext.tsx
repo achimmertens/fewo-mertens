@@ -484,7 +484,7 @@ const en: Record<string, any> = {
     livingRoomDesc1: 'The living room features a pull-out sofa bed that comfortably sleeps two additional people.',
     livingRoomDesc2: 'The soft seating area faces the fireplace, which provides both cozy warmth and a sense of calm. Here you can enjoy the beautiful view of the forest, relax in the evening, or read a book.',
     heatingFireplace: 'Heating & Fireplace',
-    heatingDesc: 'The apartment does not have conventional heating, but instead features a beautiful, cozy fireplace that provides pleasant warmth and a special atmosphere on cool days. There is plenty of free firewood available. We would appreciate a small donation though. The fireplace is easy to operate. If you need instructions, you can find them in our tutorial video.',
+    heatingDesc: 'The apartment has a night store heating and a cozy fireplace that provides pleasant warmth and a special atmosphere on cool days. There is plenty of free firewood available. We would appreciate a small donation though. The fireplace is easy to operate. If you need instructions, you can find them in our tutorial video.',
     bedroomTitle: 'The Bedroom',
     bedroomDesc: 'The apartment features a high-quality box spring bed (180x200 cm)',
     bathroomTitle: 'Bathroom',
