@@ -74,7 +74,7 @@ else
     fi
   }
 
-  check_tag "Title-Tag existiert" '<title>'
+  check_tag "Title-Tag existiert" '<title'
   check_tag "Meta Description" 'name="description"'
   check_tag "Meta Robots (index, follow)" 'name="robots".*content="index, follow"'
   check_tag "Canonical URL" 'rel="canonical"'
